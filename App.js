@@ -14,25 +14,19 @@ import {
   Community,
   CreateCommunity,
   WaitingList
-} from './pages/index.jsx'
+} from './pages/index'
+import BottomNav from './navigations/BottomNav'
 
 const Stack = createStackNavigator()
 
 export default function App() {
   return (
     <PaperProvider>
-      <NavigationContainer >
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} ></Stack.Screen>
-          <Stack.Screen name="Register" component={Register} options={{ headerTitleAlign: 'center' }} ></Stack.Screen>
-          <Stack.Screen name="Start Run" component={StartRun}></Stack.Screen>
-          <Stack.Screen name="History" component={History}></Stack.Screen>
-          <Stack.Screen name="Community" component={Community}></Stack.Screen>
-          <Stack.Screen name="Create Community" component={CreateCommunity}></Stack.Screen>
-          <Stack.Screen name="Leaderboard" component={Leaderboard}></Stack.Screen>
-          <Stack.Screen name="Events" component={Events}></Stack.Screen>
-          <Stack.Screen name="Create Event" component={CreateEvent}></Stack.Screen>
-          <Stack.Screen name="Waiting List" component={WaitingList}></Stack.Screen>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login}></Stack.Screen>
+          <Stack.Screen name="Register" component={Register}></Stack.Screen>
+          <Stack.Screen name="Main" component={BottomNav}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
