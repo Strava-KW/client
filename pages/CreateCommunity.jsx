@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native'
 
-function CreateCommunity () {
+function CreateEvent() {
   return (
     <View>
-      <Text>Create community Page</Text>
+      <Text>Create Event Page</Text>
     </View>
   )
 }
 
-export default CreateCommunity
+export default CreateEvent

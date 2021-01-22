@@ -1,13 +1,13 @@
-import Login from './Login'
-import Register from './Register'
-import StartRun from './StartRun'
-import Leaderboard from './Leaderboard'
-import History from './History'
-import Events from './Events'
-import CreateEvent from './CreateEvent'
-import Community from './Community'
-import CreateCommunity from './CreateCommunity'
-import WaitingList from './WaitingList'
+import Login from './Login.jsx'
+import Register from './Register.jsx'
+import StartRun from './StartRun.jsx'
+import Leaderboard from './Leaderboard.jsx'
+import History from './History.jsx'
+import Events from './Events.jsx'
+import CreateEvent from './CreateEvent.jsx'
+import Community from './Community.jsx'
+import CreateCommunity from './CreateCommunity.jsx'
+import WaitingList from './WaitingList.jsx'
 
 export {
   Login,
