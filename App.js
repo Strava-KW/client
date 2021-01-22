@@ -3,28 +3,28 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { 
+import {
   Login,
-  Register, 
-  StartRun, 
-  Leaderboard, 
+  Register,
+  StartRun,
+  Leaderboard,
   History,
   Events,
   CreateEvent,
   Community,
   CreateCommunity,
   WaitingList
-} from './pages/index'
+} from './pages/index.jsx'
 
 const Stack = createStackNavigator()
 
 export default function App() {
   return (
     <PaperProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login}></Stack.Screen>
-          <Stack.Screen name="Register" component={Register}></Stack.Screen>
+      <NavigationContainer >
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} ></Stack.Screen>
+          <Stack.Screen name="Register" component={Register} options={{ headerTitleAlign: 'center' }} ></Stack.Screen>
           <Stack.Screen name="Start Run" component={StartRun}></Stack.Screen>
           <Stack.Screen name="History" component={History}></Stack.Screen>
           <Stack.Screen name="Community" component={Community}></Stack.Screen>
