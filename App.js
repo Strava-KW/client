@@ -1,21 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { 
+  Login,
+  Register, 
+  StartRun, 
+  Leaderboard, 
+  History,
+  Events,
+  CreateEvent,
+  Community,
+  CreateCommunity,
+  WaitingList
+} from './pages/index'
+
+const Stack = createStackNavigator()
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login}></Stack.Screen>
+          <Stack.Screen name="Register" component={Register}></Stack.Screen>
+          <Stack.Screen name="Start Run" component={StartRun}></Stack.Screen>
+          <Stack.Screen name="History" component={History}></Stack.Screen>
+          <Stack.Screen name="Community" component={Community}></Stack.Screen>
+          <Stack.Screen name="Create Community" component={CreateCommunity}></Stack.Screen>
+          <Stack.Screen name="Leaderboard" component={Leaderboard}></Stack.Screen>
+          <Stack.Screen name="Events" component={Events}></Stack.Screen>
+          <Stack.Screen name="Create Event" component={CreateEvent}></Stack.Screen>
+          <Stack.Screen name="Waiting List" component={WaitingList}></Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
