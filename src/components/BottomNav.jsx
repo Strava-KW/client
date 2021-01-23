@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { StartRun, History, Community } from '../pages'
-
+import { StartRun, History } from '../pages'
+import { CommunityStack } from '../components/index'
 
 const Tab = createMaterialBottomTabNavigator()
 
@@ -10,13 +10,25 @@ function BottomNav () {
   return (
     <Tab.Navigator
       initialRouteName="Start"
-      activeColor="#f48924"
-      labelStyle={{ fontSize: 12 }}
-      style={{ backgroundColor: '#e91e63' }}
+      activeColor="#FA8135"
+      labelStyle={{ fontSize: 10, fontFamily: 'Jost' }}
+      barStyle={{ 
+        backgroundColor: "#42464e",
+        paddingBottom: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: -5,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 6.5,
+        
+        elevation: 10,
+      }}
     >
       <Tab.Screen
         name="Community"
-        component={Community}
+        component={CommunityStack}
         options={{
           tabBarLabel:'Community',
           tabBarIcon: ({ color }) => (
@@ -39,7 +51,8 @@ function BottomNav () {
         name="History"
         component={History}
         options={{
-          tabBarLabel:'History',
+          title: 'History',
+          tabBarLabel: 'History',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="history" color={color} size={26} />
           ),

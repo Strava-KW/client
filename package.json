@@ -34,6 +34,7 @@
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "expo-font": "~8.4.0",
     "expo-task-manager": "~8.6.0"
   },
   "devDependencies": {

@@ -8,6 +8,7 @@ import CreateEvent from './CreateEvent.jsx'
 import Community from './Community.jsx'
 import CreateCommunity from './CreateCommunity.jsx'
 import WaitingList from './WaitingList.jsx'
+import Members from './Members.jsx'
 
 export {
   LoginPage,
@@ -19,5 +20,6 @@ export {
   CreateEvent,
   Community,
   CreateCommunity,
-  WaitingList
+  WaitingList,
+  Members
 }
