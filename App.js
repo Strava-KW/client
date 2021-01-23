@@ -1,51 +1,25 @@
 import React from 'react';
-<<<<<<< HEAD
-import { StyleSheet, Text, View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-  Login,
-  Register,
-  StartRun,
-  Leaderboard,
-  History,
-  Events,
-  CreateEvent,
-  Community,
-  CreateCommunity,
-  WaitingList
-} from './pages/index'
-import BottomNav from './navigations/BottomNav'
 
-const Stack = createStackNavigator()
-=======
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import { StyleSheet } from 'react-native';
-// import RunTracker from './src/components/RunTracker'
-import EventLocation from './src/components/EventLocation'
->>>>>>> c10febb162c77d185f97d2db7ec5a08a85da51a6
+import {BottomNav} from './src/components'
+import { LoginPage , RegisterPage} from './src/pages/index'
+
+
 
 const Stack = createStackNavigator()
 export default function App() {
   return (
-<<<<<<< HEAD
     <PaperProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login}></Stack.Screen>
-          <Stack.Screen name="Register" component={Register}></Stack.Screen>
-          <Stack.Screen name="Main" component={BottomNav}></Stack.Screen>
+        <Stack.Navigator  initialRouteName="Login">
+          <Stack.Screen name="Login" component={LoginPage}></Stack.Screen>
+          <Stack.Screen name="Register" component={RegisterPage}></Stack.Screen>
+          <Stack.Screen name="Main" component={BottomNav}  options={{ title: 'Runator' }}></Stack.Screen> 
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
-=======
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={EventLocation}></Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
->>>>>>> c10febb162c77d185f97d2db7ec5a08a85da51a6
+
   );
 }

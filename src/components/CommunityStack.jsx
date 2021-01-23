@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack'
 import CommunityDrawer from './CommunityDrawer'
-import { Community, CreateCommunity } from '../pages/index'
+import { Community, CreateCommunity } from '../pages'
 
 const Stack = createStackNavigator()
 
