@@ -93,6 +93,8 @@ export default function LoginPage({ navigation }) {
             visible={visible}
             onDismiss={hideModal}
             contentContainerStyle={styles.modal}
+            animationType={"fade"}
+            transparent={true}
           >
             <Headline style={styles.headline}>Sign In</Headline>
             <TextInput
