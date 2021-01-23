@@ -12,7 +12,7 @@ function Members () {
           <Card.Content style={styles.person}>
             <Avatar.Image style={styles.avatarContainer} size={48} color="orange">Coba</Avatar.Image>
             <View style={styles.nameContainer}>
-              <Text style={{ fontSize: 21, fontWeight: '700', color: '#f48924' }}>John Doe</Text>
+              <Text style={{ fontSize: 21, fontWeight: '600', fontFamily: 'Jost', color: '#f48924' }}>John Doe</Text>
             </View>      
           </Card.Content>
         </Card>
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     padding: 25,
     fontSize: 25,
     color: '#FA8135',
-    fontWeight: "bold"
+    fontFamily: 'Jost'
   },
   waitingList: {
     height: '70%',

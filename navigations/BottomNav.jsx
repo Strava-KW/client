@@ -11,7 +11,7 @@ function BottomNav () {
     <Tab.Navigator
       initialRouteName="Start"
       activeColor="#FA8135"
-      labelStyle={{ fontSize: 10 }}
+      labelStyle={{ fontSize: 10, fontFamily: 'Jost' }}
       barStyle={{ 
         backgroundColor: "#42464e",
         paddingBottom: 5,

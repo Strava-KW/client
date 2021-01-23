@@ -17,7 +17,7 @@ function CommunityDrawer () {
           color: "#FA8135",
           fontSize: 20,
           alignSelf: 'center',
-          fontWeight: 'bold'
+          fontFamily: 'Jost'
         }
       }}
     >

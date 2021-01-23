@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { StyleSheet, Dimensions } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 function Events () {
   return (
@@ -13,53 +13,26 @@ function Events () {
           <Card.Content style={styles.mapContainer}>
             <MapView
               style={styles.map}
-              initialRegion={{
+              region={{
                 latitude: 37.78825,
                 longitude: -122.4324,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
-            ></MapView>
-          </Card.Content>
-          <Card.Content style={styles.cardContent}>
-            <Title style={styles.cardName}>Event Name</Title>
-            <View style={{display: "flex", flexDirection: "row"}}>
-              <Paragraph style={styles.cardLocation}>Location</Paragraph>
-              <Paragraph style={styles.cardDate}>22/1/2021</Paragraph>
-            </View>
-          </Card.Content>
-        </Card>
-        <Card style={styles.eventCard}>
-          <Card.Content style={styles.mapContainer}>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            ></MapView>
-          </Card.Content>
-          <Card.Content style={styles.cardContent}>
-            <Title style={styles.cardName}>Event Name</Title>
-            <View style={{display: "flex", flexDirection: "row"}}>
-              <Paragraph style={styles.cardLocation}>Location</Paragraph>
-              <Paragraph style={styles.cardDate}>22/1/2021</Paragraph>
-            </View>
-          </Card.Content>
-        </Card>
-        <Card style={styles.eventCard}>
-          <Card.Content style={styles.mapContainer}>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            ></MapView>
+              scrollEnabled={false}
+              pitchEnabled={false}
+              minZoomLevel={13}
+              zoomEnabled={true}
+            >
+              <Marker 
+                coordinate={{
+                  latitude: 37.78825,
+                  longitude: -122.4324,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}
+              />
+            </MapView>
           </Card.Content>
           <Card.Content style={styles.cardContent}>
             <Title style={styles.cardName}>Event Name</Title>
@@ -70,7 +43,6 @@ function Events () {
           </Card.Content>
         </Card>
       </ScrollView>
-      {/* <BottomNav /> */}
     </View>
   )
 }
@@ -87,7 +59,7 @@ const styles = StyleSheet.create({
     paddingTop : 0,
     paddingRight : 0,
     paddingLeft : 0,
-    borderRadius: 10
+    borderRadius: 30
   },
   eventContainer: {
     height: '70%',
@@ -101,7 +73,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 15,
     fontSize: 25,
-    color: "#FA8135"
+    color: "#FA8135",
+    fontFamily: 'Jost'
   },  
   map: {
     flex: 1,
@@ -126,22 +99,27 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     backgroundColor: "#FA8135",
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30
   },
   cardName: {
-    fontSize: 22,
-    color: "#2F3238"
+    fontSize: 24,
+    alignContent: 'center',
+    paddingTop: 10,
+    color: "#2F3238",
+    fontFamily: 'Jost'
   },
   cardLocation: {
     fontSize: 16,
     flex: 3,
-    color: "#2F3238"
+    color: "#2F3238",
+    fontFamily: 'Jost'
   },
   cardDate: {
     fontSize: 14,
     flex: 1,
     color: "#2F3238",
+    fontFamily: 'Jost'
   }
 });
 

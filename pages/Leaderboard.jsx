@@ -10,36 +10,12 @@ function Leaderboard () {
         <Card style={styles.rankCard}>
           <Card.Content style={styles.rank}>
             <View style={styles.posContainer}>
-              <Text style={{ fontSize: 32, alignSelf: 'center', justifyContent: 'center', fontWeight: '700', color: '#FA8135'}}>1</Text>
+              <Text style={{ fontSize: 32, alignSelf: 'center', justifyContent: 'center', fontWeight: '600', fontFamily: 'Jost', color: '#FA8135'}}>1</Text>
             </View>
             <Avatar.Image style={styles.avatarContainer} size={54} color="orange">Coba</Avatar.Image>
             <View style={styles.detailContainer}>
-              <Text style={{ fontSize: 20, fontWeight: '700', color: '#FA8135' }}>John Doe</Text>
-              <Text style={{ fontSize: 14, fontWeight: '400', color: '#FA8135' }}>Distance: 70 km</Text>
-            </View>           
-          </Card.Content>
-        </Card>
-        <Card style={styles.rankCard}>
-          <Card.Content style={styles.rank}>
-            <View style={styles.posContainer}>
-              <Text style={{ fontSize: 32, alignSelf: 'center', justifyContent: 'center', fontWeight: '700', color: '#f48924'}}>1</Text>
-            </View>
-            <Avatar.Image style={styles.avatarContainer} size={54} color="orange">Coba</Avatar.Image>
-            <View style={styles.detailContainer}>
-              <Text style={{ fontSize: 20, fontWeight: '700', color: '#f48924' }}>John Doe</Text>
-              <Text style={{ fontSize: 14, fontWeight: '400', color: '#f48924' }}>Distance: 70 km</Text>
-            </View>           
-          </Card.Content>
-        </Card>
-        <Card style={styles.rankCard}>
-          <Card.Content style={styles.rank}>
-            <View style={styles.posContainer}>
-              <Text style={{ fontSize: 32, alignSelf: 'center', justifyContent: 'center', fontWeight: '700', color: '#f48924'}}>1</Text>
-            </View>
-            <Avatar.Image style={styles.avatarContainer} size={54} color="orange">Coba</Avatar.Image>
-            <View style={styles.detailContainer}>
-              <Text style={{ fontSize: 20, fontWeight: '700', color: '#f48924' }}>John Doe</Text>
-              <Text style={{ fontSize: 14, fontWeight: '400', color: '#f48924' }}>Distance: 70 km</Text>
+              <Text style={{ fontSize: 21, fontWeight: '600', fontFamily: 'Jost', color: '#FA8135' }}>John Doe</Text>
+              <Text style={{ fontSize: 14, fontWeight: '400', fontFamily: 'Jost', color: '#FA8135' }}>Distance: 70 km</Text>
             </View>           
           </Card.Content>
         </Card>
@@ -60,7 +36,7 @@ const styles = StyleSheet.create({
     padding: 25,
     fontSize: 25,
     color: '#FA8135',
-    fontWeight: "bold",
+    fontWeight: '800',
     fontFamily: 'Jost'
   },
   leaderboard: {

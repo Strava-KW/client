@@ -23,7 +23,7 @@ const Stack = createStackNavigator()
 
 export default function App() {
   const [loaded] = useFonts({
-    Jost: require('./assets/Jost.ttf'),
+    'Jost': require('./assets/Jost.ttf'),
   });
 
   if (!loaded) {
@@ -34,7 +34,7 @@ export default function App() {
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen 
+          {/* <Stack.Screen 
             name="Login" 
             component={Login}
             options={{
@@ -47,9 +47,9 @@ export default function App() {
             options={{
               headerShown: false
             }}
-          ></Stack.Screen>
+          ></Stack.Screen> */}
           <Stack.Screen 
-            name="Main" 
+            name="Runator" 
             component={BottomNav}
             options={{
               headerStyle: {
@@ -57,7 +57,8 @@ export default function App() {
               },
               headerTintColor: '#FA8135',
               headerTitleStyle: {
-                alignSelf: 'center'
+                alignSelf: 'center',
+                fontFamily: 'Jost'
               }
             }}
           ></Stack.Screen>

@@ -6,13 +6,13 @@ function Community () {
   return (
     <View style={styles.container}>
       <Text style={styles.subtitle}> Create a Community </Text>
-      <Button icon="plus" mode="contained" color="#FA8135">Create</Button>
+      <Button icon="plus" mode="contained" color="#FA8135" >Create</Button>
       <Text style={styles.subtitle}>or Join a Community</Text>
       <ScrollView>
         <Card style={styles.communityCard}>
           <Card.Content style={styles.communityCardContent}>
-            <Title style={{color:'#FA8135'}}>CommunityKu</Title>
-            <Paragraph style={{color:'#FA8135'}}>Members: 10</Paragraph>
+            <Title style={{color:'#FA8135', fontFamily: 'Jost', fontSize: 21}}>CommunityKu</Title>
+            <Paragraph style={{color:'#FA8135', fontFamily: 'Jost', fontSize: 16}}>Members: 10</Paragraph>
           </Card.Content>
           <Card.Actions style={{ flexDirection: 'row-reverse', marginLeft: 10 }}>
             <Button color="#FA8135">Join</Button>
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     padding: 15,
     fontSize: 18,
     paddingTop: 30,
-    color: '#fff'
+    color: '#fff',
+    fontFamily: 'Jost'
   },
   communityCard: {
     width: (Dimensions.get('window').width - 75),
