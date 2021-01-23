@@ -47,7 +47,7 @@ export default function LoginPage({ navigation }) {
         <Provider>
           <Portal>
             <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-              <Button mode="outlined" onPress={() => navigation.navigate('Main')}>
+              <Button mode="outlined" onPress={() => navigation.navigate('Runator')}>
                  Sign In
               </Button>
             </Modal>
