@@ -93,6 +93,8 @@ export default function LoginPage({ navigation }) {
             visible={visible}
             onDismiss={hideModal}
             contentContainerStyle={styles.modal}
+            animationType={"fade"}
+            transparent={true}
           >
             <Headline style={styles.headline}>Sign In</Headline>
             <TextInput
@@ -136,11 +138,15 @@ export default function LoginPage({ navigation }) {
             <Button
               style={styles.signInButton}
               color="#FA8135"
+              uppercase={false}
               dark={true}
               mode="contained"
               onPress={() => {
+                hideModal();
                 console.log(email, password);
-                navigation.navigate("Login");
+                navigation.navigate("Runator");
+                setEmail("");
+                setPassword("");
               }}
               labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
             >
