@@ -100,12 +100,9 @@ export default function LoginPage({ navigation }) {
               value={email}
               onChangeText={(email) => setEmail(email)}
               mode="flat"
-              style={{
-                width: 300,
-                alignSelf: "center",
-                padding: 0,
-              }}
-              labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
+              selectionColor="#FA8135"
+              underlineColor="#FA8135"
+              style={styles.formField}
               theme={{
                 colors: {
                   placeholder: "white",
@@ -122,14 +119,11 @@ export default function LoginPage({ navigation }) {
               label="Password"
               value={password}
               onChangeText={(password) => setPassword(password)}
-              mode="flat"
+              mode="outlined"
+              selectionColor="#FA8135"
+              underlineColor="#FA8135"
+              style={styles.formField}
               secureTextEntry={true}
-              style={{
-                width: 300,
-                alignSelf: "center",
-                padding: 0,
-              }}
-              labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
               theme={{
                 colors: {
                   placeholder: "orange",
@@ -140,14 +134,13 @@ export default function LoginPage({ navigation }) {
               }}
             />
             <Button
+              style={styles.signInButton}
+              color="#FA8135"
+              dark={true}
               mode="contained"
-              onPress={() => navigation.navigate("Runator")}
-              uppercase={false}
-              style={{
-                marginTop: 50,
-                width: 300,
-                alignSelf: "center",
-                backgroundColor: "#42464E",
+              onPress={() => {
+                console.log(email, password);
+                navigation.navigate("Login");
               }}
               labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
             >
@@ -186,13 +179,25 @@ const styles = StyleSheet.create({
     height: "70%",
   },
   modal: {
-    backgroundColor: "#FA8135",
+    backgroundColor: "#242424",
     padding: 20,
   },
   headline: {
     marginBottom: 30,
     fontFamily: "Jost",
-    color: "#242424",
+    color: "white",
     textAlign: "center",
+  },
+  formField: {
+    width: Dimensions.get("window").width - 75,
+    margin: 5,
+    alignSelf: "center",
+  },
+  signInButton: {
+    marginTop: 50,
+    width: 300,
+    height: 40,
+    alignSelf: "center",
+    backgroundColor: "#FA8135",
   },
 });
