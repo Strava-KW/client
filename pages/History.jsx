@@ -71,15 +71,20 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10
   },
   cardName: {
-    color: "#FA8135"
+    color: "#FA8135",
+    fontFamily: "Jost",
+    fontSize: 21,
+    paddingTop: 5
   },
   cardLocation: {
     flex: 3,
-    color: "#FA8135"
+    color: "#FA8135",
+    fontFamily: "Jost"
   },
   cardDate: {
     flex: 1,
     color: "#FA8135",
+    fontFamily: "Jost"
   }
 })
 

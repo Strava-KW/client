@@ -58,7 +58,8 @@ export default function App() {
               headerTintColor: '#FA8135',
               headerTitleStyle: {
                 alignSelf: 'center',
-                fontFamily: 'Jost'
+                fontFamily: 'Jost',
+                fontSize: 24
               }
             }}
           ></Stack.Screen>
