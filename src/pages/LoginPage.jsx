@@ -136,11 +136,15 @@ export default function LoginPage({ navigation }) {
             <Button
               style={styles.signInButton}
               color="#FA8135"
+              uppercase={false}
               dark={true}
               mode="contained"
               onPress={() => {
+                hideModal();
                 console.log(email, password);
-                navigation.navigate("Login");
+                navigation.navigate("Runator");
+                setEmail("");
+                setPassword("");
               }}
               labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
             >
