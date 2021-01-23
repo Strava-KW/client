@@ -2,29 +2,11 @@ import React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-<<<<<<< HEAD
-import {
-  Login,
-  Register,
-  StartRun,
-  Leaderboard,
-  History,
-  Events,
-  CreateEvent,
-  Community,
-  CreateCommunity,
-  WaitingList
-} from './pages/index';
-import BottomNav from './navigations/BottomNav';
 import theme from './config/theme'
 import { useFonts } from 'expo-font'
-=======
->>>>>>> 55dffb66fcc9787c2a1ee10ff3e35a17a1a4a5eb
 
-import {BottomNav} from './src/components'
+import { BottomNav } from './src/components'
 import { LoginPage , RegisterPage} from './src/pages/index'
-
-
 
 const Stack = createStackNavigator()
 export default function App() {
@@ -39,22 +21,21 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-<<<<<<< HEAD
         <Stack.Navigator>
-          <Stack.Screen 
+          {/* <Stack.Screen 
             name="Login" 
-            component={Login}
+            component={LoginPage}
             options={{
               headerShown: false
             }}
           ></Stack.Screen>
           <Stack.Screen 
             name="Register" 
-            component={Register}
+            component={RegisterPage}
             options={{
               headerShown: false
             }}
-          ></Stack.Screen>
+          ></Stack.Screen> */}
           <Stack.Screen 
             name="Runator" 
             component={BottomNav}
@@ -70,12 +51,6 @@ export default function App() {
               }
             }}
           ></Stack.Screen>
-=======
-        <Stack.Navigator  initialRouteName="Login">
-          <Stack.Screen name="Login" component={LoginPage}></Stack.Screen>
-          <Stack.Screen name="Register" component={RegisterPage}></Stack.Screen>
-          <Stack.Screen name="Main" component={BottomNav}  options={{ title: 'Runator' }}></Stack.Screen> 
->>>>>>> 55dffb66fcc9787c2a1ee10ff3e35a17a1a4a5eb
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

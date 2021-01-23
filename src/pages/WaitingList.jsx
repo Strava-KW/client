@@ -14,7 +14,7 @@ function WaitingList () {
               <Avatar.Image size={48} color="orange">Coba</Avatar.Image>
             </View>
             <View style={styles.nameContainer}>
-              <Text style={{ fontSize: 21, fontWeight: '700', color: '#FA8135' }}>John Doe</Text>
+              <Text style={{ fontSize: 21, fontWeight: '600', color: '#FA8135', fontFamily: 'Jost' }}>John Doe</Text>
             </View>
             <Card.Actions style={styles.personAction}>
               <IconButton icon="check-bold" color="green" size={20}></IconButton>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     padding: 25,
     fontSize: 25,
     color: '#FA8135',
-    fontWeight: "bold"
+    fontFamily: 'Jost'
   },
   waitingList: {
     height: '70%',
