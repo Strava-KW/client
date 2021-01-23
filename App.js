@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+<<<<<<< HEAD
 import {
   Login,
   Register,
@@ -18,9 +18,15 @@ import {
 import BottomNav from './navigations/BottomNav';
 import theme from './config/theme'
 import { useFonts } from 'expo-font'
+=======
+>>>>>>> 55dffb66fcc9787c2a1ee10ff3e35a17a1a4a5eb
+
+import {BottomNav} from './src/components'
+import { LoginPage , RegisterPage} from './src/pages/index'
+
+
 
 const Stack = createStackNavigator()
-
 export default function App() {
   const [loaded] = useFonts({
     'Jost': require('./assets/Jost.ttf'),
@@ -33,6 +39,7 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
+<<<<<<< HEAD
         <Stack.Navigator>
           <Stack.Screen 
             name="Login" 
@@ -63,8 +70,15 @@ export default function App() {
               }
             }}
           ></Stack.Screen>
+=======
+        <Stack.Navigator  initialRouteName="Login">
+          <Stack.Screen name="Login" component={LoginPage}></Stack.Screen>
+          <Stack.Screen name="Register" component={RegisterPage}></Stack.Screen>
+          <Stack.Screen name="Main" component={BottomNav}  options={{ title: 'Runator' }}></Stack.Screen> 
+>>>>>>> 55dffb66fcc9787c2a1ee10ff3e35a17a1a4a5eb
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
+
   );
 }

@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native'
+import {RunTracker} from '../components'
 
 function StartRun () {
   return (
-    <View>
-      <Text>Run Page</Text>
-    </View>
+    <>
+      <View>
+        <RunTracker/>
+      </View>
+    </>
   )
 }
 

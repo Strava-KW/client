@@ -11,7 +11,7 @@ import {
   Text
 } from 'react-native-paper';
 
-export default function Login({ navigation }) {
+export default function LoginPage({ navigation }) {
 
   const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState('');
@@ -27,7 +27,7 @@ export default function Login({ navigation }) {
   return (
     <>
       <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
-        <Image source={require('../assets/icon.png')}
+        <Image source={require('../../assets/icon.png')}
           style={{ width: 300, height: 300 }} />
 
         <View>
@@ -47,7 +47,9 @@ export default function Login({ navigation }) {
         <Provider>
           <Portal>
             <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-              <Text>Example Modal.  Click outside this area to dismiss.</Text>
+              <Button mode="outlined" onPress={() => navigation.navigate('Main')}>
+                 Sign In
+              </Button>
             </Modal>
           </Portal>
         </Provider>
