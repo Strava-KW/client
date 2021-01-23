@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Dimensions, StyleSheet } from 'react-native';
 import {
   Button,
   Divider,
@@ -18,7 +18,6 @@ export default function LoginPage({ navigation }) {
   const [password, setPassword] = useState('');
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const containerStyle = { backgroundColor: 'white', padding: 20 };
 
   const hasErrors = () => {
     return email.length > 2 && !email.includes('@')
@@ -26,34 +25,89 @@ export default function LoginPage({ navigation }) {
 
   return (
     <>
-      <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
+      <View style={styles.container}>
         <Image source={require('../../assets/icon.png')}
-          style={{ width: 300, height: 300 }} />
-
-        <View>
-          <Button icon="google" mode="outlined" onPress={() => alert('Google OAuth')}>
+          style={styles.icon} />
+        <View style={styles.loginContainer}>
+          <Text style={styles.title}>Login to Runator</Text>
+          <Button 
+            icon="google" 
+            mode="contained" 
+            uppercase={false} 
+            onPress={() => alert('Google OAuth')} 
+            style={{marginBottom: 10, width: 300, alignSelf:'center', backgroundColor:'#42464E'}}
+            labelStyle={{fontFamily:'Jost', fontSize: 18}}
+          >
             Sign in with Google
-        </Button>
-          <Button icon="email" mode="outlined" onPress={() => navigation.navigate('Register')}>
+          </Button>
+          <Button 
+            icon="email" 
+            mode="contained" 
+            uppercase={false} 
+            onPress={() => navigation.navigate('Register')}
+            style={{marginBottom: 10, width: 300, alignSelf:'center', backgroundColor:'#42464E'}}
+            labelStyle={{fontFamily:'Jost', fontSize: 18}}
+          >
             Sign up with Email
-        </Button>
+          </Button>
+          <View>
+            <Text style={{alignSelf:'center', paddingBottom: 10, paddingTop: 15, fontFamily: 'Jost', color: '#2F3238', fontSize: 16}}> already a member ?</Text>
+            <Button 
+              mode="contained" 
+              onPress={showModal}
+              uppercase={false}
+              style={{marginBottom: 10, width: 300, alignSelf:'center', backgroundColor:'#42464E'}}
+              labelStyle={{fontFamily:'Jost', fontSize: 18}}
+            >
+              Sign In
+            </Button>
+          </View>
         </View>
-        <View>
-          <Text> already a member ?</Text>
-          <Button mode="outlined" onPress={showModal}>
-            Sign In
-        </Button>
-        </View>
-        <Provider>
-          <Portal>
-            <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-              <Button mode="outlined" onPress={() => navigation.navigate('Runator')}>
-                 Sign In
-              </Button>
-            </Modal>
-          </Portal>
-        </Provider>
+        <Portal>
+          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
+            <Button 
+              mode="contained" 
+              onPress={() => navigation.navigate('Runator')}
+              uppercase={false}
+              style={{marginBottom: 20, width: 300, alignSelf:'center', backgroundColor:'#42464E'}}
+              labelStyle={{fontFamily:'Jost', fontSize: 18}}
+            >
+              Sign In
+            </Button>
+          </Modal>
+        </Portal>
       </View>
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, 
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#42464e'
+  },
+  icon: {
+    width: 250,
+    height: 250,
+    margin: 15
+  },
+  title: {
+    alignSelf:'center',
+    fontSize: 30,
+    fontFamily: 'Jost',
+    marginBottom: 15,
+    padding: 10,
+    color: '#2F3238'
+  },
+  loginContainer: {
+    backgroundColor: '#FA8135',
+    width: Dimensions.get('window').width,
+    height: '70%'
+  },
+  modal: {
+    backgroundColor: '#FA8135', 
+    padding: 20
+  }
+})
