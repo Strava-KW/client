@@ -22,7 +22,7 @@ function History () {
         <Card.Content style={styles.cardContent}>
           <Title style={styles.cardName}>Activity Name</Title>
           <View style={{display: "flex", flexDirection: "row"}}>
-            <Paragraph style={styles.cardLocation}>Distance:</Paragraph>
+            <Paragraph style={styles.cardLocation}>Distance: </Paragraph>
             <Paragraph style={styles.cardDate}>22/1/2021</Paragraph>
           </View>
         </Card.Content>
@@ -34,7 +34,7 @@ function History () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#52565e',
+    backgroundColor: '#42464E',
   },
   mapContainer: {
     width : '100%',
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     marginTop: 40,
     marginBottom: 10,
-    resizeMode: 'cover',
+    alignSelf: 'center',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -64,22 +64,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.40,
     shadowRadius: 2.50,
     elevation: 2,
+    backgroundColor: "#2F3238",
   },
   cardContent: {
-    backgroundColor: "#42464e",
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10
   },
   cardName: {
-    color: "#fff"
+    color: "#FA8135"
   },
   cardLocation: {
-    flex: 2,
-    color: "#fff"
+    flex: 3,
+    color: "#FA8135"
   },
   cardDate: {
     flex: 1,
-    color: "#fff",
+    color: "#FA8135",
   }
 })
 

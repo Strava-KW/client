@@ -3,23 +3,17 @@ import { View, Text, StyleSheet, Dimensions} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { IconButton, Card, Title, Paragraph, Avatar } from 'react-native-paper'
 
-function WaitingList () {
+function Members () {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> Waiting List </Text>
+      <Text style={styles.title}> Community Members </Text>
       <ScrollView style={styles.waitingList}>
         <Card style={styles.personCard}>
           <Card.Content style={styles.person}>
-            <View style={styles.avatarContainer}>
-              <Avatar.Image size={48} color="orange">Coba</Avatar.Image>
-            </View>
+            <Avatar.Image style={styles.avatarContainer} size={48} color="orange">Coba</Avatar.Image>
             <View style={styles.nameContainer}>
-              <Text style={{ fontSize: 21, fontWeight: '700', color: '#FA8135' }}>John Doe</Text>
-            </View>
-            <Card.Actions style={styles.personAction}>
-              <IconButton icon="check-bold" color="green" size={20}></IconButton>
-              <IconButton icon="close-thick" color="red" size={20}></IconButton>
-            </Card.Actions>          
+              <Text style={{ fontSize: 21, fontWeight: '700', color: '#f48924' }}>John Doe</Text>
+            </View>      
           </Card.Content>
         </Card>
       </ScrollView>
@@ -71,7 +65,7 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     justifyContent: 'center',
-    marginRight: 15,
+    marginRight: 20,
   },
   nameContainer: {
     flex: 2,
@@ -79,9 +73,8 @@ const styles = StyleSheet.create({
   },
   personAction: {
     flex: 1,
-    flexDirection: 'row',
-    alignContent: 'flex-start'
+    flexDirection: 'row-reverse'
   }
 })
 
-export default WaitingList
+export default Members

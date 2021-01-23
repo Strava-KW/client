@@ -14,19 +14,53 @@ import {
   Community,
   CreateCommunity,
   WaitingList
-} from './pages/index'
-import BottomNav from './navigations/BottomNav'
+} from './pages/index';
+import BottomNav from './navigations/BottomNav';
+import theme from './config/theme'
+import { useFonts } from 'expo-font'
 
 const Stack = createStackNavigator()
 
 export default function App() {
+  const [loaded] = useFonts({
+    Jost: require('./assets/Jost.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login}></Stack.Screen>
-          <Stack.Screen name="Register" component={Register}></Stack.Screen>
-          <Stack.Screen name="Main" component={BottomNav}></Stack.Screen>
+          <Stack.Screen 
+            name="Login" 
+            component={Login}
+            options={{
+              headerShown: false
+            }}
+          ></Stack.Screen>
+          <Stack.Screen 
+            name="Register" 
+            component={Register}
+            options={{
+              headerShown: false
+            }}
+          ></Stack.Screen>
+          <Stack.Screen 
+            name="Main" 
+            component={BottomNav}
+            options={{
+              headerStyle: {
+                backgroundColor: '#42464E'
+              },
+              headerTintColor: '#FA8135',
+              headerTitleStyle: {
+                alignSelf: 'center'
+              }
+            }}
+          ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

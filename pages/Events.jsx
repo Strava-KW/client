@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#52565e',
+    backgroundColor: '#42464e',
   },
   mapContainer: {
     width : '100%',
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   eventContainer: {
     height: '70%',
-    backgroundColor: '#32363e',
+    backgroundColor: '#2F3238',
     // alignItems: 'center',
     // justifyContent: 'center',
     borderTopLeftRadius: 25,
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
   title: {
     alignSelf: "center",
     padding: 15,
-    color: "#f48924"
+    fontSize: 25,
+    color: "#FA8135"
   },  
   map: {
     flex: 1,
@@ -109,11 +110,11 @@ const styles = StyleSheet.create({
   eventCard: {
     height: 240,
     width: 320,
-    borderRadius: 10,
+    borderRadius: 20,
     marginHorizontal: 25,
-    marginTop: 40,
-    marginBottom: 10,
-    resizeMode: 'cover',
+    marginTop: 30,
+    marginBottom: 5,
+    alignSelf: 'center',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -124,20 +125,23 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   cardContent: {
-    backgroundColor: "#f48924",
+    backgroundColor: "#FA8135",
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10
   },
   cardName: {
-    color: "#42464e"
+    fontSize: 22,
+    color: "#2F3238"
   },
   cardLocation: {
-    flex: 2,
-    color: "#42464e"
+    fontSize: 16,
+    flex: 3,
+    color: "#2F3238"
   },
   cardDate: {
+    fontSize: 14,
     flex: 1,
-    color: "#42464e",
+    color: "#2F3238",
   }
 });
 
