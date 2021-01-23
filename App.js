@@ -34,7 +34,7 @@ export default function App() {
     <PaperProvider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator>
-          {/* <Stack.Screen 
+          <Stack.Screen 
             name="Login" 
             component={Login}
             options={{
@@ -47,7 +47,7 @@ export default function App() {
             options={{
               headerShown: false
             }}
-          ></Stack.Screen> */}
+          ></Stack.Screen>
           <Stack.Screen 
             name="Runator" 
             component={BottomNav}
