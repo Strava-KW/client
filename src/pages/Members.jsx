@@ -1,21 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { IconButton, Card, Title, Paragraph, Avatar } from 'react-native-paper'
+import { useSelector, useDispatch } from 'react-redux'
+import { setCommunities } from '../store/actions'
+import axios from '../../config/axios'
 
 function Members () {
+  const dispatch = useDispatch()
+  const communities = useSelector(state => state.communities)
+  const access_token = useSelector(state => state.access_token)
+
+  useEffect(() => {
+    if (access_token) {
+      axios({
+        url: '/community/community',
+        method: 'GET',
+        headers: {
+          access_token
+        }
+      })
+        .then(res => {
+          dispatch(setCommunities(res.data))
+          console.log(res.data, '<== dari community')
+        })
+        .catch(err => {
+          console.log(err.response.data.message, '<== error')
+        })
+    }
+  }, [access_token])
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Community Members </Text>
       <ScrollView style={styles.waitingList}>
-        <Card style={styles.personCard}>
-          <Card.Content style={styles.person}>
-            <Avatar.Image style={styles.avatarContainer} size={48} color="orange">Coba</Avatar.Image>
-            <View style={styles.nameContainer}>
-              <Text style={{ fontSize: 21, fontWeight: '600', fontFamily: 'Jost', color: '#f48924' }}>John Doe</Text>
-            </View>      
-          </Card.Content>
-        </Card>
+        {
+          communities?.members?.map(member => (
+            <Card style={styles.personCard}>
+              <Card.Content style={styles.person}>
+                <Avatar.Text style={styles.avatarContainer} size={48} color="orange" label={member.fullname[0]}></Avatar.Text>
+                <View style={styles.nameContainer}>
+                  <Text style={{ fontSize: 21, fontWeight: '600', fontFamily: 'Jost', color: '#f48924' }}>{member.fullname}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: '600', fontFamily: 'Jost', color: '#e6e6e6' }}>{member.role}</Text>
+                </View>      
+              </Card.Content>
+            </Card>
+          ))
+        }
       </ScrollView>
     </View>
   )

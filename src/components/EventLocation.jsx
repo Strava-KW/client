@@ -4,17 +4,16 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import * as Location from 'expo-location';
 // import * as TaskManager from 'expo-task-manager'
 import {mapStyle} from '../constant/mapStyle.json'
+import axios from 'axios'
 
-export default function EventLocation() {
+export default function EventLocation(props) {
   const [initialLocation, setInitialLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState([]);
   const [locationNow, setLocationNow] = useState(null)
   // const TASK_FETCH = 'runInBackground'
-  const eventLocation = {
-    latitude: -6.1692662,
-    longitude: 106.6074376
-  }
+  const [eventLocation, setEventLocation] = useState({})
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -65,6 +64,15 @@ export default function EventLocation() {
   //   }
   // });
 
+  useEffect(() => {
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${props.location}&key=AIzaSyC_bUeG0cXpov1tAARI3M8T1r9-uTD0h4g`)
+      .then(res => {
+        setEventLocation({
+          latitude: res.data.results[0].geometry.location.lat,
+          longitude: res.data.results[0].geometry.location.lng
+        })
+      })
+  }, [])
 
   if (location && initialLocation && locationNow) {
     return (
@@ -74,8 +82,8 @@ export default function EventLocation() {
         showUserLocation={true}
         initialRegion={
           {
-            latitude: initialLocation?.coords?.latitude,
-            longitude: initialLocation?.coords?.longitude,
+            latitude: eventLocation.latitude,
+            longitude: eventLocation.longitude,
             latitudeDelta: 0.015,
             longitudeDelta: 0.01
           }
@@ -84,16 +92,9 @@ export default function EventLocation() {
         <Marker
           coordinate={eventLocation}
         />
-        <Marker
+        {/* <Marker
           coordinate={locationNow}
-        />
-        <Polyline 
-          coordinates={location}
-          strokeWidth={6}
-          strokeColor="#00a8ff"
-          lineCap="round"
-          lineJoin="miter"
-        />
+        /> */}
       </MapView>
     )
   } else {
@@ -112,7 +113,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width : '100%',
+    height : '100%',
+    paddingTop : 0,
+    paddingRight : 0,
+    paddingLeft : 0,
+    borderRadius: 30
   },
 });

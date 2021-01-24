@@ -60,6 +60,32 @@ function WaitingList () {
       })
   }
 
+  function handleReject (id) {
+    axios({
+      url: `/community/approval/${id}`,
+      method: 'PATCH',
+      headers: {
+        access_token
+      }
+    })
+      .then(res => {
+        console.log(res.data)
+        return axios({
+          url: '/community/community',
+          method: 'GET',
+          headers: {
+            access_token
+          }
+        })
+      })
+      .then(res => {
+        dispatch(setCommunities(res.data))
+      })
+      .catch(err => {
+        console.log(err.response.data.message)
+      })
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Waiting List </Text>
@@ -69,7 +95,7 @@ function WaitingList () {
             <Card style={styles.personCard} key={person._id}>
               <Card.Content style={styles.person}>
                 <View style={styles.avatarContainer}>
-                  <Avatar.Text size={48} color="orange" label={person.fullname}></Avatar.Text>
+                  <Avatar.Text size={48} color="orange" label={person.fullname[0]}></Avatar.Text>
                 </View>
                 <View style={styles.nameContainer}>
                   <Text style={{ fontSize: 21, fontWeight: '600', color: '#FA8135', fontFamily: 'Jost' }}>{person.fullname}</Text>
