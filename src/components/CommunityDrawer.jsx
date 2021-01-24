@@ -9,7 +9,7 @@ function CommunityDrawer () {
     <Drawer.Navigator
       overlayColor="transparent"
       drawerStyle={{
-        backgroundColor: '#42464e',
+        backgroundColor: '#323232',
       }}
       drawerContentOptions={{
         activeTintColor: "#DA6115",

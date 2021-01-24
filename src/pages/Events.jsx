@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#42464e',
+    backgroundColor: '#323232',
   },
   mapContainer: {
     width : '100%',
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   eventContainer: {
     height: '70%',
-    backgroundColor: '#2F3238',
+    backgroundColor: '#242424',
     // alignItems: 'center',
     // justifyContent: 'center',
     borderTopLeftRadius: 25,
@@ -106,19 +106,19 @@ const styles = StyleSheet.create({
     fontSize: 24,
     alignContent: 'center',
     paddingTop: 10,
-    color: "#2F3238",
+    color: "#242424",
     fontFamily: 'Jost'
   },
   cardLocation: {
     fontSize: 16,
     flex: 3,
-    color: "#2F3238",
+    color: "#242424",
     fontFamily: 'Jost'
   },
   cardDate: {
     fontSize: 14,
     flex: 1,
-    color: "#2F3238",
+    color: "#242424",
     fontFamily: 'Jost'
   }
 });

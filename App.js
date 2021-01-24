@@ -1,4 +1,7 @@
 import React from "react";
+import { Provider } from 'react-redux';
+import store from './src/store/index'
+
 import { Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -18,40 +21,42 @@ export default function App() {
   }
 
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={LoginPage}
-            options={{
-              headerShown: false,
-            }}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Register"
-            component={RegisterPage}
-            options={{
-              headerShown: false,
-            }}
-          ></Stack.Screen>
-          <Stack.Screen
-            name="Runator"
-            component={BottomNav}
-            options={{
-              headerStyle: {
-                backgroundColor: "#42464E",
-              },
-              headerTintColor: "#FA8135",
-              headerTitleStyle: {
-                alignSelf: "center",
-                fontFamily: "Jost",
-                fontSize: 24,
-              },
-            }}
-          ></Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <Provider store={store}>
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={LoginPage}
+              options={{
+                headerShown: false,
+              }}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Register"
+              component={RegisterPage}
+              options={{
+                headerShown: false,
+              }}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Runator"
+              component={BottomNav}
+              options={{
+                headerStyle: {
+                  backgroundColor: "#323232",
+                },
+                headerTintColor: "#FA8135",
+                headerTitleStyle: {
+                  alignSelf: "center",
+                  fontFamily: "Jost",
+                  fontSize: 24,
+                }
+              }}
+            ></Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </Provider>
   );
 }

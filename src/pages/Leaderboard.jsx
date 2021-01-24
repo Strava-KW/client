@@ -15,7 +15,7 @@ function Leaderboard () {
             <Avatar.Image style={styles.avatarContainer} size={54} color="orange">Coba</Avatar.Image>
             <View style={styles.detailContainer}>
               <Text style={{ fontSize: 21, fontWeight: '600', fontFamily: 'Jost', color: '#FA8135' }}>John Doe</Text>
-              <Text style={{ fontSize: 14, fontWeight: '400', fontFamily: 'Jost', color: '#FA8135' }}>Distance: 70 km</Text>
+              <Text style={{ fontSize: 14, fontWeight: '400', fontFamily: 'Jost', color: '#FA8135' }}>Distances total: 70 km</Text>
             </View>           
           </Card.Content>
         </Card>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#42464E',
+    backgroundColor: '#323232',
   },
   title: {
     padding: 25,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   leaderboard: {
     height: '70%',
     width: (Dimensions.get('window').width - 24),
-    backgroundColor: '#2F3238',
+    backgroundColor: '#242424',
     // alignItems: 'center',
     // justifyContent: 'center',
     borderTopLeftRadius: 25,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginHorizontal: 10,
     borderRadius: 25,
-    backgroundColor: '#42464E'
+    backgroundColor: '#323232'
   },
   rank: {
     display: 'flex',

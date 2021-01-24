@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native'
 
-function CreateEvent () {
+function CreateEvent ({ navigation }) {
   return (
     <View>
       <Text>Create Event Page</Text>
