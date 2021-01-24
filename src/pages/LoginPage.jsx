@@ -7,11 +7,31 @@ import {
   TextInput,
   Modal,
   Portal,
-  Provider,
   Text,
 } from "react-native-paper";
+import * as Google from "expo-google-app-auth";
 
 export default function LoginPage({ navigation }) {
+  const config = {
+    androidClientId:
+      "33938517114-lsqdhqjb66cu4l7qs7nlo7d7oaj14qfv.apps.googleusercontent.com",
+    iosClientId:
+      "33938517114-n48rrc12e3c9ub1d0320lvcc9eal3fmp.apps.googleusercontent.com",
+    scopes: ["profile", "email"],
+  };
+
+  const googleLogin = async () => {
+    try {
+      const { type, accessToken, user } = await Google.logInAsync(config);
+      if (type === "success") {
+        navigation.replace("Runator", { user, accessToken });
+        console.log(user, accessToken);
+      }
+    } catch ({ message }) {
+      alert(`login: ${message}`);
+    }
+  };
+
   const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +52,7 @@ export default function LoginPage({ navigation }) {
             icon="google"
             mode="contained"
             uppercase={false}
-            onPress={() => alert("Google OAuth")}
+            onPress={() => googleLogin()}
             style={{
               marginBottom: 10,
               width: 300,
