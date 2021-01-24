@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { Button, HelperText, TextInput, Headline } from "react-native-paper";
 // import instance from "../../config/axios";
-import axios from "axios";
+import axios from "axios"
 
 function Register({ navigation }) {
   const [fullname, setFullName] = useState("");
@@ -95,15 +95,14 @@ function Register({ navigation }) {
           const data = { fullname, email, password };
           console.log(data);
           axios({
-            url: "http://localhost:3000/users/register",
+            url: "https://secret-gorge-48512.herokuapp.com/users/register",
             method: "POST",
-            data: {
-              fullname,
-              email,
-              password,
-            },
+            data: data
           })
-            .then((res) => console.log(res.data))
+            .then((res) => {
+              console.log('access this')
+              console.log(res.data)
+            })
             .catch((err) => console.log(err));
         }}
       >
