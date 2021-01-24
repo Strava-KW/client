@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import { Button, HelperText, TextInput, Headline } from "react-native-paper";
-// import instance from "../../config/axios";
-import axios from "axios"
+import { Button, HelperText, TextInput, Headline, Dialog, Portal } from "react-native-paper";
+import axios from "../../config/axios";
+// import axios from "axios";
 
 function Register({ navigation }) {
   const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false)
   const hasErrors = () => {
     return email.length > 2 && !email.includes("@");
   };
@@ -91,17 +92,16 @@ function Register({ navigation }) {
         dark={true}
         mode="contained"
         onPress={(e) => {
-          e.preventDefault();
           const data = { fullname, email, password };
           console.log(data);
           axios({
-            url: "https://secret-gorge-48512.herokuapp.com/users/register",
+            url: "/users/register",
             method: "POST",
             data: data
           })
             .then((res) => {
-              console.log('access this')
               console.log(res.data)
+              navigation.navigate('Login')
             })
             .catch((err) => console.log(err));
         }}

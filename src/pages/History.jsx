@@ -34,7 +34,7 @@ function History () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#42464E',
+    backgroundColor: '#242424',
   },
   mapContainer: {
     width : '100%',
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.40,
     shadowRadius: 2.50,
     elevation: 2,
-    backgroundColor: "#2F3238",
+    backgroundColor: "#323232",
   },
   cardContent: {
     borderBottomLeftRadius: 10,

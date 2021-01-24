@@ -64,30 +64,45 @@ export default function RunTracker() {
 
   if (location && initialLocation && locationNow) {
     return (
-      <MapView
-        style={styles.map}
-        customMapStyle={mapStyle}
-        showUserLocation={true}
-        initialRegion={
-          {
-            latitude: initialLocation?.coords?.latitude,
-            longitude: initialLocation?.coords?.longitude,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.01
+      <View>
+        <MapView
+          style={styles.map}
+          customMapStyle={mapStyle}
+          showUserLocation={true}
+          initialRegion={
+            {
+              latitude: initialLocation?.coords?.latitude,
+              longitude: initialLocation?.coords?.longitude,
+              latitudeDelta: 0.015,
+              longitudeDelta: 0.01
+            }
           }
-        }
-      > 
-        <Marker
-          coordinate={locationNow}
-        />
-        <Polyline 
-          coordinates={location}
-          strokeWidth={6}
-          strokeColor="#00a8ff"
-          lineCap="round"
-          lineJoin="miter"
-        />
-      </MapView>
+        > 
+          <Marker
+            coordinate={locationNow}
+          />
+          <Polyline 
+            coordinates={location}
+            strokeWidth={6}
+            strokeColor="#00a8ff"
+            lineCap="round"
+            lineJoin="miter"
+          />
+        </MapView>
+        <View
+          style={{
+            position: "absolute",
+            top: "1%",
+            backgroundColor: 'rgba(52, 52, 52, 0.7)',
+            alignSelf: "center",
+            justifyContent: 'center',
+            width: (Dimensions.get("window").width - 100),
+            height: 40
+          }}
+        >
+          <Text style={{ alignSelf: 'center', color: "#FA8135" }}>Distance: {location.length/1000} km</Text>
+        </View>
+      </View>
     )
   } else {
     return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Image, Dimensions, StyleSheet } from "react-native";
 import {
   Button,
@@ -10,6 +10,9 @@ import {
   Text,
 } from "react-native-paper";
 import * as Google from "expo-google-app-auth";
+import { useDispatch, useSelector } from 'react-redux';
+import { setAccessToken, setError } from '../store/actions';
+import axios from '../../config/axios'
 
 export default function LoginPage({ navigation }) {
   const config = {
@@ -38,6 +41,24 @@ export default function LoginPage({ navigation }) {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
+  const dispatch = useDispatch()
+  const error = useSelector(state => state.error)
+  const access_token = useSelector(state => state.access_token)
+
+  useEffect(() => {
+    return () => {
+      dispatch(setError(null))
+    }
+  }, [error])
+
+  // useEffect(() => {
+  //   dispatch(setError(null))
+  // }, [])
+  if (error) {
+    console.log(error, '<=== console')
+    dispatch(setError(null))
+  }
+
   const hasErrors = () => {
     return email.length > 2 && !email.includes("@");
   };
@@ -57,7 +78,7 @@ export default function LoginPage({ navigation }) {
               marginBottom: 10,
               width: 300,
               alignSelf: "center",
-              backgroundColor: "#42464E",
+              backgroundColor: "#242424",
             }}
             labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
           >
@@ -72,7 +93,7 @@ export default function LoginPage({ navigation }) {
               marginBottom: 10,
               width: 300,
               alignSelf: "center",
-              backgroundColor: "#42464E",
+              backgroundColor: "#242424",
             }}
             labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
           >
@@ -85,7 +106,7 @@ export default function LoginPage({ navigation }) {
                 paddingBottom: 10,
                 paddingTop: 15,
                 fontFamily: "Jost",
-                color: "#2F3238",
+                color: "#242424",
                 fontSize: 16,
               }}
             >
@@ -100,7 +121,7 @@ export default function LoginPage({ navigation }) {
                 marginBottom: 10,
                 width: 300,
                 alignSelf: "center",
-                backgroundColor: "#42464E",
+                backgroundColor: "#242424",
               }}
               labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
             >
@@ -164,9 +185,27 @@ export default function LoginPage({ navigation }) {
               onPress={() => {
                 hideModal();
                 console.log(email, password);
-                navigation.navigate("Runator");
-                setEmail("");
-                setPassword("");
+                axios({
+                  url: '/users/login',
+                  method: 'POST',
+                  data: {
+                    email,
+                    password
+                  }
+                })
+                  .then((res) => {
+                    console.log(res.data)
+                    dispatch(setAccessToken(res.data.access_token))
+                    navigation.replace("Runator");
+                    setEmail("");
+                    setPassword("");
+                  })
+                  .catch((err) => {
+                    dispatch(setError(err.response.data.message))
+                    console.log(err.response.data.message, '<==== ini dari catch')
+                    setEmail("");
+                    setPassword("");
+                  })
               }}
               labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
             >
@@ -184,7 +223,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "#42464e",
+    backgroundColor: "#242424",
   },
   icon: {
     width: 250,

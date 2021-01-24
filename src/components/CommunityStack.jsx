@@ -6,10 +6,10 @@ import { Community, CreateCommunity } from '../pages'
 const Stack = createStackNavigator()
 
 function CommunityStack () {
-  return(
+  return (
     <Stack.Navigator>
-      <Stack.Screen name="Community" component={Community} options={{ headerShown: false }}/>
-      <Stack.Screen name="Create Community" component={CreateCommunity} options={{ headerShown: false }}/>
+      {/* <Stack.Screen name="Community" component={Community} options={{ headerShown: false }}/>
+      <Stack.Screen name="Create Community" component={CreateCommunity} options={{ headerShown: false }}/> */}
       <Stack.Screen name="Community Drawer" component={CommunityDrawer} options={{ headerShown: false }}/>
     </Stack.Navigator>
   )
