@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { Button, HelperText, TextInput, Headline } from "react-native-paper";
+// import instance from "../../config/axios";
+import axios from "axios";
 
 function Register({ navigation }) {
-  const [name, setName] = useState("");
+  const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const hasErrors = () => {
     return email.length > 2 && !email.includes("@");
   };
@@ -29,9 +30,9 @@ function Register({ navigation }) {
       </View>
 
       <TextInput
-        label="Name"
-        value={name}
-        onChangeText={(name) => setName(name)}
+        label="Full Name"
+        value={fullname}
+        onChangeText={(fullname) => setFullName(fullname)}
         mode="flat"
         selectionColor="#FA8135"
         underlineColor="#FA8135"
@@ -89,9 +90,21 @@ function Register({ navigation }) {
         color="#FA8135"
         dark={true}
         mode="contained"
-        onPress={() => {
-          console.log(name, email, password);
-          navigation.replace("Login");
+        onPress={(e) => {
+          e.preventDefault();
+          const data = { fullname, email, password };
+          console.log(data);
+          axios({
+            url: "http://localhost:3000/users/register",
+            method: "POST",
+            data: {
+              fullname,
+              email,
+              password,
+            },
+          })
+            .then((res) => console.log(res.data))
+            .catch((err) => console.log(err));
         }}
       >
         Sign Up
