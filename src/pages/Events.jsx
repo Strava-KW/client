@@ -11,42 +11,23 @@ import {
   Modal,
   Portal,
 } from "react-native-paper";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { StyleSheet, Dimensions } from "react-native";
 import EventLocation from "../components/EventLocation";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCommunity } from "../store/actions";
+import AlgoliaPlaces from "algolia-places-react";
+// import ReactNativeAlgoliaPlaces from "react-native-algolia-places";
 
 function Events() {
   const dispatch = useDispatch();
   const communities = useSelector((state) => state.communities);
   const access_token = useSelector((state) => state.access_token);
   const [eventName, setEventName] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(false);
-
-  const handleDate = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
-  };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode("date");
-  };
-
-  const showTimepicker = () => {
-    showMode("time");
-  };
 
   useEffect(() => {
     if (access_token) {
@@ -91,7 +72,9 @@ function Events() {
         <Modal
           visible={visible}
           onDismiss={() => {
-            hideModal(), setEventName("");
+            hideModal(), setEventName(""), setEventName("");
+            setDate("");
+            setTime("");
           }}
           contentContainerStyle={styles.modal}
           animationType={"fade"}
@@ -115,22 +98,88 @@ function Events() {
               },
             }}
           />
-          <View>
-            <Button onPress={showDatepicker} title="Show date picker!" />
-          </View>
-          <View>
-            <Button onPress={showTimepicker} title="Show time picker!" />
-          </View>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              display="default"
-              onChange={handleDate}
-            />
-          )}
+          <TextInput
+            label="Date"
+            value={date}
+            onChangeText={(date) => setDate(date)}
+            mode="outlined"
+            selectionColor="#FA8135"
+            underlineColor="#FA8135"
+            style={styles.formField}
+            theme={{
+              colors: {
+                placeholder: "orange",
+                text: "white",
+                primary: "orange",
+                background: "#242424",
+              },
+            }}
+          />
+          <TextInput
+            label="Time"
+            value={time}
+            onChangeText={(time) => setTime(time)}
+            mode="outlined"
+            selectionColor="#FA8135"
+            underlineColor="#FA8135"
+            style={styles.formField}
+            theme={{
+              colors: {
+                placeholder: "orange",
+                text: "white",
+                primary: "orange",
+                background: "#242424",
+              },
+            }}
+          />
+          {/* <ReactNativeAlgoliaPlaces
+            appId={"YHR3Y7AR19"}
+            appKey={"bcdcb7e00c995b262100ad6d278f43b8"}
+            itemList={(item, i, textSearch) => (
+              <Text key={i + "item"}>item.locale_names[0]</Text>
+            )}
+          /> */}
+          <AlgoliaPlaces
+            placeholder="Write an address here"
+            options={{
+              appId: "YHR3Y7AR19",
+              apiKey: "bcdcb7e00c995b262100ad6d278f43b8",
+              language: "en",
+              countries: ["id"],
+              type: "city",
+              // Other options from https://community.algolia.com/places/documentation.html#options
+            }}
+            // onChange={({ query, rawAnswer, suggestion, suggestionIndex }) =>
+            //   console.log(
+            //     "Fired when suggestion selected in the dropdown or hint was validated."
+            //   )
+            // }
+            // onSuggestions={({ rawAnswer, query, suggestions }) =>
+            //   console.log(
+            //     "Fired when dropdown receives suggestions. You will receive the array of suggestions that are displayed."
+            //   )
+            // }
+            // onCursorChanged={({
+            //   rawAnswer,
+            //   query,
+            //   suggestion,
+            //   suggestonIndex,
+            // }) =>
+            //   console.log(
+            //     "Fired when arrows keys are used to navigate suggestions."
+            //   )
+            // }
+            // onClear={() => console.log("Fired when the input is cleared.")}
+            // onLimit={({ message }) =>
+            //   console.log("Fired when you reached your current rate limit.")
+            // }
+            // onError={({ message }) =>
+            //   console.log(
+            //     "Fired when we could not make the request to Algolia Places servers for any reason but reaching your rate limit."
+            //   )
+            // }
+          />
+
           <Button
             style={styles.createEventButton}
             color="#FA8135"
@@ -140,6 +189,8 @@ function Events() {
             onPress={() => {
               console.log(eventName);
               setEventName("");
+              setDate("");
+              setTime("");
               hideModal();
               // axios({
               //   url: "/community",
