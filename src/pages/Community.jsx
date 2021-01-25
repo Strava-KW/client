@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchCommunity, joinCommunity } from '../store/actions'
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCommunity, joinCommunity } from "../store/actions";
 import {
   Button,
   Card,
@@ -24,12 +24,12 @@ function Community({ navigation }) {
 
   useEffect(() => {
     if (access_token) {
-      dispatch(fetchCommunity(access_token))
+      dispatch(fetchCommunity(access_token));
     }
   }, [access_token]);
 
-  function handleJoin (id) {
-    dispatch(joinCommunity(id, access_token))
+  function handleJoin(id) {
+    dispatch(joinCommunity(id, access_token));
   }
 
   return (
@@ -110,23 +110,26 @@ function Community({ navigation }) {
               console.log(communityName);
               setCommunityName("");
               hideModal();
-              // console.log(email, password);
-              // axios({
-              //   url: '/community/',
-              //   method: 'POST',
-              //   data: {
-              //     name: communityName,
-              //   }
-              // })
-              //   .then((res) => {
-              //     console.log(res.data)
-              //     setCommunityName("");
-              //   })
-              //   .catch((err) => {
-              //     dispatch(setError(err.response.data.message))
-              //     console.log(err.response.data.message, '<==== ini dari catch')
-              //     setCommunityName("");
-              //   })
+              axios({
+                url: "/community",
+                method: "POST",
+                data: {
+                  name: communityName,
+                },
+                headers: access_token,
+              })
+                .then((res) => {
+                  console.log(res.data);
+                  setCommunityName("");
+                })
+                .catch((err) => {
+                  dispatch(setError(err.response.data.message));
+                  console.log(
+                    err.response.data.message,
+                    "<==== ini dari catch"
+                  );
+                  setCommunityName("");
+                });
             }}
             labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
           >
