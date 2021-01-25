@@ -8,11 +8,11 @@ const Stack = createStackNavigator();
 function CommunityStack() {
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Community"
         component={Community}
         options={{ headerShown: false }}
-      /> */}
+      />
 
       <Stack.Screen
         name="Community Drawer"

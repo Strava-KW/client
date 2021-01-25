@@ -26,6 +26,7 @@ export function fetchCommunity (access_token) {
     })
     .catch(err => {
       console.log(err.response.data.message, '<== error')
+      dispatch(setError(err.response.data.message))
     })
 }
 
@@ -43,6 +44,7 @@ export function acceptMember (id, access_token) {
     })
     .catch(err => {
       console.log(err.response.data.message)
+      dispatch(setError(err.response.data.message))
     })
 }
 
@@ -60,6 +62,7 @@ export function rejectMember (id, access_token) {
     })
     .catch(err => {
       console.log(err.response.data.message)
+      dispatch(setError(err.response.data.message))
     })
 }
 
@@ -77,5 +80,6 @@ export function joinCommunity (id, access_token) {
     })
     .catch(err => {
       console.log(err.response.data.message)
+      dispatch(setError(err.response.data.message))
     })
 }

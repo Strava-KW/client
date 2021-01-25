@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native'
-import { Button, Card, Title, Paragraph } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchCommunity, joinCommunity } from '../store/actions'
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import {
   Button,
   Card,
