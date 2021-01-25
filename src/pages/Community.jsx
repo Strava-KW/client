@@ -145,6 +145,7 @@ function Community({ navigation }) {
             mode="contained"
             onPress={() => {
               console.log(communityName);
+              setCommunityName("");
               hideModal();
               // console.log(email, password);
               // axios({
