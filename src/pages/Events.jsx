@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import React, { useEffect } from "react";
-import { ScrollView, View, Text } from "react-native";
-import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
-=======
 import React, { useEffect, useState } from "react";
 import { ScrollView, View, Text } from "react-native";
 import {
@@ -16,30 +11,23 @@ import {
   Modal,
   Portal,
 } from "react-native-paper";
->>>>>>> alert-error
 import { StyleSheet, Dimensions } from "react-native";
 import EventLocation from "../components/EventLocation";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCommunity } from "../store/actions";
-<<<<<<< HEAD
-=======
 import AlgoliaPlaces from "algolia-places-react";
 // import ReactNativeAlgoliaPlaces from "react-native-algolia-places";
->>>>>>> alert-error
 
 function Events() {
   const dispatch = useDispatch();
   const communities = useSelector((state) => state.communities);
   const access_token = useSelector((state) => state.access_token);
-<<<<<<< HEAD
-=======
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
->>>>>>> alert-error
 
   useEffect(() => {
     if (access_token) {
@@ -56,16 +44,9 @@ function Events() {
         mode="contained"
         color="#FA8135"
         style={styles.createButton}
-<<<<<<< HEAD
-        // onPress={()}
-      >
-        {" "}
-        Create Event{" "}
-=======
         onPress={showModal}
       >
         Create Event
->>>>>>> alert-error
       </Button>
       <ScrollView style={styles.eventContainer}>
         {communities?.events?.map((eventElement) => (
@@ -324,8 +305,6 @@ const styles = StyleSheet.create({
     color: "#242424",
     fontFamily: "Jost",
   },
-<<<<<<< HEAD
-=======
   modal: {
     backgroundColor: "#242424",
     padding: 20,
@@ -348,7 +327,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "#FA8135",
   },
->>>>>>> alert-error
 });
 
 export default Events;
