@@ -12,25 +12,28 @@ export function setCommunities (data) {
   return {type: 'SET_COMMUNITIES', communities: data}
 }
 
-export function fetchCommunity (access_token) {
+export function setProfile (data) {
+  return {type: 'SET_PROFILE', profile: data}
+}
+
+export const fetchCommunity = (access_token) => (dispatch, getState) => {
   axios({
-    url: '/community/community',
+    url: '/community',
     method: 'GET',
     headers: {
       access_token
     }
   })
     .then(res => {
+      console.log(res.data)
       dispatch(setCommunities(res.data))
-      console.log(res.data, '<== dari actions')
     })
     .catch(err => {
-      console.log(err.response.data.message, '<== error')
       dispatch(setError(err.response.data.message))
     })
 }
 
-export function acceptMember (id, access_token) {
+export const acceptMember = (id, access_token) => (dispatch, getState) => {
   axios({
     url: `/community/approval/${id}`,
     method: 'PUT',
@@ -39,16 +42,14 @@ export function acceptMember (id, access_token) {
     }
   })
     .then(res => {
-      console.log(res.data)
       dispatch(fetchCommunity(access_token))
     })
     .catch(err => {
-      console.log(err.response.data.message)
       dispatch(setError(err.response.data.message))
     })
 }
 
-export function rejectMember (id, access_token) {
+export const rejectMember = (id, access_token) => (dispatch, getState) => {
   axios({
     url: `/community/approval/${id}`,
     method: 'PUT',
@@ -57,16 +58,14 @@ export function rejectMember (id, access_token) {
     }
   })
     .then(res => {
-      console.log(res.data)
       dispatch(fetchCommunity(access_token))
     })
     .catch(err => {
-      console.log(err.response.data.message)
       dispatch(setError(err.response.data.message))
     })
 }
 
-export function joinCommunity (id, access_token) {
+export const joinCommunity = (id, access_token) => (dispatch, getState) => {
   axios({
     url: `/community/${id}`,
     method: 'PATCH',
@@ -75,11 +74,10 @@ export function joinCommunity (id, access_token) {
     }
   })
     .then(res => {
-      console.log(res.data)
+      
       dispatch(fetchCommunity(access_token))
     })
     .catch(err => {
-      console.log(err.response.data.message)
       dispatch(setError(err.response.data.message))
     })
 }

@@ -20,6 +20,14 @@ function Events () {
   return (
     <View style={styles.container}>
       <Title style={styles.title}>Events</Title>
+      <Button 
+        icon='plus'
+        uppercase={false}
+        mode="contained"
+        color="#FA8135" 
+        style={styles.createButton}
+        // onPress={()}
+      > Create Event </Button>
       <ScrollView style={styles.eventContainer}>
         {
           communities?.events?.map(eventElement => (
@@ -50,14 +58,19 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     width : '100%',
-    height : '70%',
+    height : '60%',
     paddingTop : 0,
     paddingRight : 0,
     paddingLeft : 0,
     borderRadius: 30
   },
+  createButton: {
+    width: 150,
+    alignSelf: 'center',
+    marginBottom: 15
+  },
   eventContainer: {
-    height: '70%',
+    // height: '70%',
     backgroundColor: '#242424',
     // alignItems: 'center',
     // justifyContent: 'center',
@@ -88,14 +101,14 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
+    backgroundColor: "#FA8135",
     shadowOpacity: 0.40,
     shadowRadius: 2.50,
     elevation: 2,
   },
   cardContent: {
-    backgroundColor: "#FA8135",
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
   },
   cardName: {
     fontSize: 18,

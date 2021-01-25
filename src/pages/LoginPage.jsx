@@ -12,6 +12,7 @@ import {
 import * as Google from "expo-google-app-auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setAccessToken, setError } from "../store/actions";
+import Toast from 'react-native-toast-message';
 import axios from "../../config/axios";
 
 export default function LoginPage({ navigation }) {
@@ -27,8 +28,20 @@ export default function LoginPage({ navigation }) {
     try {
       const { type, accessToken, user } = await Google.logInAsync(config);
       if (type === "success") {
-        navigation.replace("Runator", { user, accessToken });
-        console.log(user, accessToken);
+        // navigation.replace("Runator", { user, accessToken });
+        axios({
+          url: '/googleLogin',
+          method: 'POST',
+          data: {
+            google_token: accessToken
+          }
+        })
+          .then(res => {
+            console.log(res.data)
+          })
+          .catch(err => {
+            console.log(err.response.data.message, '<== google login')
+          })
       }
     } catch ({ message }) {
       alert(`login: ${message}`);
@@ -51,12 +64,17 @@ export default function LoginPage({ navigation }) {
     };
   }, [error]);
 
-  // useEffect(() => {
-  //   dispatch(setError(null))
-  // }, [])
   if (error) {
-    console.log(error, "<=== console");
-    dispatch(setError(null));
+    Toast.show({
+      type: 'error',
+      position: 'top',
+      text1: error,
+      visibilityTime: 3000,
+      autoHide: true,
+      onHide: () => {dispatch(setError(null))},
+      topOffset: 30,
+      bottomOffset: 40,
+    }); 
   }
 
   const hasErrors = () => {
@@ -67,6 +85,7 @@ export default function LoginPage({ navigation }) {
     <>
       <View style={styles.container}>
         <Image source={require("../../assets/icon.png")} style={styles.icon} />
+        <Toast ref={(ref) => Toast.setRef(ref)} />
         <View style={styles.loginContainer}>
           <Text style={styles.title}>Login to Runator</Text>
           <Button
@@ -184,29 +203,36 @@ export default function LoginPage({ navigation }) {
               mode="contained"
               onPress={() => {
                 hideModal();
-                // navigation.replace("Runator");
-                console.log(email, password);
-                // axios({
-                //   url: '/users/login',
-                //   method: 'POST',
-                //   data: {
-                //     email,
-                //     password
-                //   }
-                // })
-                //   .then((res) => {
-                //     console.log(res.data)
-                //     dispatch(setAccessToken(res.data.access_token))
-                navigation.replace("Runator");
-                setEmail("");
-                setPassword("");
-                // })
-                // .catch((err) => {
-                //   dispatch(setError(err.response.data.message))
-                //   console.log(err.response.data.message, '<==== ini dari catch')
-                //   setEmail("");
-                //   setPassword("");
-                // })
+                axios({
+                  url: '/users/login',
+                  method: 'POST',
+                  data: {
+                    email,
+                    password
+                  }
+                })
+                  .then((res) => {
+                    console.log(res.data, 'login')
+                    dispatch(setAccessToken(res.data.access_token))
+                    Toast.show({
+                      type: 'success',
+                      position: 'top',
+                      text1: 'Logged In!',
+                      visibilityTime: 3000,
+                      autoHide: true,
+                      onHide: () => {navigation.replace("Runator");},
+                      topOffset: 30,
+                      bottomOffset: 40,
+                    });
+                    setEmail("");
+                    setPassword("");
+                  })
+                  .catch((err) => {
+                    console.log(err.response.data.message, 'login')
+                    dispatch(setError(err.response.data.message))
+                    setEmail("");
+                    setPassword("");
+                  })
               }}
               labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
             >

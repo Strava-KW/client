@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { StyleSheet, Dimensions } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import MapView from 'react-native-maps';
 
 function History () {
+  const profile = useSelector(state => state.profile)
+  const access_token = useSelector(state => state.access_token)
+  const [history, setHistory] = useState([])
+
+  useEffect(() => {
+    setHistory(profile.history)
+  }, [profile])
+
+  if (profile) {
+    console.log(profile)
+  }
+
   return (
     <ScrollView style={styles.container}>
-      <Card style={styles.eventCard}>
+      {/* <Card style={styles.eventCard}>
         <Card.Content style={styles.mapContainer}>
           <MapView
             style={styles.map}
@@ -26,7 +39,18 @@ function History () {
             <Paragraph style={styles.cardDate}>22/1/2021</Paragraph>
           </View>
         </Card.Content>
-      </Card>
+      </Card> */}
+      {
+        history?.map(track => <Card style={styles.eventCard} key={track.date}>
+          <Card.Content style={styles.cardContent}>
+            {/* <Title style={styles.cardName}>Activity Name</Title> */}
+            <View style={{display: "flex", flexDirection: "row"}}>
+              <Paragraph style={styles.cardLocation}>Distance: {track.distance} km</Paragraph>
+              <Paragraph style={styles.cardDate}>{track.date.slice(0,10)}</Paragraph>
+            </View>
+          </Card.Content>
+        </Card>)
+      }
     </ScrollView>
   )
 }
@@ -49,11 +73,10 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   eventCard: {
-    height: 240,
     width: 320,
     borderRadius: 10,
     marginHorizontal: 25,
-    marginTop: 40,
+    marginTop: 10,
     marginBottom: 10,
     alignSelf: 'center',
     shadowColor: "#000",

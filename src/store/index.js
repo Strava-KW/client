@@ -4,7 +4,8 @@ import thunk from 'redux-thunk';
 let initialState = {
   access_token: null,
   error: null,
-  communities: []
+  communities: [],
+  profile: {}
 }
 
 function reducer (state = initialState, action) {
@@ -15,6 +16,8 @@ function reducer (state = initialState, action) {
       return {...state, error: action.error}
     case 'SET_COMMUNITIES':
       return {...state, communities: action.communities}
+    case 'SET_PROFILE':
+      return {...state, profile: action.profile}
     default:
       return initialState
   }

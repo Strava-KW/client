@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { IconButton, Card, Title, Paragraph, Avatar } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
 import { acceptMember, fetchCommunity, rejectMember } from '../store/actions'
+import Toast from 'react-native-toast-message';
 
 function WaitingList () {
   const dispatch = useDispatch()
@@ -18,10 +19,28 @@ function WaitingList () {
 
   function handleAccept (id) {
     dispatch(acceptMember(id, access_token))
+    Toast.show({
+      type: 'success',
+      position: 'top',
+      text1: 'Added new member to the community',
+      visibilityTime: 3000,
+      autoHide: true,
+      topOffset: 30,
+      bottomOffset: 40,
+    });
   }
 
   function handleReject (id) {
     dispatch(rejectMember(id, access_token))
+    Toast.show({
+      type: 'success',
+      position: 'top',
+      text1: 'Removed user from the waiting list',
+      visibilityTime: 3000,
+      autoHide: true,
+      topOffset: 30,
+      bottomOffset: 40,
+    });
   }
 
   return (
@@ -47,6 +66,7 @@ function WaitingList () {
           )
         }
       </ScrollView>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
   )
 }

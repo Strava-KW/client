@@ -2,25 +2,30 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import CommunityDrawer from "./CommunityDrawer";
 import { Community } from "../pages";
+import { useSelector } from 'react-redux'
 
 const Stack = createStackNavigator();
 
 function CommunityStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Community"
-        component={Community}
-        options={{ headerShown: false }}
-      />
+  const profile = useSelector(state => state.profile)
 
-      <Stack.Screen
-        name="Community Drawer"
-        component={CommunityDrawer}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
+  if (profile) {
+    return (
+      <Stack.Navigator>
+        { 
+          profile.communityId ? <Stack.Screen
+            name="Community Drawer"
+            component={CommunityDrawer}
+            options={{ headerShown: false }}
+          /> :  <Stack.Screen
+            name="Community"
+            component={Community}
+            options={{ headerShown: false }}
+          />
+        }
+      </Stack.Navigator>
+    )  
+  }
 }
 
 export default CommunityStack;
