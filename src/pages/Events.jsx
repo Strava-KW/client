@@ -20,6 +20,14 @@ function Events () {
   return (
     <View style={styles.container}>
       <Title style={styles.title}>Events</Title>
+      <Button 
+        icon='plus'
+        uppercase={false}
+        mode="contained"
+        color="#FA8135" 
+        style={styles.createButton}
+        // onPress={()}
+      > Create Event </Button>
       <ScrollView style={styles.eventContainer}>
         {
           communities?.events?.map(eventElement => (
@@ -55,6 +63,11 @@ const styles = StyleSheet.create({
     paddingRight : 0,
     paddingLeft : 0,
     borderRadius: 30
+  },
+  createButton: {
+    width: 150,
+    alignSelf: 'center',
+    marginBottom: 15
   },
   eventContainer: {
     height: '70%',

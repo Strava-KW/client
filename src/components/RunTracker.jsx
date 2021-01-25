@@ -3,6 +3,7 @@ import MapView, { Polyline, Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import * as Location from "expo-location";
 // import * as TaskManager from 'expo-task-manager'
+import mapStyle from '../constant/mapStyle.json'
 
 export default function RunTracker( props ) {
   const [errorMsg, setErrorMsg] = useState(null);
@@ -25,7 +26,7 @@ export default function RunTracker( props ) {
       await Location.watchPositionAsync(
         {
           accuracy: Location.Accuracy.Highest,
-          distanceInterval: 1,
+          distanceInterval: 10,
         },
         (loc) => {
           setLocationNow({
@@ -63,169 +64,6 @@ export default function RunTracker( props ) {
   //     console.log(data)
   //   }
   // });
-
-  /** MAP STYLE */
-  const mapStyle = [
-    {
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#242f3e",
-        },
-      ],
-    },
-    {
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#746855",
-        },
-      ],
-    },
-    {
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#242f3e",
-        },
-      ],
-    },
-    {
-      featureType: "administrative.locality",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#d59563",
-        },
-      ],
-    },
-    {
-      featureType: "poi",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#d59563",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#263c3f",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#6b9a76",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#38414e",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.stroke",
-      stylers: [
-        {
-          color: "#212a37",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#9ca5b3",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#746855",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "geometry.stroke",
-      stylers: [
-        {
-          color: "#1f2835",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#f3d19c",
-        },
-      ],
-    },
-    {
-      featureType: "transit",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#2f3948",
-        },
-      ],
-    },
-    {
-      featureType: "transit.station",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#d59563",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#17263c",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#515c6d",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "labels.text.stroke",
-      stylers: [
-        {
-          color: "#17263c",
-        },
-      ],
-    },
-  ];
 
   if (location && locationNow) {
     return (
@@ -269,7 +107,7 @@ export default function RunTracker( props ) {
           }}
         >
           <Text style={{ alignSelf: "center", color: "#FA8135" }}>
-            Distance: {location.length / 1000} km
+            Distance: {location.length / 100} km
           </Text>
         </View>
       </View>
