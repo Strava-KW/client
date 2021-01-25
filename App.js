@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Provider } from 'react-redux';
 import store from './src/store/index'
 
@@ -8,9 +8,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import theme from "./config/theme";
 import { useFonts } from "expo-font";
 import { BottomNav } from "./src/components";
-import { LoginPage, RegisterPage } from "./src/pages/index";
+import { LoginPage, RegisterPage, Settings } from "./src/pages/index";
+import { IconButton } from 'react-native-paper'
+
 
 const Stack = createStackNavigator();
+
 export default function App() {
   const [loaded] = useFonts({
     Jost: require("./assets/Jost.ttf"),
@@ -42,7 +45,31 @@ export default function App() {
             <Stack.Screen
               name="Runator"
               component={BottomNav}
-              options={{
+              options={({navigation}) => ({
+                headerStyle: {
+                  backgroundColor: "#323232",
+                },
+                headerTintColor: "#FA8135",
+                headerTitleStyle: {
+                  paddingLeft: 60,
+                  alignSelf: "center",
+                  fontFamily: "Jost",
+                  fontSize: 24,
+                },
+                headerRight: () => (
+                  <IconButton
+                    icon="cog"
+                    color="grey"
+                    size={28}
+                    onPress={() => { navigation.navigate('Settings') }}
+                  />
+                )
+              })}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Settings"
+              component={Settings}
+              options={({navigation}) => ({
                 headerStyle: {
                   backgroundColor: "#323232",
                 },
@@ -51,12 +78,15 @@ export default function App() {
                   alignSelf: "center",
                   fontFamily: "Jost",
                   fontSize: 24,
-                }
-              }}
-            ></Stack.Screen>
+                },
+              })}
+            >
+            </Stack.Screen>
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
     </Provider>
   );
 }
+
+

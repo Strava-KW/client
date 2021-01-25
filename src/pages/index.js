@@ -9,6 +9,7 @@ import Community from './Community.jsx'
 import CreateCommunity from './CreateCommunity.jsx'
 import WaitingList from './WaitingList.jsx'
 import Members from './Members.jsx'
+import Settings from './Settings.jsx'
 
 export {
   LoginPage,
@@ -21,5 +22,6 @@ export {
   Community,
   CreateCommunity,
   WaitingList,
-  Members
+  Members,
+  Settings
 }
