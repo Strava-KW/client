@@ -97,11 +97,7 @@ function Register({ navigation }) {
           axios({
             url: "/users/register",
             method: "POST",
-            data: {
-              fullname,
-              email,
-              password,
-            },
+            data: data
           })
             .then((res) => {
               console.log(res.data)
