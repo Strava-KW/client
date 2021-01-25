@@ -6,7 +6,6 @@ import * as Location from 'expo-location';
 import {mapStyle} from '../constant/mapStyle.json'
 
 export default function RunTracker() {
-  const [initialLocation, setInitialLocation] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState([]);
   const [locationNow, setLocationNow] = useState(null)
@@ -17,10 +16,7 @@ export default function RunTracker() {
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
         return;
-      } else {
-        const initialLoc = await Location.getCurrentPositionAsync({})
-        setInitialLocation(initialLoc)
-      }
+      } 
       
       // await Location.startLocationUpdatesAsync(TASK_FETCH, {
       //   accuracy: Location.Accuracy.Highest,
@@ -47,10 +43,9 @@ export default function RunTracker() {
   let text = 'Waiting..';
   if (errorMsg) {
     text = errorMsg;
-  } else if (initialLocation) {
-    text = JSON.stringify(initialLocation);
+  } else if (locationNow) {
+    text = JSON.stringify(locationNow);
   }
-
   // TaskManager.defineTask(TASK_FETCH, ({ data, error }) => {
   //   if (error) {
   //     // Error occurred - check `error.message` for more details.
@@ -61,20 +56,21 @@ export default function RunTracker() {
   //   }
   // });
 
-
-  if (location && initialLocation && locationNow) {
+  if (location && locationNow) {
     return (
       <View>
         <MapView
           style={styles.map}
           customMapStyle={mapStyle}
           showUserLocation={true}
-          initialRegion={
+          region={
             {
-              latitude: initialLocation?.coords?.latitude,
-              longitude: initialLocation?.coords?.longitude,
-              latitudeDelta: 0.015,
-              longitudeDelta: 0.01
+              latitude: locationNow?.latitude,
+              longitude: locationNow?.longitude,
+              // latitudeDelta: 0.015,
+              // longitudeDelta: 0.01
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.001
             }
           }
         > 
