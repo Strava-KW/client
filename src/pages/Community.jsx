@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchCommunity, joinCommunity } from '../store/actions'
+import { fetchCommunity, joinCommunity, setError } from '../store/actions'
 import {
   Button,
   Card,
@@ -12,7 +12,8 @@ import {
   Modal,
   Portal,
 } from "react-native-paper";
-import axios from '../../config/axios'
+import axios from '../../config/axios';
+import Toast from 'react-native-toast-message';
 
 function Community({ navigation }) {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ function Community({ navigation }) {
   const [communityName, setCommunityName] = useState("");
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const error = useSelector(state => state.error)
+  const profile = useSelector(state => state.profile)
 
   useEffect(() => {
     if (access_token) {
@@ -33,17 +36,35 @@ function Community({ navigation }) {
     dispatch(joinCommunity(id, access_token))
   }
 
+  if (error) {
+    Toast.show({
+      type: 'error',
+      position: 'top',
+      text1: error,
+      visibilityTime: 3000,
+      autoHide: true,
+      onHide: () => {dispatch(setError(null))},
+      topOffset: 30,
+      bottomOffset: 40,
+    }); 
+  }
+
+  if(profile) {
+    console.log(profile)
+  }
+
   return (
     <View style={styles.container}>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
       {
-        !communities.message && (
+        communities && !communities.message && (
           <View>
             <Text style={styles.subtitle}> Create a Community </Text>
             <Button icon="plus" mode="contained" color="#FA8135" onPress={showModal}> Create </Button>
           </View>
         )
       }
-      {communities.length > 0 && (
+      { communities && communities.length > 0 && (
         <Text style={styles.subtitle}>or Join a Community</Text>
       )}
       <ScrollView>
@@ -132,6 +153,7 @@ function Community({ navigation }) {
                 })
                 .catch((err) => {
                   dispatch(setError(err.response.data.message))
+                  navigation.replace('Runator', { screen: 'Start' })
                   console.log(err.response.data.message, '<==== ini dari catch')
                   setCommunityName("");
                 })

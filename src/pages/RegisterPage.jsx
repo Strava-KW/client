@@ -9,21 +9,40 @@ import {
   Portal,
 } from "react-native-paper";
 import axios from "../../config/axios";
+import { useSelector, useDispatch } from 'react-redux'
+import { setError } from '../store/actions'
 // import axios from "axios";
+import Toast from 'react-native-toast-message'
 
 function Register({ navigation }) {
   const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
+  const error = useSelector(state => state.error)
+  const dispatch = useDispatch()
+
   const hasErrors = () => {
     return email.length > 2 && !email.includes("@");
   };
 
+  if (error) {
+    Toast.show({
+      type: 'error',
+      position: 'top',
+      text1: error,
+      visibilityTime: 3000,
+      autoHide: true,
+      onHide: () => {dispatch(setError(null))},
+      topOffset: 30,
+      bottomOffset: 40,
+    }); 
+  }
+
   return (
     <View style={styles.container}>
       <Headline style={styles.headline}>Register</Headline>
-
+      <Toast ref={(ref) => Toast.setRef(ref)} />
       <View
         style={{ flexDirection: "row", alignItems: "center", marginBottom: 20 }}
       >
@@ -110,7 +129,7 @@ function Register({ navigation }) {
               console.log(res.data);
               navigation.navigate("Login");
             })
-            .catch((err) => console.log(err));
+            .catch((err) => dispatch(setError(err.response.data.message)));
         }}
       >
         Sign Up

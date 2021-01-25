@@ -15,6 +15,10 @@ function Leaderboard () {
     }
   }, [access_token])
 
+  if (communities) {
+    console.log(communities.members)
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Leaderboard </Text>
@@ -56,7 +60,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Jost'
   },
   leaderboard: {
-    height: '70%',
     width: (Dimensions.get('window').width - 24),
     backgroundColor: '#242424',
     // alignItems: 'center',
