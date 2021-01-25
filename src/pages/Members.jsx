@@ -14,7 +14,7 @@ function Members () {
   useEffect(() => {
     if (access_token) {
       axios({
-        url: '/community/community',
+        url: '/community/',
         method: 'GET',
         headers: {
           access_token
