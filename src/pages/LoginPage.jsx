@@ -55,7 +55,6 @@ export default function LoginPage({ navigation }) {
   //   dispatch(setError(null))
   // }, [])
   if (error) {
-    console.log(error, "<=== console");
     dispatch(setError(null));
   }
 
@@ -184,8 +183,6 @@ export default function LoginPage({ navigation }) {
               mode="contained"
               onPress={() => {
                 hideModal();
-                // navigation.replace("Runator");
-                console.log(email, password);
                 axios({
                   url: '/users/login',
                   method: 'POST',
@@ -195,15 +192,15 @@ export default function LoginPage({ navigation }) {
                   }
                 })
                   .then((res) => {
-                    console.log(res.data)
+                    console.log(res.data, 'login')
                     dispatch(setAccessToken(res.data.access_token))
                     navigation.replace("Runator");
                     setEmail("");
                     setPassword("");
                   })
                   .catch((err) => {
+                    console.log(err.response.data.message, 'login')
                     dispatch(setError(err.response.data.message))
-                    console.log(err.response.data.message, '<==== ini dari catch')
                     setEmail("");
                     setPassword("");
                   })

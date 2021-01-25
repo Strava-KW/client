@@ -25,11 +25,10 @@ export const fetchCommunity = (access_token) => (dispatch, getState) => {
     }
   })
     .then(res => {
+      console.log(res.data)
       dispatch(setCommunities(res.data))
-      console.log(res.data, '<== dari actions')
     })
     .catch(err => {
-      console.log(err.response.data.message, '<== error')
       dispatch(setError(err.response.data.message))
     })
 }
@@ -43,11 +42,9 @@ export const acceptMember = (id, access_token) => (dispatch, getState) => {
     }
   })
     .then(res => {
-      console.log(res.data)
       dispatch(fetchCommunity(access_token))
     })
     .catch(err => {
-      console.log(err.response.data.message)
       dispatch(setError(err.response.data.message))
     })
 }
@@ -61,11 +58,9 @@ export const rejectMember = (id, access_token) => (dispatch, getState) => {
     }
   })
     .then(res => {
-      console.log(res.data)
       dispatch(fetchCommunity(access_token))
     })
     .catch(err => {
-      console.log(err.response.data.message)
       dispatch(setError(err.response.data.message))
     })
 }
@@ -79,11 +74,10 @@ export const joinCommunity = (id, access_token) => (dispatch, getState) => {
     }
   })
     .then(res => {
-      console.log(res.data)
+      
       dispatch(fetchCommunity(access_token))
     })
     .catch(err => {
-      console.log(err.response.data.message)
       dispatch(setError(err.response.data.message))
     })
 }

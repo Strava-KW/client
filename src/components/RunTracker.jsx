@@ -26,7 +26,7 @@ export default function RunTracker( props ) {
       await Location.watchPositionAsync(
         {
           accuracy: Location.Accuracy.Highest,
-          distanceInterval: 1,
+          distanceInterval: 10,
         },
         (loc) => {
           setLocationNow({
@@ -107,7 +107,7 @@ export default function RunTracker( props ) {
           }}
         >
           <Text style={{ alignSelf: "center", color: "#FA8135" }}>
-            Distance: {location.length / 1000} km
+            Distance: {location.length / 100} km
           </Text>
         </View>
       </View>

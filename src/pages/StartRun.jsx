@@ -4,7 +4,7 @@ import { RunTracker } from "../components";
 import { Button } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from 'react-redux';
-import { setProfile } from '../store/actions'
+import { setProfile, setError } from '../store/actions'
 import axios from '../../config/axios'
 
 function StartRun({ route, Navigation }) {
@@ -23,11 +23,10 @@ function StartRun({ route, Navigation }) {
       }
     })
       .then(res => {
-        console.log(res.data)
         dispatch(setProfile(res.data))
       })
       .catch(err => {
-        console.log(err.response.data)
+        dispatch(setError(err.response.data))
       })
   }, [])
 
@@ -43,12 +42,11 @@ function StartRun({ route, Navigation }) {
         access_token
       },
       data: {
-        distance: (locationRun.length/1000),
+        distance: (locationRun.length/100),
         date: new Date()
       }
     })
       .then(res => {
-        console.log(res.data)
         return axios({
           url: '/profile',
           method: 'GET',
@@ -58,12 +56,10 @@ function StartRun({ route, Navigation }) {
         })
       })
       .then(res => {
-        console.log(res.data, '<=== dari fungsi track run')
         dispatch(setProfile(res.data))
         setShowMap(false)
       })
       .catch(err => {
-        console.log(err.response.data)
         setShowMap(false)
       })
   }
