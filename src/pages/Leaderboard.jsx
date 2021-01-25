@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native'
 import { Button, Card, Title, Paragraph, Avatar } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
-import { setCommunities } from '../store/actions'
-import axios from '../../config/axios'
+import { fetchCommunity } from '../store/actions'
 
 function Leaderboard () {
   const dispatch = useDispatch()
@@ -12,20 +11,7 @@ function Leaderboard () {
 
   useEffect(() => {
     if (access_token) {
-      axios({
-        url: '/community/community',
-        method: 'GET',
-        headers: {
-          access_token
-        }
-      })
-        .then(res => {
-          dispatch(setCommunities(res.data))
-          console.log(res.data, '<== dari community')
-        })
-        .catch(err => {
-          console.log(err.response.data.message, '<== error')
-        })
+      dispatch(fetchCommunity(access_token))
     }
   }, [access_token])
 

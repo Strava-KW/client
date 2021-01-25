@@ -3,8 +3,7 @@ import { View, Text, StyleSheet, Dimensions} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { IconButton, Card, Title, Paragraph, Avatar } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
-import { setCommunities } from '../store/actions'
-import axios from '../../config/axios'
+import { acceptMember, fetchCommunity, rejectMember } from '../store/actions'
 
 function WaitingList () {
   const dispatch = useDispatch()
@@ -13,77 +12,16 @@ function WaitingList () {
 
   useEffect(() => {
     if (access_token) {
-      axios({
-        url: '/community/community',
-        method: 'GET',
-        headers: {
-          access_token
-        }
-      })
-        .then(res => {
-          dispatch(setCommunities(res.data))
-          console.log(res.data, '<== dari community')
-        })
-        .catch(err => {
-          console.log(err.response.data.message, '<== error')
-        })
+      dispatch(fetchCommunity(access_token))
     }
   }, [access_token])
 
-  if (communities) {
-    console.log(communities)
-  }
-
   function handleAccept (id) {
-    axios({
-      url: `/community/approval/${id}`,
-      method: 'PUT',
-      headers: {
-        access_token
-      }
-    })
-      .then(res => {
-        console.log(res.data)
-        return axios({
-          url: '/community/community',
-          method: 'GET',
-          headers: {
-            access_token
-          }
-        })
-      })
-      .then(res => {
-        dispatch(setCommunities(res.data))
-      })
-      .catch(err => {
-        console.log(err.response.data.message)
-      })
+    dispatch(acceptMember(id, access_token))
   }
 
   function handleReject (id) {
-    axios({
-      url: `/community/approval/${id}`,
-      method: 'PATCH',
-      headers: {
-        access_token
-      }
-    })
-      .then(res => {
-        console.log(res.data)
-        return axios({
-          url: '/community/community',
-          method: 'GET',
-          headers: {
-            access_token
-          }
-        })
-      })
-      .then(res => {
-        dispatch(setCommunities(res.data))
-      })
-      .catch(err => {
-        console.log(err.response.data.message)
-      })
+    dispatch(rejectMember(id, access_token))
   }
 
   return (
