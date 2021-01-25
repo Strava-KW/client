@@ -12,7 +12,7 @@ import {
   Modal,
   Portal,
 } from "react-native-paper";
-import axios from '../../config/axios'
+import axios from "../../config/axios";
 
 function Community({ navigation }) {
   const dispatch = useDispatch();
@@ -35,20 +35,27 @@ function Community({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {
-        !communities.message && (
-          <View>
-            <Text style={styles.subtitle}> Create a Community </Text>
-            <Button icon="plus" mode="contained" color="#FA8135" onPress={showModal}> Create </Button>
-          </View>
-        )
-      }
+      {!communities.message && (
+        <View>
+          <Text style={styles.subtitle}> Create a Community </Text>
+          <Button
+            icon="plus"
+            mode="contained"
+            color="#FA8135"
+            onPress={showModal}
+          >
+            {" "}
+            Create{" "}
+          </Button>
+        </View>
+      )}
       {communities.length > 0 && (
         <Text style={styles.subtitle}>or Join a Community</Text>
       )}
       <ScrollView>
-        { 
-          communities?.message? <Text style={styles.subtitle}>{communities.message}</Text> :
+        {communities?.message ? (
+          <Text style={styles.subtitle}>{communities.message}</Text>
+        ) : (
           communities?.map((community) => (
             <Card style={styles.communityCard} key={community._id}>
               <Card.Content style={styles.communityCardContent}>
@@ -75,7 +82,7 @@ function Community({ navigation }) {
               </Card.Actions>
             </Card>
           ))
-        }
+        )}
       </ScrollView>
       <Portal>
         <Modal
@@ -116,17 +123,19 @@ function Community({ navigation }) {
               setCommunityName("");
               hideModal();
               axios({
-<<<<<<< HEAD
                 url: "/community",
                 method: "POST",
                 data: {
                   name: communityName,
                 },
-                headers: access_token,
+                headers: {
+                  access_token,
+                },
               })
                 .then((res) => {
                   console.log(res.data);
                   setCommunityName("");
+                  navigation.replace("Runator", { screen: "Start" });
                 })
                 .catch((err) => {
                   dispatch(setError(err.response.data.message));
@@ -136,27 +145,6 @@ function Community({ navigation }) {
                   );
                   setCommunityName("");
                 });
-=======
-                url: '/community',
-                method: 'POST',
-                data: {
-                  name: communityName,
-                },
-                headers: {
-                  access_token
-                }
-              })
-                .then((res) => {
-                  console.log(res.data)
-                  setCommunityName("");
-                  navigation.replace('Runator', { screen: 'Start' })
-                })
-                .catch((err) => {
-                  dispatch(setError(err.response.data.message))
-                  console.log(err.response.data.message, '<==== ini dari catch')
-                  setCommunityName("");
-                })
->>>>>>> ac059b1103169bb2a549b226f9339eeb8f74ce55
             }}
             labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
           >
@@ -177,7 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#242424",
   },
   subtitle: {
-    textAlign: 'center',
+    textAlign: "center",
     padding: 15,
     fontSize: 18,
     paddingTop: 30,

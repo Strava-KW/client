@@ -1,20 +1,9 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { ScrollView, View, Text } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 import { StyleSheet, Dimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { setProfile } from "../store/actions";
-import axios from "../../config/axios";
 import MapView from "react-native-maps";
-=======
-import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text } from 'react-native';
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import { StyleSheet, Dimensions } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import MapView from 'react-native-maps';
->>>>>>> ac059b1103169bb2a549b226f9339eeb8f74ce55
 
 function History() {
   const profile = useSelector((state) => state.profile);
@@ -25,13 +14,6 @@ function History() {
     setHistory(profile.history);
   }, [profile]);
 
-<<<<<<< HEAD
-  if (profile) {
-    console.log(profile);
-  }
-
-=======
->>>>>>> ac059b1103169bb2a549b226f9339eeb8f74ce55
   return (
     <ScrollView style={styles.container}>
       {/* <Card style={styles.eventCard}>
@@ -54,27 +36,17 @@ function History() {
           </View>
         </Card.Content>
       </Card> */}
-<<<<<<< HEAD
-      {history?.map((track, idx) => (
-        <Card key={idx} style={styles.eventCard}>
+      {history?.map((track) => (
+        <Card style={styles.eventCard} key={track.date}>
           <Card.Content style={styles.cardContent}>
             {/* <Title style={styles.cardName}>Activity Name</Title> */}
             <View style={{ display: "flex", flexDirection: "row" }}>
               <Paragraph style={styles.cardLocation}>
-                Distance: {track.distance}
+                Distance: {track.distance} km
               </Paragraph>
               <Paragraph style={styles.cardDate}>
                 {track.date.slice(0, 10)}
               </Paragraph>
-=======
-      {
-        history?.map(track => <Card style={styles.eventCard} key={track.date}>
-          <Card.Content style={styles.cardContent}>
-            {/* <Title style={styles.cardName}>Activity Name</Title> */}
-            <View style={{display: "flex", flexDirection: "row"}}>
-              <Paragraph style={styles.cardLocation}>Distance: {track.distance} km</Paragraph>
-              <Paragraph style={styles.cardDate}>{track.date.slice(0,10)}</Paragraph>
->>>>>>> ac059b1103169bb2a549b226f9339eeb8f74ce55
             </View>
           </Card.Content>
         </Card>
