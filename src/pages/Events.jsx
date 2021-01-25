@@ -4,8 +4,7 @@ import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { StyleSheet, Dimensions } from 'react-native';
 import EventLocation from '../components/EventLocation';
 import { useSelector, useDispatch } from 'react-redux'
-import { setCommunities } from '../store/actions'
-import axios from '../../config/axios';
+import { fetchCommunity } from '../store/actions'
 
 function Events () {
   const dispatch = useDispatch()
@@ -14,26 +13,9 @@ function Events () {
 
   useEffect(() => {
     if (access_token) {
-      axios({
-        url: '/community/community',
-        method: 'GET',
-        headers: {
-          access_token
-        }
-      })
-        .then(res => {
-          dispatch(setCommunities(res.data))
-          console.log(res.data, '<== dari community')
-        })
-        .catch(err => {
-          console.log(err.response.data.message, '<== error')
-        })
+      dispatch(fetchCommunity(access_token))
     }
   }, [access_token])
-
-  if (communities) {
-    console.log(communities)
-  }
 
   return (
     <View style={styles.container}>

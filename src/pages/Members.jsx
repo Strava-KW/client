@@ -3,8 +3,7 @@ import { View, Text, StyleSheet, Dimensions} from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { IconButton, Card, Title, Paragraph, Avatar } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
-import { setCommunities } from '../store/actions'
-import axios from '../../config/axios'
+import { fetchCommunity } from '../store/actions'
 
 function Members () {
   const dispatch = useDispatch()
@@ -13,20 +12,7 @@ function Members () {
 
   useEffect(() => {
     if (access_token) {
-      axios({
-        url: '/community/community',
-        method: 'GET',
-        headers: {
-          access_token
-        }
-      })
-        .then(res => {
-          dispatch(setCommunities(res.data))
-          console.log(res.data, '<== dari community')
-        })
-        .catch(err => {
-          console.log(err.response.data.message, '<== error')
-        })
+      dispatch(fetchCommunity(access_token))
     }
   }, [access_token])
 

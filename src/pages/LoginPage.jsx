@@ -186,6 +186,7 @@ export default function LoginPage({ navigation }) {
                 hideModal();
                 // navigation.replace("Runator");
                 console.log(email, password);
+<<<<<<< HEAD
                 axios({
                   url: "/users/login",
                   method: "POST",
@@ -210,6 +211,29 @@ export default function LoginPage({ navigation }) {
                     setEmail("");
                     setPassword("");
                   });
+=======
+                // axios({
+                //   url: '/users/login',
+                //   method: 'POST',
+                //   data: {
+                //     email,
+                //     password
+                //   }
+                // })
+                //   .then((res) => {
+                //     console.log(res.data)
+                //     dispatch(setAccessToken(res.data.access_token))
+                    navigation.replace("Runator");
+                    setEmail("");
+                    setPassword("");
+                  // })
+                  // .catch((err) => {
+                  //   dispatch(setError(err.response.data.message))
+                  //   console.log(err.response.data.message, '<==== ini dari catch')
+                  //   setEmail("");
+                  //   setPassword("");
+                  // })
+>>>>>>> 0d942643d7e13514b69b7485ceca0f873b033675
               }}
               labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
             >
