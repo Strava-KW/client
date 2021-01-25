@@ -251,7 +251,7 @@ export default function RunTracker() {
           <Polyline
             coordinates={location}
             strokeWidth={2}
-            strokeColor="#FA8135"
+            strokeColor="#107869" //98D7C2,167D7F,107869,08313A,1A5653
             lineCap="round"
             lineJoin="miter"
           />
