@@ -107,7 +107,7 @@ export default function RunTracker( props ) {
           }}
         >
           <Text style={{ alignSelf: "center", color: "#FA8135" }}>
-            Distance: {location.length / 100} km
+            Distance: {((location.length / 100) - 0.01).toFixed(2)} km
           </Text>
         </View>
       </View>

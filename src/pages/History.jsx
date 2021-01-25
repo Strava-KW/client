@@ -14,6 +14,10 @@ function History() {
     setHistory(profile.history);
   }, [profile]);
 
+  if (profile) {
+    console.log(profile)
+  }
+
   return (
     <ScrollView style={styles.container}>
       {/* <Card style={styles.eventCard}>

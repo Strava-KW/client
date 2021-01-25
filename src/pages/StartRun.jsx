@@ -42,7 +42,7 @@ function StartRun({ route, Navigation }) {
         access_token
       },
       data: {
-        distance: (locationRun.length/100),
+        distance: ((locationRun.length/100)-0.01).toFixed(2),
         date: new Date()
       }
     })

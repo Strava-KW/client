@@ -15,6 +15,10 @@ function Leaderboard () {
     }
   }, [access_token])
 
+  if (communities) {
+    console.log(communities.members)
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Leaderboard </Text>
@@ -29,7 +33,7 @@ function Leaderboard () {
                 <Avatar.Text style={styles.avatarContainer} size={54} color="orange" label={member.fullname[0]}></Avatar.Text>
                 <View style={styles.detailContainer}>
                   <Text style={{ fontSize: 21, fontWeight: '600', fontFamily: 'Jost', color: '#FA8135' }}>{member.fullname}</Text>
-                  <Text style={{ fontSize: 14, fontWeight: '400', fontFamily: 'Jost', color: '#FA8135' }}>Distances total: {member.totalRange} km</Text>
+                  <Text style={{ fontSize: 14, fontWeight: '400', fontFamily: 'Jost', color: '#FA8135' }}>Distances total: {member.totalRange.toFixed(2)} km</Text>
                 </View>           
               </Card.Content>
             </Card>
@@ -56,7 +60,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Jost'
   },
   leaderboard: {
-    height: '70%',
     width: (Dimensions.get('window').width - 24),
     backgroundColor: '#242424',
     // alignItems: 'center',
