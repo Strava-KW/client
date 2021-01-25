@@ -59,16 +59,6 @@ export default function EventLocation(props) {
     text = JSON.stringify(locationNow);
   }
 
-  // TaskManager.defineTask(TASK_FETCH, ({ data, error }) => {
-  //   if (error) {
-  //     // Error occurred - check `error.message` for more details.
-  //     return;
-  //   }
-  //   if (data) {
-  //     console.log(data)
-  //   }
-  // });
-
   if (location && locationNow) {
     return (
       <MapView
