@@ -1,17 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import { RunTracker } from "../components";
 import { Button } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
+import { setProfile } from '../store/actions'
+import axios from '../../config/axios'
 
 function StartRun({ route, Navigation }) {
   const [ showMap, setShowMap ] = useState(false)
-  
+  const [ locationRun, setLocationRun ] = useState([])
+  const dispatch = useDispatch()
+  const access_token = useSelector(state => state.access_token)
+
+
+  useEffect(() => {
+    axios({
+      url: '/profile',
+      method: 'GET',
+      headers: {
+        access_token
+      }
+    })
+      .then(res => {
+        console.log(res.data)
+        dispatch(setProfile(res.data))
+      })
+      .catch(err => {
+        console.log(err.response.data)
+      })
+  }, [])
+
+  function setLocation (location) {
+    setLocationRun(location)
+  }
+
+  function trackRun () {
+    axios({
+      url: '/history',
+      method: 'POST',
+      headers: {
+        access_token
+      },
+      data: {
+        distance: (locationRun.length/1000),
+        date: new Date()
+      }
+    })
+      .then(res => {
+        console.log(res.data)
+        return axios({
+          url: '/profile',
+          method: 'GET',
+          headers: {
+            access_token
+          }
+        })
+      })
+      .then(res => {
+        console.log(res.data, '<=== dari fungsi track run')
+        dispatch(setProfile(res.data))
+        setShowMap(false)
+      })
+      .catch(err => {
+        console.log(err.response.data)
+        setShowMap(false)
+      })
+  }
+
   if (showMap) {
     return (
       <View>
-        <RunTracker />
+        <RunTracker 
+          setLocation={setLocation}
+        />
         <View
           style={{
             position: "absolute",
@@ -32,7 +94,7 @@ function StartRun({ route, Navigation }) {
               fontFamily: "Jost",
               fontSize: 16,
             }}
-            onPress={() => setShowMap(false)}
+            onPress={() => trackRun()}
           >
             STOP
           </Button>

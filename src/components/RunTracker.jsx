@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import * as Location from "expo-location";
 // import * as TaskManager from 'expo-task-manager'
 
-export default function RunTracker() {
+export default function RunTracker( props ) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState([]);
   const [locationNow, setLocationNow] = useState(null);
@@ -43,6 +43,10 @@ export default function RunTracker() {
       );
     })();
   }, []);
+
+  useEffect(() => {
+    props.setLocation(location)
+  }, [location])
 
   let text = "Waiting..";
   if (errorMsg) {
@@ -265,7 +269,7 @@ export default function RunTracker() {
           }}
         >
           <Text style={{ alignSelf: "center", color: "#FA8135" }}>
-            Distance: {location.length / 100} km
+            Distance: {location.length / 1000} km
           </Text>
         </View>
       </View>

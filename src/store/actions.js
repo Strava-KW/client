@@ -12,9 +12,13 @@ export function setCommunities (data) {
   return {type: 'SET_COMMUNITIES', communities: data}
 }
 
-export function fetchCommunity (access_token) {
+export function setProfile (data) {
+  return {type: 'SET_PROFILE', profile: data}
+}
+
+export const fetchCommunity = (access_token) => (dispatch, getState) => {
   axios({
-    url: '/community/community',
+    url: '/community',
     method: 'GET',
     headers: {
       access_token
@@ -30,7 +34,7 @@ export function fetchCommunity (access_token) {
     })
 }
 
-export function acceptMember (id, access_token) {
+export const acceptMember = (id, access_token) => (dispatch, getState) => {
   axios({
     url: `/community/approval/${id}`,
     method: 'PUT',
@@ -48,7 +52,7 @@ export function acceptMember (id, access_token) {
     })
 }
 
-export function rejectMember (id, access_token) {
+export const rejectMember = (id, access_token) => (dispatch, getState) => {
   axios({
     url: `/community/approval/${id}`,
     method: 'PUT',
@@ -66,7 +70,7 @@ export function rejectMember (id, access_token) {
     })
 }
 
-export function joinCommunity (id, access_token) {
+export const joinCommunity = (id, access_token) => (dispatch, getState) => {
   axios({
     url: `/community/${id}`,
     method: 'PATCH',

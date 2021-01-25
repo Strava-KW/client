@@ -1,10 +1,13 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { Leaderboard, WaitingList, Events, Members } from '../pages/index'
+import { useSelector } from 'react-redux'
 
 const Drawer = createDrawerNavigator()
 
 function CommunityDrawer () {
+  const profile = useSelector(state => state.profile)
+
   return (
     <Drawer.Navigator
       overlayColor="transparent"
@@ -24,7 +27,9 @@ function CommunityDrawer () {
       <Drawer.Screen name="Leaderboard" component={Leaderboard} />
       <Drawer.Screen name="Events" component={Events} />
       <Drawer.Screen name="Members" component={Members} />
-      <Drawer.Screen name="Waiting List" component={WaitingList} />
+      {
+        profile?.role === 'admin' && <Drawer.Screen name="Waiting List" component={WaitingList} /> 
+      }
     </Drawer.Navigator>
   )
 }

@@ -186,27 +186,27 @@ export default function LoginPage({ navigation }) {
                 hideModal();
                 // navigation.replace("Runator");
                 console.log(email, password);
-                // axios({
-                //   url: '/users/login',
-                //   method: 'POST',
-                //   data: {
-                //     email,
-                //     password
-                //   }
-                // })
-                //   .then((res) => {
-                //     console.log(res.data)
-                //     dispatch(setAccessToken(res.data.access_token))
-                navigation.replace("Runator");
-                setEmail("");
-                setPassword("");
-                // })
-                // .catch((err) => {
-                //   dispatch(setError(err.response.data.message))
-                //   console.log(err.response.data.message, '<==== ini dari catch')
-                //   setEmail("");
-                //   setPassword("");
-                // })
+                axios({
+                  url: '/users/login',
+                  method: 'POST',
+                  data: {
+                    email,
+                    password
+                  }
+                })
+                  .then((res) => {
+                    console.log(res.data)
+                    dispatch(setAccessToken(res.data.access_token))
+                    navigation.replace("Runator");
+                    setEmail("");
+                    setPassword("");
+                  })
+                  .catch((err) => {
+                    dispatch(setError(err.response.data.message))
+                    console.log(err.response.data.message, '<==== ini dari catch')
+                    setEmail("");
+                    setPassword("");
+                  })
               }}
               labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
             >

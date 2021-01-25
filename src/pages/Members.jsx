@@ -22,7 +22,7 @@ function Members () {
       <ScrollView style={styles.waitingList}>
         {
           communities?.members?.map(member => (
-            <Card style={styles.personCard}>
+            <Card style={styles.personCard} key={member._id}>
               <Card.Content style={styles.person}>
                 <Avatar.Text style={styles.avatarContainer} size={48} color="orange" label={member.fullname[0]}></Avatar.Text>
                 <View style={styles.nameContainer}>
