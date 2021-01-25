@@ -33,6 +33,10 @@ function Community({ navigation }) {
     dispatch(joinCommunity(id, access_token))
   }
 
+  if (communities) {
+    console.log(communities)
+  }
+
   return (
     <View style={styles.container}>
       {
