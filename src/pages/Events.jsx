@@ -233,21 +233,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#323232",
   },
   mapContainer: {
-<<<<<<< HEAD
     width: "100%",
-    height: "70%",
+    height: "60%",
     paddingTop: 0,
     paddingRight: 0,
     paddingLeft: 0,
     borderRadius: 30,
-=======
-    width : '100%',
-    height : '60%',
-    paddingTop : 0,
-    paddingRight : 0,
-    paddingLeft : 0,
-    borderRadius: 30
->>>>>>> development
   },
   createButton: {
     width: 150,
@@ -255,13 +246,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   eventContainer: {
-<<<<<<< HEAD
-    height: "70%",
-    backgroundColor: "#242424",
-=======
     // height: '70%',
-    backgroundColor: '#242424',
->>>>>>> development
+    backgroundColor: "#242424",
     // alignItems: 'center',
     // justifyContent: 'center',
     borderTopLeftRadius: 25,
@@ -291,25 +277,14 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-<<<<<<< HEAD
+    backgroundColor: "#FA8135",
     shadowOpacity: 0.4,
     shadowRadius: 2.5,
     elevation: 2,
   },
   cardContent: {
-    backgroundColor: "#FA8135",
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-=======
-    backgroundColor: "#FA8135",
-    shadowOpacity: 0.40,
-    shadowRadius: 2.50,
-    elevation: 2,
-  },
-  cardContent: {
     borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0
->>>>>>> development
+    borderBottomRightRadius: 0,
   },
   cardName: {
     fontSize: 18,
