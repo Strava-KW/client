@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MapView, { Polyline, Marker } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import * as Location from "expo-location";
 // import * as TaskManager from 'expo-task-manager'
 
@@ -242,11 +242,16 @@ export default function RunTracker() {
             longitudeDelta: 0.01,
           }}
         >
-          <Marker coordinate={locationNow} />
+          <Marker coordinate={locationNow}>
+            <Image
+              source={require("../../assets/runningwomen.png")}
+              style={{ height: 35, width: 35 }}
+            />
+          </Marker>
           <Polyline
             coordinates={location}
-            strokeWidth={6}
-            strokeColor="#00a8ff"
+            strokeWidth={2}
+            strokeColor="#FA8135"
             lineCap="round"
             lineJoin="miter"
           />
@@ -263,7 +268,7 @@ export default function RunTracker() {
           }}
         >
           <Text style={{ alignSelf: "center", color: "#FA8135" }}>
-            Distance: {location.length / 1000} km
+            Distance: {location.length / 100} km
           </Text>
         </View>
       </View>
