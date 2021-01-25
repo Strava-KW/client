@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native'
 import { Button, Card, Title, Paragraph } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
-import { setCommunities } from '../store/actions'
-import axios from '../../config/axios'
+import { fetchCommunity, joinCommunity } from '../store/actions'
 
 function Community ({ navigation }) {
   const dispatch = useDispatch()
@@ -12,47 +11,12 @@ function Community ({ navigation }) {
 
   useEffect(() => {
     if (access_token) {
-      axios({
-        url: '/community/community',
-        method: 'GET',
-        headers: {
-          access_token
-        }
-      })
-        .then(res => {
-          dispatch(setCommunities(res.data))
-          console.log(res.data, '<== dari community')
-        })
-        .catch(err => {
-          console.log(err.response.data.message, '<== error')
-        })
+      dispatch(fetchCommunity(access_token))
     }
   }, [access_token])
 
   function handleJoin (id) {
-    axios({
-      url: `/community/${id}`,
-      method: 'PATCH',
-      headers: {
-        access_token
-      }
-    })
-      .then(res => {
-        console.log(res.data)
-        return axios({
-          url: '/community/community',
-          method: 'GET',
-          headers: {
-            access_token
-          }
-        })
-      })
-      .then(res => {
-        dispatch(setCommunities(res.data))
-      })
-      .catch(err => {
-        console.log(err.response.data.message)
-      })
+    dispatch(joinCommunity(id, access_token))
   }
 
   return (
