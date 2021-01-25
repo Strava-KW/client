@@ -1,15 +1,45 @@
+<<<<<<< HEAD
 import React, { useEffect } from "react";
 import { ScrollView, View, Text } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
+=======
+import React, { useEffect, useState } from "react";
+import { ScrollView, View, Text } from "react-native";
+import {
+  Avatar,
+  Button,
+  Card,
+  Title,
+  Paragraph,
+  Headline,
+  TextInput,
+  Modal,
+  Portal,
+} from "react-native-paper";
+>>>>>>> alert-error
 import { StyleSheet, Dimensions } from "react-native";
 import EventLocation from "../components/EventLocation";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCommunity } from "../store/actions";
+<<<<<<< HEAD
+=======
+import AlgoliaPlaces from "algolia-places-react";
+// import ReactNativeAlgoliaPlaces from "react-native-algolia-places";
+>>>>>>> alert-error
 
 function Events() {
   const dispatch = useDispatch();
   const communities = useSelector((state) => state.communities);
   const access_token = useSelector((state) => state.access_token);
+<<<<<<< HEAD
+=======
+  const [eventName, setEventName] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [visible, setVisible] = useState(false);
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+>>>>>>> alert-error
 
   useEffect(() => {
     if (access_token) {
@@ -26,10 +56,16 @@ function Events() {
         mode="contained"
         color="#FA8135"
         style={styles.createButton}
+<<<<<<< HEAD
         // onPress={()}
       >
         {" "}
         Create Event{" "}
+=======
+        onPress={showModal}
+      >
+        Create Event
+>>>>>>> alert-error
       </Button>
       <ScrollView style={styles.eventContainer}>
         {communities?.events?.map((eventElement) => (
@@ -51,6 +87,160 @@ function Events() {
           </Card>
         ))}
       </ScrollView>
+      <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={() => {
+            hideModal(), setEventName(""), setEventName("");
+            setDate("");
+            setTime("");
+          }}
+          contentContainerStyle={styles.modal}
+          animationType={"fade"}
+          transparent={true}
+        >
+          <Headline style={styles.headline}>Event Name</Headline>
+          <TextInput
+            label="e.g. Happy Run at Monas"
+            value={eventName}
+            onChangeText={(eventName) => setEventName(eventName)}
+            mode="outlined"
+            selectionColor="#FA8135"
+            underlineColor="#FA8135"
+            style={styles.formField}
+            theme={{
+              colors: {
+                placeholder: "orange",
+                text: "white",
+                primary: "orange",
+                background: "#242424",
+              },
+            }}
+          />
+          <TextInput
+            label="Date"
+            value={date}
+            onChangeText={(date) => setDate(date)}
+            mode="outlined"
+            selectionColor="#FA8135"
+            underlineColor="#FA8135"
+            style={styles.formField}
+            theme={{
+              colors: {
+                placeholder: "orange",
+                text: "white",
+                primary: "orange",
+                background: "#242424",
+              },
+            }}
+          />
+          <TextInput
+            label="Time"
+            value={time}
+            onChangeText={(time) => setTime(time)}
+            mode="outlined"
+            selectionColor="#FA8135"
+            underlineColor="#FA8135"
+            style={styles.formField}
+            theme={{
+              colors: {
+                placeholder: "orange",
+                text: "white",
+                primary: "orange",
+                background: "#242424",
+              },
+            }}
+          />
+          {/* <ReactNativeAlgoliaPlaces
+            appId={"YHR3Y7AR19"}
+            appKey={"bcdcb7e00c995b262100ad6d278f43b8"}
+            itemList={(item, i, textSearch) => (
+              <Text key={i + "item"}>item.locale_names[0]</Text>
+            )}
+          /> */}
+          <AlgoliaPlaces
+            placeholder="Write an address here"
+            options={{
+              appId: "YHR3Y7AR19",
+              apiKey: "bcdcb7e00c995b262100ad6d278f43b8",
+              language: "en",
+              countries: ["id"],
+              type: "city",
+              // Other options from https://community.algolia.com/places/documentation.html#options
+            }}
+            // onChange={({ query, rawAnswer, suggestion, suggestionIndex }) =>
+            //   console.log(
+            //     "Fired when suggestion selected in the dropdown or hint was validated."
+            //   )
+            // }
+            // onSuggestions={({ rawAnswer, query, suggestions }) =>
+            //   console.log(
+            //     "Fired when dropdown receives suggestions. You will receive the array of suggestions that are displayed."
+            //   )
+            // }
+            // onCursorChanged={({
+            //   rawAnswer,
+            //   query,
+            //   suggestion,
+            //   suggestonIndex,
+            // }) =>
+            //   console.log(
+            //     "Fired when arrows keys are used to navigate suggestions."
+            //   )
+            // }
+            // onClear={() => console.log("Fired when the input is cleared.")}
+            // onLimit={({ message }) =>
+            //   console.log("Fired when you reached your current rate limit.")
+            // }
+            // onError={({ message }) =>
+            //   console.log(
+            //     "Fired when we could not make the request to Algolia Places servers for any reason but reaching your rate limit."
+            //   )
+            // }
+          />
+
+          <Button
+            style={styles.createEventButton}
+            color="#FA8135"
+            uppercase={false}
+            dark={true}
+            mode="contained"
+            onPress={() => {
+              console.log(eventName);
+              setEventName("");
+              setDate("");
+              setTime("");
+              hideModal();
+              // axios({
+              //   url: "/community",
+              //   method: "POST",
+              //   data: {
+              //     name: communityName,
+              //   },
+              //   headers: {
+              //     access_token,
+              //   },
+              // })
+              //   .then((res) => {
+              //     console.log(res.data);
+              //     setCommunityName("");
+              //     navigation.replace("Runator", { screen: "Start" });
+              //   })
+              //   .catch((err) => {
+              //     dispatch(setError(err.response.data.message));
+              //     console.log(
+              //       err.response.data.message,
+              //       "<==== ini dari catch"
+              //     );
+              //     setCommunityName("");
+              //   });
+            }}
+            labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
+          >
+            Create
+          </Button>
+        </Modal>
+      </Portal>
     </View>
   );
 }
@@ -134,6 +324,31 @@ const styles = StyleSheet.create({
     color: "#242424",
     fontFamily: "Jost",
   },
+<<<<<<< HEAD
+=======
+  modal: {
+    backgroundColor: "#242424",
+    padding: 20,
+  },
+  headline: {
+    marginBottom: 30,
+    fontFamily: "Jost",
+    color: "white",
+    textAlign: "center",
+  },
+  formField: {
+    width: Dimensions.get("window").width - 75,
+    margin: 5,
+    alignSelf: "center",
+  },
+  createEventButton: {
+    marginTop: 50,
+    width: 300,
+    height: 40,
+    alignSelf: "center",
+    backgroundColor: "#FA8135",
+  },
+>>>>>>> alert-error
 });
 
 export default Events;
