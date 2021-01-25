@@ -10,9 +10,9 @@ import {
   Text,
 } from "react-native-paper";
 import * as Google from "expo-google-app-auth";
-import { useDispatch, useSelector } from 'react-redux';
-import { setAccessToken, setError } from '../store/actions';
-import axios from '../../config/axios'
+import { useDispatch, useSelector } from "react-redux";
+import { setAccessToken, setError } from "../store/actions";
+import axios from "../../config/axios";
 
 export default function LoginPage({ navigation }) {
   const config = {
@@ -41,22 +41,22 @@ export default function LoginPage({ navigation }) {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
-  const dispatch = useDispatch()
-  const error = useSelector(state => state.error)
-  const access_token = useSelector(state => state.access_token)
+  const dispatch = useDispatch();
+  const error = useSelector((state) => state.error);
+  const access_token = useSelector((state) => state.access_token);
 
   useEffect(() => {
     return () => {
-      dispatch(setError(null))
-    }
-  }, [error])
+      dispatch(setError(null));
+    };
+  }, [error]);
 
   // useEffect(() => {
   //   dispatch(setError(null))
   // }, [])
   if (error) {
-    console.log(error, '<=== console')
-    dispatch(setError(null))
+    console.log(error, "<=== console");
+    dispatch(setError(null));
   }
 
   const hasErrors = () => {
@@ -184,28 +184,32 @@ export default function LoginPage({ navigation }) {
               mode="contained"
               onPress={() => {
                 hideModal();
+                // navigation.replace("Runator");
                 console.log(email, password);
                 axios({
-                  url: '/users/login',
-                  method: 'POST',
+                  url: "/users/login",
+                  method: "POST",
                   data: {
                     email,
-                    password
-                  }
+                    password,
+                  },
                 })
                   .then((res) => {
-                    console.log(res.data)
-                    dispatch(setAccessToken(res.data.access_token))
+                    console.log(res.data);
+                    dispatch(setAccessToken(res.data.access_token));
                     navigation.replace("Runator");
                     setEmail("");
                     setPassword("");
                   })
                   .catch((err) => {
-                    dispatch(setError(err.response.data.message))
-                    console.log(err.response.data.message, '<==== ini dari catch')
+                    dispatch(setError(err.response.data.message));
+                    console.log(
+                      err.response.data.message,
+                      "<==== ini dari catch"
+                    );
                     setEmail("");
                     setPassword("");
-                  })
+                  });
               }}
               labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
             >

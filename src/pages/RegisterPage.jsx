@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import { Button, HelperText, TextInput, Headline, Dialog, Portal } from "react-native-paper";
+import {
+  Button,
+  HelperText,
+  TextInput,
+  Headline,
+  Dialog,
+  Portal,
+} from "react-native-paper";
 import axios from "../../config/axios";
 // import axios from "axios";
 
@@ -8,7 +15,7 @@ function Register({ navigation }) {
   const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const hasErrors = () => {
     return email.length > 2 && !email.includes("@");
   };
@@ -97,11 +104,11 @@ function Register({ navigation }) {
           axios({
             url: "/users/register",
             method: "POST",
-            data: data
+            data: data,
           })
             .then((res) => {
-              console.log(res.data)
-              navigation.navigate('Login')
+              console.log(res.data);
+              navigation.navigate("Login");
             })
             .catch((err) => console.log(err));
         }}
