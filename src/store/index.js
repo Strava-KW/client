@@ -5,7 +5,8 @@ let initialState = {
   access_token: null,
   error: null,
   communities: [],
-  profile: {}
+  profile: {},
+  google_access_token: null
 }
 
 function reducer (state = initialState, action) {
@@ -18,6 +19,8 @@ function reducer (state = initialState, action) {
       return {...state, communities: action.communities}
     case 'SET_PROFILE':
       return {...state, profile: action.profile}
+    case 'SET_GOOGLE_ACCESS_TOKEN':
+      return {...state, google_access_token: action.google_access_token}
     default:
       return initialState
   }

@@ -19,7 +19,7 @@ function StartRun({ route, Navigation }) {
       url: '/profile',
       method: 'GET',
       headers: {
-        access_token
+        access_token: access_token
       }
     })
       .then(res => {

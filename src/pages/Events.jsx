@@ -36,7 +36,7 @@ function Events () {
                 <EventLocation location={eventElement.hashed}/>
               </Card.Content>
               <Card.Content style={styles.cardContent}>
-                <Title style={styles.cardName}>EventName</Title>
+                <Title style={styles.cardName}>{eventElement.name}</Title>
                 <View style={{display: "flex", flexDirection: "row"}}>
                   <Paragraph style={styles.cardLocation}>{eventElement.location}</Paragraph>
                   <Paragraph style={styles.cardDate}>{eventElement.date.slice(0, 10)}</Paragraph>
