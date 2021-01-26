@@ -11,14 +11,13 @@ import {
   Modal,
   Portal,
 } from "react-native-paper";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { StyleSheet, Dimensions } from "react-native";
-import EventLocation from "../components/EventLocation";
+import { EventLocation, GooglePlacesInput } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCommunity } from "../store/actions";
-import AlgoliaPlaces from "algolia-places-react";
-// import ReactNativeAlgoliaPlaces from "react-native-algolia-places";
 
-function Events() {
+function Events({ navigation }) {
   const dispatch = useDispatch();
   const communities = useSelector((state) => state.communities);
   const access_token = useSelector((state) => state.access_token);
@@ -44,7 +43,7 @@ function Events() {
         mode="contained"
         color="#FA8135"
         style={styles.createButton}
-        onPress={showModal}
+        onPress={navigation.navigate("GoogleSearch")}
       >
         Create Event
       </Button>
@@ -132,54 +131,7 @@ function Events() {
               },
             }}
           />
-          {/* <ReactNativeAlgoliaPlaces
-            appId={"YHR3Y7AR19"}
-            appKey={"bcdcb7e00c995b262100ad6d278f43b8"}
-            itemList={(item, i, textSearch) => (
-              <Text key={i + "item"}>item.locale_names[0]</Text>
-            )}
-          /> */}
-          <AlgoliaPlaces
-            placeholder="Write an address here"
-            options={{
-              appId: "YHR3Y7AR19",
-              apiKey: "bcdcb7e00c995b262100ad6d278f43b8",
-              language: "en",
-              countries: ["id"],
-              type: "city",
-              // Other options from https://community.algolia.com/places/documentation.html#options
-            }}
-            // onChange={({ query, rawAnswer, suggestion, suggestionIndex }) =>
-            //   console.log(
-            //     "Fired when suggestion selected in the dropdown or hint was validated."
-            //   )
-            // }
-            // onSuggestions={({ rawAnswer, query, suggestions }) =>
-            //   console.log(
-            //     "Fired when dropdown receives suggestions. You will receive the array of suggestions that are displayed."
-            //   )
-            // }
-            // onCursorChanged={({
-            //   rawAnswer,
-            //   query,
-            //   suggestion,
-            //   suggestonIndex,
-            // }) =>
-            //   console.log(
-            //     "Fired when arrows keys are used to navigate suggestions."
-            //   )
-            // }
-            // onClear={() => console.log("Fired when the input is cleared.")}
-            // onLimit={({ message }) =>
-            //   console.log("Fired when you reached your current rate limit.")
-            // }
-            // onError={({ message }) =>
-            //   console.log(
-            //     "Fired when we could not make the request to Algolia Places servers for any reason but reaching your rate limit."
-            //   )
-            // }
-          />
-
+          <GooglePlacesInput />
           <Button
             style={styles.createEventButton}
             color="#FA8135"
