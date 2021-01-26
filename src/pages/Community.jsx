@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchCommunity, joinCommunity, setError } from '../store/actions'
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCommunity, joinCommunity, setError } from "../store/actions";
 import {
   Button,
   Card,
@@ -12,8 +12,8 @@ import {
   Modal,
   Portal,
 } from "react-native-paper";
-import axios from '../../config/axios';
-import Toast from 'react-native-toast-message';
+import axios from "../../config/axios";
+import Toast from "react-native-toast-message";
 
 function Community({ navigation }) {
   const dispatch = useDispatch();
@@ -23,53 +23,62 @@ function Community({ navigation }) {
   const [communityName, setCommunityName] = useState("");
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const error = useSelector(state => state.error)
-  const profile = useSelector(state => state.profile)
+  const error = useSelector((state) => state.error);
+  const profile = useSelector((state) => state.profile);
 
   useEffect(() => {
     if (access_token) {
-      dispatch(fetchCommunity(access_token))
+      dispatch(fetchCommunity(access_token));
     }
   }, [access_token]);
 
-  function handleJoin (id) {
-    dispatch(joinCommunity(id, access_token))
+  function handleJoin(id) {
+    dispatch(joinCommunity(id, access_token));
   }
 
   if (error) {
     Toast.show({
-      type: 'error',
-      position: 'top',
+      type: "error",
+      position: "top",
       text1: error,
       visibilityTime: 3000,
       autoHide: true,
-      onHide: () => {dispatch(setError(null))},
+      onHide: () => {
+        dispatch(setError(null));
+      },
       topOffset: 30,
       bottomOffset: 40,
-    }); 
+    });
   }
 
-  if(profile) {
-    console.log(profile)
+  if (profile) {
+    console.log(profile);
   }
 
   return (
     <View style={styles.container}>
       <Toast ref={(ref) => Toast.setRef(ref)} />
-      {
-        communities && !communities.message && (
-          <View>
-            <Text style={styles.subtitle}> Create a Community </Text>
-            <Button icon="plus" mode="contained" color="#FA8135" onPress={showModal}> Create </Button>
-          </View>
-        )
-      }
-      { communities && communities.length > 0 && (
+      {communities && !communities.message && (
+        <View>
+          <Text style={styles.subtitle}> Create a Community </Text>
+          <Button
+            icon="plus"
+            mode="contained"
+            color="#FA8135"
+            onPress={showModal}
+          >
+            {" "}
+            Create{" "}
+          </Button>
+        </View>
+      )}
+      {communities && communities.length > 0 && (
         <Text style={styles.subtitle}>or Join a Community</Text>
       )}
       <ScrollView>
-        { 
-          communities?.message? <Text style={styles.subtitle}>{communities.message}</Text> :
+        {communities?.message ? (
+          <Text style={styles.subtitle}>{communities.message}</Text>
+        ) : (
           communities?.map((community) => (
             <Card style={styles.communityCard} key={community._id}>
               <Card.Content style={styles.communityCardContent}>
@@ -96,7 +105,7 @@ function Community({ navigation }) {
               </Card.Actions>
             </Card>
           ))
-        }
+        )}
       </ScrollView>
       <Portal>
         <Modal
@@ -137,26 +146,29 @@ function Community({ navigation }) {
               setCommunityName("");
               hideModal();
               axios({
-                url: '/community',
-                method: 'POST',
+                url: "/community",
+                method: "POST",
                 data: {
                   name: communityName,
                 },
                 headers: {
-                  access_token
-                }
+                  access_token,
+                },
               })
                 .then((res) => {
-                  console.log(res.data)
+                  console.log(res.data);
                   setCommunityName("");
-                  navigation.replace('Runator', { screen: 'Start' })
+                  navigation.replace("Runator", { screen: "Start" });
                 })
                 .catch((err) => {
-                  dispatch(setError(err.response.data.message))
-                  navigation.replace('Runator', { screen: 'Start' })
-                  console.log(err.response.data.message, '<==== ini dari catch')
+                  dispatch(setError(err.response.data.message));
+                  navigation.replace("Runator", { screen: "Start" });
+                  console.log(
+                    err.response.data.message,
+                    "<==== ini dari catch"
+                  );
                   setCommunityName("");
-                })
+                });
             }}
             labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
           >
@@ -177,7 +189,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#242424",
   },
   subtitle: {
-    textAlign: 'center',
+    textAlign: "center",
     padding: 15,
     fontSize: 18,
     paddingTop: 30,
