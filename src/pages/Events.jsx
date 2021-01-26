@@ -18,6 +18,7 @@ import {
   TextInput,
   Modal,
   Portal,
+  IconButton
 } from "react-native-paper";
 import axios from "../../config/axios";
 // import { EventLocation } from "../components";
@@ -47,7 +48,7 @@ function Events({ navigation }) {
     }
   }, [access_token]);
 
-  searchLocation = async (text) => {
+  const searchLocation = async (text) => {
     try {
       setSearchKeyword(text);
       axios
@@ -84,18 +85,41 @@ function Events({ navigation }) {
       <ScrollView style={styles.eventContainer}>
         {
           communities?.events?.map(eventElement => (
-            <Card key={communities.events._id} style={styles.eventCard}>
-              <Card.Content style={styles.mapContainer}>
-                <EventMap location={eventElement.hashed} />
-              </Card.Content>
-              <Card.Content style={styles.cardContent}>
-                <Title style={styles.cardName}>{eventElement.name}</Title>
-                <View style={{display: "flex", flexDirection: "row"}}>
-                  <Paragraph style={styles.cardLocation}>{eventElement.location}</Paragraph>
-                  <Paragraph style={styles.cardDate}>{eventElement.date.slice(0, 10)}</Paragraph>
-                </View>
-              </Card.Content>
-            </Card>
+            <TouchableOpacity onPress={() => {navigation.navigate('Event Location', {location: eventElement.hashed})}}>
+              <Card key={eventElement._id} style={styles.eventCard}>
+                <Card.Content style={styles.mapContainer}>
+                  <EventMap location={eventElement.hashed} />
+                </Card.Content>
+                <Card.Content style={styles.cardContent}>
+                  <Title style={styles.cardName}>{eventElement.name}</Title>
+                  <View style={{display: "flex", flexDirection: "row"}}>
+                    <Paragraph style={styles.cardLocation}>{eventElement.location}</Paragraph>
+                    <Paragraph style={styles.cardDate}>{eventElement.date.slice(0, 10)}</Paragraph>
+                  </View>
+                </Card.Content>
+                <Card.Actions style={styles.cardActions}>
+                  <IconButton 
+                    icon="delete"
+                    color="#242424" 
+                    onPress={() => {
+                      axios({
+                        url: `/community/events/${eventElement._id}`,
+                        method: 'DELETE',
+                        headers: {
+                          access_token
+                        }
+                      })
+                        .then(res => {
+                          dispatch(fetchCommunity(access_token))
+                        })
+                        .catch(err => {
+                          dispatch(setError(err.response.data.message))
+                        })
+                    }}
+                  >Delete</IconButton>
+                </Card.Actions>
+              </Card>
+            </TouchableOpacity>
           ))
         }
       </ScrollView>
@@ -304,7 +328,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   eventCard: {
-    height: 240,
+    height: 280,
     width: 340,
     borderRadius: 20,
     marginHorizontal: 15,
@@ -326,8 +350,9 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
   },
   cardName: {
-    fontSize: 18,
+    fontSize: 20,
     alignContent: "center",
+    fontWeight: 'bold',
     // paddingTop: 10,
     color: "#242424",
     fontFamily: "Jost",
@@ -343,6 +368,9 @@ const styles = StyleSheet.create({
     flex: 1,
     color: "#242424",
     fontFamily: "Jost",
+  },
+  cardActions: {
+    flex: 1,
   },
   modal: {
     backgroundColor: "#242424",

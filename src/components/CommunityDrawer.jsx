@@ -2,6 +2,7 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { Leaderboard, WaitingList, Events, Members } from '../pages/index'
 import { useSelector } from 'react-redux'
+import EventStack from './EventStack';
 
 const Drawer = createDrawerNavigator()
 
@@ -25,7 +26,7 @@ function CommunityDrawer () {
       }}
     >
       <Drawer.Screen name="Leaderboard" component={Leaderboard} />
-      <Drawer.Screen name="Events" component={Events} />
+      <Drawer.Screen name="Events" component={EventStack} />
       <Drawer.Screen name="Members" component={Members} />
       {
         profile?.role === 'admin' && <Drawer.Screen name="Waiting List" component={WaitingList} /> 

@@ -12,6 +12,7 @@ function StartRun({ route, Navigation }) {
   const [ locationRun, setLocationRun ] = useState([])
   const dispatch = useDispatch()
   const access_token = useSelector(state => state.access_token)
+  const profile = useSelector(state => state.profile)
 
 
   useEffect(() => {
@@ -34,6 +35,10 @@ function StartRun({ route, Navigation }) {
 
   function setLocation (location) {
     setLocationRun(location)
+  }
+
+  if (profile) {
+    console.log(profile)
   }
 
   function trackRun () {

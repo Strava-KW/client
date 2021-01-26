@@ -32,7 +32,7 @@ function Leaderboard () {
                 <View style={styles.posContainer}>
                   <Text style={{ fontSize: 32, alignSelf: 'center', justifyContent: 'center', fontWeight: '600', fontFamily: 'Jost', color: '#FA8135'}}>{index + 1}.</Text>
                 </View>
-                <Avatar.Text style={styles.avatarContainer} size={54} color="orange" label={member.fullname[0]}></Avatar.Text>
+                <Avatar.Text style={styles.avatarContainer} size={54} color="#242424" label={member.fullname[0]}></Avatar.Text>
                 <View style={styles.detailContainer}>
                   <Text style={{ fontSize: 21, fontWeight: '600', fontFamily: 'Jost', color: '#FA8135' }}>{member.fullname}</Text>
                   <Text style={{ fontSize: 14, fontWeight: '400', fontFamily: 'Jost', color: '#FA8135' }}>Distances total: {member.totalRange.toFixed(2)} km</Text>
@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 15
+    marginRight: 15,
+    backgroundColor: '#FA8135'
   },
   detailContainer: {
     flex: 3,

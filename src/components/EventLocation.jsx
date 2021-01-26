@@ -10,7 +10,7 @@ import Toast from 'react-native-toast-message';
 
 export default function EventLocation(props) {
   const [location, setLocation] = useState([]);
-  const [locationNow, setLocationNow] = useState(null);
+  const [locationNow, setLocationNow] = useState({latitude: 0, longitude:0});
   const [loading, setLoading] = useState(true)
   const [eventLocation, setEventLocation] = useState({
     latitude: 0,
@@ -47,7 +47,7 @@ export default function EventLocation(props) {
       );
       axios
         .get(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${props.location}&key=AIzaSyC_bUeG0cXpov1tAARI3M8T1r9-uTD0h4g`
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${props.route.params.location}&key=AIzaSyC_bUeG0cXpov1tAARI3M8T1r9-uTD0h4g`
         )
         .then((res) => {
           setEventLocation({
@@ -70,6 +70,11 @@ export default function EventLocation(props) {
         });
     })();
   }, []);
+
+  if (props.route.params) {
+    console.log(props.route.params)
+    console.log(eventLocation)
+  }
 
   if (loading) return <View><Text>Loading ...</Text></View> // styling
 

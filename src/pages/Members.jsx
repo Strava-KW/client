@@ -28,7 +28,7 @@ function Members () {
           communities?.members?.map(member => (
             <Card style={styles.personCard} key={member._id}>
               <Card.Content style={styles.person}>
-                <Avatar.Text style={styles.avatarContainer} size={48} color="orange" label={member.fullname[0]}></Avatar.Text>
+                <Avatar.Text style={styles.avatarContainer} size={48} color="#242424" label={member.fullname[0]}></Avatar.Text>
                 <View style={styles.nameContainer}>
                   <Text style={{ fontSize: 21, fontWeight: '600', fontFamily: 'Jost', color: '#f48924' }}>{member.fullname}</Text>
                   <Text style={{ fontSize: 15, fontWeight: '600', fontFamily: 'Jost', color: '#e6e6e6' }}>{member.role}</Text>
@@ -85,8 +85,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   avatarContainer: {
+    alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 20,
+    marginRight: 15,
+    backgroundColor: '#FA8135'
   },
   nameContainer: {
     flex: 2,
