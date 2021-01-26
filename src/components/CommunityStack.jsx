@@ -1,7 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import CommunityDrawer from "./CommunityDrawer";
-import GooglePlacesInput from "./GooglePlacesInput";
 import { Community } from "../pages";
 import { useSelector } from "react-redux";
 
@@ -26,11 +25,6 @@ function CommunityStack() {
             options={{ headerShown: false }}
           />
         )}
-        <Stack.Screen
-          name="GoogleSearch"
-          component={GooglePlacesInput}
-          options={{ headerShown: false }}
-        />
       </Stack.Navigator>
     );
   }

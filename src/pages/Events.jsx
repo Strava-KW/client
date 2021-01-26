@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, Text } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import {
   Avatar,
   Button,
@@ -11,9 +19,9 @@ import {
   Modal,
   Portal,
 } from "react-native-paper";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { StyleSheet, Dimensions } from "react-native";
-import { EventLocation, GooglePlacesInput } from "../components";
+import axios from "axios";
+
+import { EventLocation } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCommunity } from "../store/actions";
 
@@ -27,12 +35,34 @@ function Events({ navigation }) {
   const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const API_KEY = "AIzaSyC_bUeG0cXpov1tAARI3M8T1r9-uTD0h4g";
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isShowingResults, setIsShowingResults] = useState(false);
 
   useEffect(() => {
     if (access_token) {
       dispatch(fetchCommunity(access_token));
     }
   }, [access_token]);
+
+  searchLocation = async (text) => {
+    try {
+      setSearchKeyword(text);
+      axios
+        .request({
+          method: "post",
+          url: `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${API_KEY}&input=${searchKeyword}`,
+        })
+        .then((response) => {
+          console.log(response.data);
+          setSearchResults(response.data.predictions);
+          setIsShowingResults(true);
+        });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -43,7 +73,8 @@ function Events({ navigation }) {
         mode="contained"
         color="#FA8135"
         style={styles.createButton}
-        onPress={navigation.navigate("GoogleSearch")}
+        onPress={showModal}
+        // onPress={() => navigation.navigate("GoogleSearch")}
       >
         Create Event
       </Button>
@@ -81,10 +112,11 @@ function Events({ navigation }) {
         >
           <Headline style={styles.headline}>Event Name</Headline>
           <TextInput
-            label="e.g. Happy Run at Monas"
+            label="Event Name"
+            placeholder="e.g. Happy Run at Monas"
             value={eventName}
             onChangeText={(eventName) => setEventName(eventName)}
-            mode="outlined"
+            mode="flat"
             selectionColor="#FA8135"
             underlineColor="#FA8135"
             style={styles.formField}
@@ -99,9 +131,10 @@ function Events({ navigation }) {
           />
           <TextInput
             label="Date"
+            placeholder="e.g. 14/02/2021"
             value={date}
             onChangeText={(date) => setDate(date)}
-            mode="outlined"
+            mode="flat"
             selectionColor="#FA8135"
             underlineColor="#FA8135"
             style={styles.formField}
@@ -116,9 +149,10 @@ function Events({ navigation }) {
           />
           <TextInput
             label="Time"
+            placeholder="e.g. 08.30"
             value={time}
             onChangeText={(time) => setTime(time)}
-            mode="outlined"
+            mode="flat"
             selectionColor="#FA8135"
             underlineColor="#FA8135"
             style={styles.formField}
@@ -131,7 +165,48 @@ function Events({ navigation }) {
               },
             }}
           />
-          <GooglePlacesInput />
+
+          <View>
+            <TextInput
+              placeholder="Search for an address"
+              style={styles.formField}
+              mode="outlined"
+              onChangeText={(text) => {
+                searchLocation(text);
+              }}
+              label="Meeting Point"
+              value={searchKeyword}
+              theme={{
+                colors: {
+                  placeholder: "orange",
+                  text: "white",
+                  primary: "orange",
+                  background: "#242424",
+                },
+              }}
+            />
+            {isShowingResults && (
+              <FlatList
+                data={searchResults}
+                renderItem={({ item, index }) => {
+                  return (
+                    <TouchableOpacity
+                      style={styles.resultItem}
+                      onPress={() => {
+                        setSearchKeyword(item.structured_formatting.main_text);
+                        setIsShowingResults(false);
+                      }}
+                    >
+                      <Text>{item.structured_formatting.main_text}</Text>
+                    </TouchableOpacity>
+                  );
+                }}
+                keyExtractor={(item) => item.id}
+                style={styles.searchResultsContainer}
+              />
+            )}
+          </View>
+
           <Button
             style={styles.createEventButton}
             color="#FA8135"
@@ -181,6 +256,7 @@ function Events({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#323232",
   },
@@ -198,10 +274,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   eventContainer: {
+    width: Dimensions.get("window").width - 24,
     // height: '70%',
     backgroundColor: "#242424",
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    // alignItems: "center",
+    // justifyContent: "center",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
   },
@@ -218,10 +295,10 @@ const styles = StyleSheet.create({
   },
   eventCard: {
     height: 240,
-    width: 320,
+    width: 340,
     borderRadius: 20,
-    marginHorizontal: 25,
-    marginTop: 30,
+    marginHorizontal: 15,
+    marginTop: 20,
     marginBottom: 5,
     alignSelf: "center",
     shadowColor: "#000",
@@ -278,6 +355,36 @@ const styles = StyleSheet.create({
     height: 40,
     alignSelf: "center",
     backgroundColor: "#FA8135",
+    zIndex: 0,
+  },
+  searchResultsContainer: {
+    width: 320,
+    height: 200,
+    backgroundColor: "#fff",
+    zIndex: 1,
+    alignSelf: "center",
+  },
+
+  resultItem: {
+    width: "100%",
+    justifyContent: "center",
+    height: 40,
+    borderBottomColor: "#ccc",
+    borderBottomWidth: 1,
+    paddingLeft: 15,
+    zIndex: 2,
+  },
+  searchBox: {
+    width: 320,
+    height: 50,
+    fontSize: 18,
+    borderRadius: 8,
+    borderColor: "#aaa",
+    color: "#000",
+    backgroundColor: "#fff",
+    borderWidth: 1.5,
+    paddingLeft: 15,
+    alignSelf: "center",
   },
 });
 

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,80 +6,67 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
-  SafeAreaView,
 } from "react-native";
 import axios from "axios";
 
-const API_KEY = "AIzaSyC_bUeG0cXpov1tAARI3M8T1r9-uTD0h4g";
-export default function Component({navigation})=> {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     searchKeyword: "",
-  //     searchResults: [],
-  //     isShowingResults: false,
-  //   };
-  // }
-  const [searchKeyword, setSearchKeyword]= useState('')
-  const [searchResults, setSearchResults]= useState([])
-  const [isShowingResults, setIsShowingResults]= useState(false)
+export default function GooglePlacesInput(props) {
+  const API_KEY = "AIzaSyC_bUeG0cXpov1tAARI3M8T1r9-uTD0h4g";
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isShowingResults, setIsShowingResults] = useState(false);
 
   searchLocation = async (text) => {
-    setSearchKeyword(text);
-    axios
-      .request({
-        method: "post",
-        url: `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${API_KEY}&input=${searchKeyword}`,
-      })
-      .then((response) => {
+    try {
+      setSearchKeyword(text);
+      axios
+        .request({
+          method: "post",
+          url: `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${API_KEY}&input=${searchKeyword}`,
+        })
+        .then((response) => {
           console.log(response.data);
-          setSearchResults(response.data.predictions)
-          setIsShowingResults(true)
+          setSearchResults(response.data.predictions);
+          setIsShowingResults(true);
         });
-      })
-      .catch((e) => {
-        console.log(e.response);
-      });
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
-  render() {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.autocompleteContainer}>
-          <TextInput
-            placeholder="Search for an address"
-            returnKeyType="search"
-            style={styles.searchBox}
-            placeholderTextColor="#000"
-            onChangeText={(text) => tsearchLocation(text)}
-            value={searchKeyword}
-          />
-          {isShowingResults && (
-            <FlatList
-              data={searchResults}
-              renderItem={({ item, index }) => {
-                return (
-                  <TouchableOpacity
-                    style={styles.resultItem}
-                    onPress={() =>{
-                      setSearchKeyword(item.description)
-                      setIsShowingResults(false)
-
-                    }}
-                  >
-                    <Text>{item.description}</Text>
-                  </TouchableOpacity>
-                );
-              }}
-              keyExtractor={(item) => item.id}
-              style={styles.searchResultsContainer}
-            />
-          )}
-        </View>
-        <View style={styles.dummmy} />
-      </SafeAreaView>
-    );
-  }
+  return (
+    <View>
+      <TextInput
+        placeholder="Search for an address"
+        returnKeyType="search"
+        style={styles.searchBox}
+        placeholderTextColor="#000"
+        onChangeText={(text) => {
+          searchLocation(text);
+        }}
+        value={searchKeyword}
+      />
+      {isShowingResults && (
+        <FlatList
+          data={searchResults}
+          renderItem={({ item, index }) => {
+            return (
+              <TouchableOpacity
+                style={styles.resultItem}
+                onPress={() => {
+                  setSearchKeyword(item.structured_formatting.main_text);
+                  setIsShowingResults(false);
+                }}
+              >
+                <Text>{item.structured_formatting.main_text}</Text>
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={(item) => item.id}
+          style={styles.searchResultsContainer}
+        />
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -93,12 +80,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 50,
   },
-  dummmy: {
-    width: 600,
-    height: 200,
-    backgroundColor: "hotpink",
-    marginTop: 20,
-  },
+
   resultItem: {
     width: "100%",
     justifyContent: "center",
@@ -117,10 +99,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderWidth: 1.5,
     paddingLeft: 15,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "lightblue",
-    alignItems: "center",
   },
 });
