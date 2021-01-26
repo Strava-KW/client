@@ -20,7 +20,6 @@ import {
   Portal,
 } from "react-native-paper";
 import axios from "axios";
-
 import { EventLocation } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCommunity } from "../store/actions";
@@ -55,7 +54,7 @@ function Events({ navigation }) {
           url: `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${API_KEY}&input=${searchKeyword}`,
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setSearchResults(response.data.predictions);
           setIsShowingResults(true);
         });
@@ -74,7 +73,6 @@ function Events({ navigation }) {
         color="#FA8135"
         style={styles.createButton}
         onPress={showModal}
-        // onPress={() => navigation.navigate("GoogleSearch")}
       >
         Create Event
       </Button>
@@ -102,8 +100,11 @@ function Events({ navigation }) {
         <Modal
           visible={visible}
           onDismiss={() => {
-            hideModal(), setEventName(""), setEventName("");
+            hideModal();
+            setEventName("");
+            setEventName("");
             setDate("");
+            setSearchKeyword("");
             setTime("");
           }}
           contentContainerStyle={styles.modal}
@@ -131,7 +132,7 @@ function Events({ navigation }) {
           />
           <TextInput
             label="Date"
-            placeholder="e.g. 14/02/2021"
+            placeholder="YYYY-MM-DD"
             value={date}
             onChangeText={(date) => setDate(date)}
             mode="flat"
@@ -147,9 +148,10 @@ function Events({ navigation }) {
               },
             }}
           />
+
           <TextInput
             label="Time"
-            placeholder="e.g. 08.30"
+            placeholder="HH:MM"
             value={time}
             onChangeText={(time) => setTime(time)}
             mode="flat"
@@ -214,34 +216,38 @@ function Events({ navigation }) {
             dark={true}
             mode="contained"
             onPress={() => {
-              console.log(eventName);
-              setEventName("");
-              setDate("");
-              setTime("");
+              console.log("DATA >>", eventName, date, time, searchKeyword);
+
               hideModal();
-              // axios({
-              //   url: "/community",
-              //   method: "POST",
-              //   data: {
-              //     name: communityName,
-              //   },
-              //   headers: {
-              //     access_token,
-              //   },
-              // })
-              //   .then((res) => {
-              //     console.log(res.data);
-              //     setCommunityName("");
-              //     navigation.replace("Runator", { screen: "Start" });
-              //   })
-              //   .catch((err) => {
-              //     dispatch(setError(err.response.data.message));
-              //     console.log(
-              //       err.response.data.message,
-              //       "<==== ini dari catch"
-              //     );
-              //     setCommunityName("");
-              //   });
+              axios({
+                url: "/events",
+                method: "POST",
+                data: {
+                  name: eventName,
+                  date,
+                  time,
+                  location: searchKeyword,
+                },
+                // headers: {
+                //   access_token,
+                // },
+              })
+                .then((res) => {
+                  console.log(res.data);
+                  setEventName("");
+                  setDate("");
+                  setTime("");
+                  setSearchKeyword("");
+                  navigation.replace("Runator", { screen: "Start" });
+                })
+                .catch((err) => {
+                  dispatch(setError(err.response.data.message));
+                  console.log(
+                    err.response.data.message,
+                    "<==== ini dari catch"
+                  );
+                  setCommunityName("");
+                });
             }}
             labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
           >
