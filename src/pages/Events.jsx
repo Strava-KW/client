@@ -19,15 +19,16 @@ import {
   Modal,
   Portal,
 } from "react-native-paper";
-import axios from "axios";
+import axios from "../../config/axios";
 import { EventLocation } from "../components";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCommunity } from "../store/actions";
+import { fetchCommunity, setError } from "../store/actions";
 
 function Events({ navigation }) {
   const dispatch = useDispatch();
   const communities = useSelector((state) => state.communities);
   const access_token = useSelector((state) => state.access_token);
+  const error = useSelector((state) => state.error)
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -63,6 +64,9 @@ function Events({ navigation }) {
     }
   };
 
+  if (error) {
+    console.log(error)
+  }
   return (
     <View style={styles.container}>
       <Title style={styles.title}>Events</Title>
@@ -79,7 +83,7 @@ function Events({ navigation }) {
       <ScrollView style={styles.eventContainer}>
         {
           communities?.events?.map(eventElement => (
-            <Card style={styles.eventCard}>
+            <Card key={communities.events._id} style={styles.eventCard}>
               <Card.Content style={styles.mapContainer}>
                 <EventLocation location={eventElement.hashed}/>
               </Card.Content>
@@ -218,7 +222,7 @@ function Events({ navigation }) {
 
               hideModal();
               axios({
-                url: "/events",
+                url: "/community/events/",
                 method: "POST",
                 data: {
                   name: eventName,
@@ -226,9 +230,9 @@ function Events({ navigation }) {
                   time,
                   location: searchKeyword,
                 },
-                // headers: {
-                //   access_token,
-                // },
+                headers: {
+                  access_token
+                },
               })
                 .then((res) => {
                   console.log(res.data);
@@ -236,7 +240,8 @@ function Events({ navigation }) {
                   setDate("");
                   setTime("");
                   setSearchKeyword("");
-                  navigation.replace("Runator", { screen: "Start" });
+                  dispatch(fetchCommunity(access_token));
+                  // navigation.replace("Runator", { screen: "Start" });
                 })
                 .catch((err) => {
                   dispatch(setError(err.response.data.message));
@@ -244,7 +249,7 @@ function Events({ navigation }) {
                     err.response.data.message,
                     "<==== ini dari catch"
                   );
-                  setCommunityName("");
+                  // setCommunityName("");
                 });
             }}
             labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
