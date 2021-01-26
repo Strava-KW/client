@@ -20,9 +20,10 @@ import {
   Portal,
 } from "react-native-paper";
 import axios from "../../config/axios";
-import { EventLocation } from "../components";
+// import { EventLocation } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCommunity, setError } from "../store/actions";
+import { EventMap } from '../components'
 
 function Events({ navigation }) {
   const dispatch = useDispatch();
@@ -85,7 +86,7 @@ function Events({ navigation }) {
           communities?.events?.map(eventElement => (
             <Card key={communities.events._id} style={styles.eventCard}>
               <Card.Content style={styles.mapContainer}>
-                <EventLocation location={eventElement.hashed}/>
+                <EventMap location={eventElement.hashed} />
               </Card.Content>
               <Card.Content style={styles.cardContent}>
                 <Title style={styles.cardName}>{eventElement.name}</Title>

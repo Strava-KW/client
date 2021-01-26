@@ -2,14 +2,10 @@ import React, { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import * as Location from "expo-location";
-// import * as TaskManager from 'expo-task-manager'
 import mapStyle from "../constant/mapStyle.json";
 import axios from "axios";
-import MapViewDirections from "react-native-maps-directions";
 
-export default function EventLocation(props) {
-  const [location, setLocation] = useState([]);
-  const [locationNow, setLocationNow] = useState(null);
+export default function EventMap(props) {
   const [loading, setLoading] = useState(true)
   const [eventLocation, setEventLocation] = useState({
     latitude: 0,
@@ -25,25 +21,6 @@ export default function EventLocation(props) {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-      await Location.watchPositionAsync(
-        {
-          accuracy: Location.Accuracy.Highest,
-          distanceInterval: 10,
-        },
-        (loc) => {
-          setLocationNow({
-            latitude: loc.coords.latitude,
-            longitude: loc.coords.longitude,
-          });
-          setLocation((data) => [
-            ...data,
-            {
-              latitude: loc.coords.latitude,
-              longitude: loc.coords.longitude,
-            },
-          ]);
-        }
-      );
 
       axios
         .get(
@@ -60,28 +37,19 @@ export default function EventLocation(props) {
   }, []);
 
   if (loading) return <View><Text>Loading ...</Text></View>
-
   return (
     <MapView
       style={styles.map}
       customMapStyle={mapStyle}
       showUserLocation={true}
-      region={{
-        latitude: locationNow?.latitude,
-        longitude: locationNow?.longitude,
+      initialRegion={{
+        latitude: eventLocation?.latitude,
+        longitude: eventLocation?.longitude,
         latitudeDelta: 0.015,
         longitudeDelta: 0.01,
       }}
     >
       <Marker coordinate={eventLocation} />
-      <Marker coordinate={locationNow} />
-      <MapViewDirections
-        origin={locationNow}
-        destination={eventLocation}
-        apikey="AIzaSyC_bUeG0cXpov1tAARI3M8T1r9-uTD0h4g"
-        strokeWidth={2}
-        strokeColor="#FA8135"
-      />
     </MapView>
   );
 }
@@ -93,7 +61,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    width: "100%",
+    height: "100%",
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingLeft: 0,
+    borderRadius: 30,
   },
 });
