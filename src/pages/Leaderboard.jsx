@@ -15,16 +15,18 @@ function Leaderboard () {
     }
   }, [access_token])
 
-  if (communities) {
-    console.log(communities.members)
-  }
+  // if (communities) {
+  //   console.log(communities.members)
+  // }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Leaderboard </Text>
       <ScrollView style={styles.leaderboard}>
         {
-          communities?.members?.map((member, index) => (
+          communities?.members?.sort(function (memberA,memberB) {
+            return memberB.totalRange - memberA.totalRange
+          }).map((member, index) => (
             <Card style={styles.rankCard} key={member._id}>
               <Card.Content style={styles.rank}>
                 <View style={styles.posContainer}>
