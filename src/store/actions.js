@@ -35,7 +35,7 @@ export const fetchCommunity = (access_token) => (dispatch, getState) => {
       dispatch(setCommunities(res.data))
     })
     .catch(err => {
-      dispatch(setError(err.response.data.message))
+      dispatch(setError(err))
     })
 }
 

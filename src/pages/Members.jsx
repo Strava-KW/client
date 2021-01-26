@@ -25,15 +25,7 @@ function Members () {
       <Text style={styles.title}> Community Members </Text>
       <ScrollView style={styles.waitingList}>
         {
-          communities?.members?.sort(function (memberA,memberB) {
-            if (memberA.role < memberB.role) {
-              return -1;
-            }
-            if (memberA.role > memberB.role) {
-              return 1;
-            }
-            return 0;
-          }).map(member => (
+          communities?.members?.map(member => (
             <Card style={styles.personCard} key={member._id}>
               <Card.Content style={styles.person}>
                 <Avatar.Text style={styles.avatarContainer} size={48} color="orange" label={member.fullname[0]}></Avatar.Text>

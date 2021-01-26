@@ -15,20 +15,22 @@ function StartRun({ route, Navigation }) {
 
 
   useEffect(() => {
-    axios({
-      url: '/profile',
-      method: 'GET',
-      headers: {
-        access_token: access_token
-      }
-    })
-      .then(res => {
-        dispatch(setProfile(res.data))
+    if (access_token) {
+      axios({
+        url: '/profile',
+        method: 'GET',
+        headers: {
+          access_token: access_token
+        }
       })
-      .catch(err => {
-        dispatch(setError(err.response.data))
-      })
-  }, [])
+        .then(res => {
+          dispatch(setProfile(res.data))
+        })
+        .catch(err => {
+          dispatch(setError(err.response.data))
+        })
+    }
+  }, [access_token])
 
   function setLocation (location) {
     setLocationRun(location)

@@ -29,6 +29,7 @@ function Community({ navigation }) {
   useEffect(() => {
     if (access_token) {
       dispatch(fetchCommunity(access_token));
+      console.log("use effect dari community")
     }
   }, [access_token]);
 
@@ -55,129 +56,137 @@ function Community({ navigation }) {
     console.log(profile);
   }
 
-  return (
-    <View style={styles.container}>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
-      {communities && !communities.message && (
-        <View>
-          <Text style={styles.subtitle}> Create a Community </Text>
-          <Button
-            icon="plus"
-            mode="contained"
-            color="#FA8135"
-            onPress={showModal}
-          >
-            {" "}
-            Create{" "}
-          </Button>
-        </View>
-      )}
-      {communities && communities.length > 0 && (
-        <Text style={styles.subtitle}>or Join a Community</Text>
-      )}
-      <ScrollView>
-        {communities?.message ? (
-          <Text style={styles.subtitle}>{communities.message}</Text>
-        ) : (
-          communities?.map((community) => (
-            <Card style={styles.communityCard} key={community._id}>
-              <Card.Content style={styles.communityCardContent}>
-                <Title
-                  style={{ color: "#FA8135", fontFamily: "Jost", fontSize: 21 }}
-                >
-                  {community.name}
-                </Title>
-                <Paragraph
-                  style={{ color: "#FA8135", fontFamily: "Jost", fontSize: 16 }}
-                >
-                  Members: {community.members.length}
-                </Paragraph>
-              </Card.Content>
-              <Card.Actions
-                style={{ flexDirection: "row-reverse", marginLeft: 10 }}
-              >
-                <Button
-                  color="#FA8135"
-                  onPress={() => handleJoin(community._id)}
-                >
-                  Join
-                </Button>
-              </Card.Actions>
-            </Card>
-          ))
+  if (communities) {
+    return (
+      <View style={styles.container}>
+        <Toast ref={(ref) => Toast.setRef(ref)} />
+        {communities && !communities.message && (
+          <View>
+            <Text style={styles.subtitle}> Create a Community </Text>
+            <Button
+              icon="plus"
+              mode="contained"
+              color="#FA8135"
+              onPress={showModal}
+            >
+              {" "}
+              Create{" "}
+            </Button>
+          </View>
         )}
-      </ScrollView>
-      <Portal>
-        <Modal
-          visible={visible}
-          onDismiss={() => {
-            hideModal(), setCommunityName("");
-          }}
-          contentContainerStyle={styles.modal}
-          animationType={"fade"}
-          transparent={true}
-        >
-          <Headline style={styles.headline}>Community Name</Headline>
-          <TextInput
-            label="e.g. Depok Runner"
-            value={communityName}
-            onChangeText={(communityName) => setCommunityName(communityName)}
-            mode="outlined"
-            selectionColor="#FA8135"
-            underlineColor="#FA8135"
-            style={styles.formField}
-            theme={{
-              colors: {
-                placeholder: "orange",
-                text: "white",
-                primary: "orange",
-                background: "#242424",
-              },
+        {communities && communities.length > 0 && (
+          <Text style={styles.subtitle}>or Join a Community</Text>
+        )}
+        <ScrollView>
+          { communities &&
+            communities?.message ? (
+            <Text style={styles.subtitle}>{communities?.message}</Text>
+          ) : (
+            communities?.map((community) => (
+              <Card style={styles.communityCard} key={community._id}>
+                <Card.Content style={styles.communityCardContent}>
+                  <Title
+                    style={{ color: "#FA8135", fontFamily: "Jost", fontSize: 21 }}
+                  >
+                    {community.name}
+                  </Title>
+                  <Paragraph
+                    style={{ color: "#FA8135", fontFamily: "Jost", fontSize: 16 }}
+                  >
+                    Members: {community.members.length}
+                  </Paragraph>
+                </Card.Content>
+                <Card.Actions
+                  style={{ flexDirection: "row-reverse", marginLeft: 10 }}
+                >
+                  <Button
+                    color="#FA8135"
+                    onPress={() => handleJoin(community._id)}
+                  >
+                    Join
+                  </Button>
+                </Card.Actions>
+              </Card>
+            ))
+          )}
+        </ScrollView>
+        <Portal>
+          <Modal
+            visible={visible}
+            onDismiss={() => {
+              hideModal(), setCommunityName("");
             }}
-          />
-          <Button
-            style={styles.createCommunityButton}
-            color="#FA8135"
-            uppercase={false}
-            dark={true}
-            mode="contained"
-            onPress={() => {
-              console.log(communityName);
-              setCommunityName("");
-              hideModal();
-              axios({
-                url: "/community",
-                method: "POST",
-                data: {
-                  name: communityName,
-                },
-                headers: {
-                  access_token,
-                },
-              })
-                .then((res) => {
-                  console.log(res.data);
-                  setCommunityName("");
-                  navigation.replace("Runator", { screen: "Start" });
-                })
-                .catch((err) => {
-                  dispatch(setError(err.response.data.message));
-                  navigation.replace("Runator", { screen: "Start" });
-                  console.log(
-                    err.response.data.message,
-                    "<==== ini dari catch"
-                  );
-                  setCommunityName("");
-                });
-            }}
-            labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
+            contentContainerStyle={styles.modal}
+            animationType={"fade"}
+            transparent={true}
           >
-            Create
-          </Button>
-        </Modal>
-      </Portal>
+            <Headline style={styles.headline}>Community Name</Headline>
+            <TextInput
+              label="e.g. Depok Runner"
+              value={communityName}
+              onChangeText={(communityName) => setCommunityName(communityName)}
+              mode="outlined"
+              selectionColor="#FA8135"
+              underlineColor="#FA8135"
+              style={styles.formField}
+              theme={{
+                colors: {
+                  placeholder: "orange",
+                  text: "white",
+                  primary: "orange",
+                  background: "#242424",
+                },
+              }}
+            />
+            <Button
+              style={styles.createCommunityButton}
+              color="#FA8135"
+              uppercase={false}
+              dark={true}
+              mode="contained"
+              onPress={() => {
+                console.log(communityName);
+                setCommunityName("");
+                hideModal();
+                axios({
+                  url: "/community",
+                  method: "POST",
+                  data: {
+                    name: communityName,
+                  },
+                  headers: {
+                    access_token,
+                  },
+                })
+                  .then((res) => {
+                    console.log(res.data);
+                    setCommunityName("");
+                    navigation.replace("Runator", { screen: "Start" });
+                  })
+                  .catch((err) => {
+                    dispatch(setError(err.response.data.message));
+                    navigation.replace("Runator", { screen: "Start" });
+                    console.log(
+                      err.response.data.message,
+                      "<==== ini dari catch"
+                    );
+                    setCommunityName("");
+                  });
+              }}
+              labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
+            >
+              Create
+            </Button>
+          </Modal>
+        </Portal>
+      </View>
+    );
+  }
+  else {
+    <View>
+      <Text>Loading ...</Text>
     </View>
-  );
+  }
 }
 
 const styles = StyleSheet.create({
