@@ -2,7 +2,6 @@
 import React, {useEffect, useState, useCallback} from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
-import AsyncStorage from '@react-native-community/async-storage'
 import * as firebase from 'firebase'
 import 'firebase/firestore'
 import { useSelector, useDispatch } from 'react-redux'
@@ -33,7 +32,9 @@ export default function Chat() {
   const [user, setUser] = useState({id: null, name: null})
   const [messages, setMessages] = useState([])
   let chatsRef;
+
   if (communities) {
+    console.log(communities)
     chatsRef = db.collection(communities._id.toString())
   }
   useEffect(() => {
@@ -60,7 +61,7 @@ export default function Chat() {
       })
       return () => unsubscribe()
     }
-  }, [chatsRef])
+  }, [])
 
   const appendMessages = useCallback((messages) => {
         setMessages((previousMessages) => GiftedChat.append(previousMessages, messages))
