@@ -20,7 +20,7 @@ import {
   Portal,
 } from "react-native-paper";
 import axios from "../../config/axios";
-import { EventLocation } from "../components";
+import EventLocation from "../components/EventLocation";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCommunity, setError } from "../store/actions";
 
@@ -28,7 +28,7 @@ function Events({ navigation }) {
   const dispatch = useDispatch();
   const communities = useSelector((state) => state.communities);
   const access_token = useSelector((state) => state.access_token);
-  const error = useSelector((state) => state.error)
+  const error = useSelector((state) => state.error);
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -46,7 +46,7 @@ function Events({ navigation }) {
     }
   }, [access_token]);
 
-  searchLocation = async (text) => {
+  const searchLocation = async (text) => {
     try {
       setSearchKeyword(text);
       axios
@@ -65,7 +65,7 @@ function Events({ navigation }) {
   };
 
   if (error) {
-    console.log(error)
+    console.log(error);
   }
   return (
     <View style={styles.container}>
@@ -81,22 +81,24 @@ function Events({ navigation }) {
         Create Event
       </Button>
       <ScrollView style={styles.eventContainer}>
-        {
-          communities?.events?.map(eventElement => (
-            <Card key={communities.events._id} style={styles.eventCard}>
-              <Card.Content style={styles.mapContainer}>
-                <EventLocation location={eventElement.hashed}/>
-              </Card.Content>
-              <Card.Content style={styles.cardContent}>
-                <Title style={styles.cardName}>{eventElement.name}</Title>
-                <View style={{display: "flex", flexDirection: "row"}}>
-                  <Paragraph style={styles.cardLocation}>{eventElement.location}</Paragraph>
-                  <Paragraph style={styles.cardDate}>{eventElement.date.slice(0, 10)}</Paragraph>
-                </View>
-              </Card.Content>
-            </Card>
-          ))
-        }
+        {communities?.events?.map((eventElement) => (
+          <Card key={eventElement._id} style={styles.eventCard}>
+            <Card.Content style={styles.mapContainer}>
+              <EventLocation location={eventElement.hashed} />
+            </Card.Content>
+            <Card.Content style={styles.cardContent}>
+              <Title style={styles.cardName}>{eventElement.name}</Title>
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <Paragraph style={styles.cardLocation}>
+                  {eventElement.location}
+                </Paragraph>
+                <Paragraph style={styles.cardDate}>
+                  {eventElement.date.slice(0, 10)}
+                </Paragraph>
+              </View>
+            </Card.Content>
+          </Card>
+        ))}
       </ScrollView>
       <Portal>
         <Modal
@@ -195,6 +197,7 @@ function Events({ navigation }) {
                 renderItem={({ item, index }) => {
                   return (
                     <TouchableOpacity
+                      key={index}
                       style={styles.resultItem}
                       onPress={() => {
                         setSearchKeyword(item.structured_formatting.main_text);
@@ -231,7 +234,7 @@ function Events({ navigation }) {
                   location: searchKeyword,
                 },
                 headers: {
-                  access_token
+                  access_token,
                 },
               })
                 .then((res) => {
