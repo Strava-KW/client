@@ -8,10 +8,12 @@ import { setProfile, setError } from "../store/actions";
 import axios from "../../config/axios";
 
 function StartRun({ route, Navigation }) {
-  const [showMap, setShowMap] = useState(false);
-  const [locationRun, setLocationRun] = useState([]);
-  const dispatch = useDispatch();
-  const access_token = useSelector((state) => state.access_token);
+  const [ showMap, setShowMap ] = useState(false)
+  const [ locationRun, setLocationRun ] = useState([])
+  const dispatch = useDispatch()
+  const access_token = useSelector(state => state.access_token)
+  const profile = useSelector(state => state.profile)
+
 
   useEffect(() => {
     if (access_token) {
@@ -35,7 +37,11 @@ function StartRun({ route, Navigation }) {
     setLocationRun(location);
   }
 
-  function trackRun() {
+  if (profile) {
+    console.log(profile)
+  }
+
+  function trackRun () {
     axios({
       url: "/history",
       method: "POST",
