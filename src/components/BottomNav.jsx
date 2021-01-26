@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import { StartRun, History } from "../pages";
-import { CommunityStack } from "../components/index";
+import { StartRun, History } from "../pages/index";
+import CommunityStack from "../components/CommunityStack";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -22,7 +22,6 @@ function BottomNav() {
         },
         shadowOpacity: 0.5,
         shadowRadius: 6.5,
-
         elevation: 10,
       }}
     >
