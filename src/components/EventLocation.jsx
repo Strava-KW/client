@@ -6,8 +6,9 @@ import * as Location from "expo-location";
 import mapStyle from "../constant/mapStyle.json";
 import axios from "axios";
 import MapViewDirections from "react-native-maps-directions";
+import Toast from 'react-native-toast-message';
 
-export default function EventLocation(props) {
+export default function EventLocation(props, { navigation }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState([]);
   const [locationNow, setLocationNow] = useState(null);
@@ -46,7 +47,6 @@ export default function EventLocation(props) {
           ]);
         }
       );
-
       axios
         .get(
           `https://maps.googleapis.com/maps/api/geocode/json?address=${props.location}&key=AIzaSyC_bUeG0cXpov1tAARI3M8T1r9-uTD0h4g`
@@ -56,6 +56,18 @@ export default function EventLocation(props) {
             latitude: res.data.results[0].geometry.location.lat,
             longitude: res.data.results[0].geometry.location.lng,
           });
+        })
+        .catch(err => {
+          Toast.show({
+            type: 'error',
+            position: 'top',
+            text1: "Event location is not found on the map",
+            visibilityTime: 2000,
+            autoHide: true,
+            topOffset: 30,
+            bottomOffset: 40,
+          }); 
+          navigation.navigate("Runator")
         });
     })();
   }, []);

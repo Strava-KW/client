@@ -10,7 +10,6 @@ function Settings ({ navigation }) {
   const access_token = useSelector(state => state.access_token)
   const dispatch = useDispatch()
   const google_access_token = useSelector(state => state.google_access_token)
-  // const iosClientId = "33938517114-n48rrc12e3c9ub1d0320lvcc9eal3fmp.apps.googleusercontent.com"
   const androidClientId = "33938517114-lsqdhqjb66cu4l7qs7nlo7d7oaj14qfv.apps.googleusercontent.com"
   const error = useSelector(state => state.error)
 

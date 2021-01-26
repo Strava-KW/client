@@ -55,7 +55,7 @@ function Community({ navigation }) {
   if (profile) {
     console.log(profile);
   }
-
+  console.log(communities)
   if (communities) {
     return (
       <View style={styles.container}>
@@ -82,6 +82,7 @@ function Community({ navigation }) {
             communities?.message ? (
             <Text style={styles.subtitle}>{communities?.message}</Text>
           ) : (
+            Array.isArray(communities) && 
             communities?.map((community) => (
               <Card style={styles.communityCard} key={community._id}>
                 <Card.Content style={styles.communityCardContent}>
