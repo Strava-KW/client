@@ -16,6 +16,12 @@ export function setProfile (data) {
   return {type: 'SET_PROFILE', profile: data}
 }
 
+export function setGoogleAccessToken (data) {
+  return {type: 'SET_GOOGLE_ACCESS_TOKEN', google_access_token: data}
+}
+
+
+
 export const fetchCommunity = (access_token) => (dispatch, getState) => {
   axios({
     url: '/community',

@@ -11,7 +11,7 @@ import {
 } from "react-native-paper";
 import * as Google from "expo-google-app-auth";
 import { useDispatch, useSelector } from "react-redux";
-import { setAccessToken, setError } from "../store/actions";
+import { setAccessToken, setError, setGoogleAccessToken } from "../store/actions";
 import Toast from 'react-native-toast-message';
 import axios from "../../config/axios";
 
@@ -26,24 +26,29 @@ export default function LoginPage({ navigation }) {
 
   const googleLogin = async () => {
     try {
-      const { type, accessToken, user } = await Google.logInAsync(config);
+      const { type, accessToken, user, idToken } = await Google.logInAsync(config);
       if (type === "success") {
         // navigation.replace("Runator", { user, accessToken });
         axios({
-          url: '/googleLogin',
+          url: '/users/googleLogin',
           method: 'POST',
           data: {
-            google_token: accessToken
+            google_token: idToken
           }
         })
           .then(res => {
-            console.log(res.data)
+            dispatch(setAccessToken(res.data.access_token))
+            dispatch(setGoogleAccessToken(accessToken))
+            navigation.replace("Runator")
           })
           .catch(err => {
-            console.log(err.response.data.message, '<== google login')
+            throw {
+              message: err.response.data.message
+            }
           })
       }
     } catch ({ message }) {
+      dispatch(setError(message))
       alert(`login: ${message}`);
     }
   };
@@ -65,16 +70,17 @@ export default function LoginPage({ navigation }) {
   }, [error]);
 
   if (error) {
+    console.log(error)
     Toast.show({
       type: 'error',
       position: 'top',
       text1: error,
       visibilityTime: 3000,
       autoHide: true,
-      onHide: () => {dispatch(setError(null))},
       topOffset: 30,
       bottomOffset: 40,
     }); 
+    dispatch(setError(null))
   }
 
   const hasErrors = () => {
