@@ -9,6 +9,7 @@ import Community from "./Community.jsx";
 import WaitingList from "./WaitingList.jsx";
 import Members from "./Members.jsx";
 import Settings from "./Settings.jsx";
+import Chat from './Chat'
 
 export {
   LoginPage,
@@ -22,4 +23,5 @@ export {
   WaitingList,
   Members,
   Settings,
+  Chat
 };

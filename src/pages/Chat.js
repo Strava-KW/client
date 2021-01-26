@@ -1,7 +1,9 @@
-// import React from 'react'
-// import { StyleSheet, Text, View } from 'react-native'
-// import * as firebase from 'firebase'
+import React, {useEffect} from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+// import firebase from 'firebase'
 // import 'firebase/firestore'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchCommunity } from '../store/actions'
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyAq3OSehcmiJOgw6VC4IkolVrP4MR6L7fM",
@@ -17,8 +19,23 @@
 // } 
 
 // const db = firebase.firestore()
-// const chatsRef = db.collection()
 
-// export default function Chat() {
-//   return <h1>hai</h1>
-// }
+export default function Chat() {
+  const dispatch = useDispatch()
+  const communities = useSelector(state => state.communities)
+  const access_token = useSelector(state => state.access_token)
+
+  useEffect(() => {
+    if (access_token) {
+      dispatch(fetchCommunity(access_token))
+    }
+    if (communities) {
+      console.log(communities)
+    }
+  }, [access_token])
+
+  return(
+    <Text>lalalalala</Text>
+  )
+
+}

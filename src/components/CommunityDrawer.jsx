@@ -1,6 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { Leaderboard, WaitingList, Events, Members } from '../pages/index'
+import { Leaderboard, WaitingList, Events, Members, Chat } from '../pages/index'
 import { useSelector } from 'react-redux'
 
 const Drawer = createDrawerNavigator()
@@ -30,6 +30,7 @@ function CommunityDrawer () {
       {
         profile?.role === 'admin' && <Drawer.Screen name="Waiting List" component={WaitingList} /> 
       }
+      <Drawer.Screen name="Chats" component={Chat} />
     </Drawer.Navigator>
   )
 }
