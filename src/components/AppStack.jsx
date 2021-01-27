@@ -3,10 +3,9 @@ import BottomNav from "./BottomNav";
 import { LoginPage, RegisterPage, Settings } from "../pages/index";
 import { IconButton } from "react-native-paper";
 import { useDispatch, useSelector } from 'react-redux';
-import { setAccessToken, setCommunities, setError, setGoogleAccessToken, setProfile } from '../store/actions';
+import { setAccessToken, setError, setGoogleAccessToken, setCommunities, setProfile } from '../store/actions';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Toast from 'react-native-toast-message' 
 import * as Google from "expo-google-app-auth";
 
 const Stack = createStackNavigator();
@@ -53,41 +52,31 @@ function AppStack () {
                 color="grey"
                 size={28}
                 onPress={ async () => {
-                    try {
-                      // dispatch(setCommunities(null))
-                      // dispatch(setProfile(null))
-                      if (google_access_token) {
-                        await Google.logOutAsync({ accessToken: google_access_token, androidClientId })
-                        dispatch(setGoogleAccessToken(null))
-                        dispatch(setAccessToken(null))
-                      }
-                      else {
-                        dispatch(setAccessToken(null))
-                      }
-                      dispatch(setError(null))
-                      // Toast.show({
-                      // type: 'success',
-                      // position: 'top',
-                      // text1: 'Logged Out',
-                      // visibilityTime: 3000,
-                      // autoHide: true,
-                      // // onHide: () => {navigation.replace('Login');},
-                      // topOffset: 30,
-                      // bottomOffset: 40,
-                      // }); 
-                      await navigation.replace('Login')
+                  try {
+                    // dispatch(setCommunities(null))
+                    // dispatch(setProfile(null))
+                    if (google_access_token) {
+                      await Google.logOutAsync({ accessToken: google_access_token, androidClientId })
+                      dispatch(setGoogleAccessToken(null))
+                      dispatch(setAccessToken(null))
                     }
-                    catch(err) {
-                      console.log(err)
-                      dispatch(setError(err))
+                    else {
+                      dispatch(setAccessToken(null))
                     }
+                    dispatch(setError(null))
+                    console.log('logout with no error')
+                    await navigation.replace('Login')
                   }
-                }
+                  catch(err) {
+                    console.log(err, '<=== logout with error')
+                    dispatch(setError(err))
+                  }
+                }}
               />
             ),
           })}
         ></Stack.Screen>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Settings"
           component={Settings}
           options={({ navigation }) => ({
@@ -101,7 +90,7 @@ function AppStack () {
               fontSize: 24,
             },
           })}
-        ></Stack.Screen>
+        ></Stack.Screen> */}
       </Stack.Navigator>
     </NavigationContainer>
   )

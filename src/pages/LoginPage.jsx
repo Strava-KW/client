@@ -77,15 +77,15 @@ export default function LoginPage({ navigation }) {
 
   if (error) {
     console.log(error);
-    Toast.show({
-      type: "error",
-      position: "top",
-      text1: error,
-      visibilityTime: 3000,
-      autoHide: true,
-      topOffset: 30,
-      bottomOffset: 40,
-    });
+    // Toast.show({
+    //   type: "error",
+    //   position: "top",
+    //   text1: JSON.stringify(error),
+    //   visibilityTime: 3000,
+    //   autoHide: true,
+    //   topOffset: 30,
+    //   bottomOffset: 40,
+    // });
     dispatch(setError(null));
   }
 
@@ -251,7 +251,7 @@ export default function LoginPage({ navigation }) {
                     Toast.show({
                       type: "success",
                       position: "top",
-                      text1: "Logged In!",
+                      text1: "Logged In! Please Wait...",
                       visibilityTime: 3000,
                       autoHide: true,
                       onHide: () => {

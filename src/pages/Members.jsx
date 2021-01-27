@@ -10,15 +10,11 @@ function Members() {
   const communities = useSelector((state) => state.communities);
   const access_token = useSelector((state) => state.access_token);
 
-  useEffect(() => {
-    if (access_token) {
-      dispatch(fetchCommunity(access_token));
-    }
-  }, [access_token]);
-
-  if (communities) {
-    console.log(communities);
-  }
+  // useEffect(() => {
+  //   if (access_token) {
+  //     dispatch(fetchCommunity(access_token));
+  //   }
+  // }, [access_token]);
 
   return (
     <View style={styles.container}>

@@ -10,9 +10,7 @@ function Leaderboard() {
   const access_token = useSelector((state) => state.access_token);
 
   useEffect(() => {
-    if (access_token) {
-      dispatch(fetchCommunity(access_token));
-    }
+    dispatch(fetchCommunity(access_token));
   }, [access_token]);
 
   // if (communities) {

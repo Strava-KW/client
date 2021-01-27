@@ -11,11 +11,11 @@ function WaitingList () {
   const communities = useSelector(state => state.communities)
   const access_token = useSelector(state => state.access_token)
 
-  useEffect(() => {
-    if (access_token) {
-      dispatch(fetchCommunity(access_token))
-    }
-  }, [access_token])
+  // useEffect(() => {
+  //   if (access_token) {
+  //     dispatch(fetchCommunity(access_token))
+  //   }
+  // }, [access_token])
 
   function handleAccept (id) {
     dispatch(acceptMember(id, access_token))

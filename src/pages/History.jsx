@@ -14,10 +14,6 @@ function History() {
     setHistory(profile.history);
   }, [profile]);
 
-  if (profile) {
-    console.log(profile)
-  }
-
   if (profile.history.length === 0) {
     return (
       <View style={styles.placeholder}>

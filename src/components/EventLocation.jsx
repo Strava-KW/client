@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Dimensions, LogBox } from "react-native";
 import Loader from './Loader';
 import * as Location from "expo-location";
 // import * as TaskManager from 'expo-task-manager'
@@ -8,6 +8,8 @@ import mapStyle from "../constant/mapStyle.json";
 import axios from "axios";
 import MapViewDirections from "react-native-maps-directions";
 import Toast from 'react-native-toast-message';
+
+LogBox.ignoreAllLogs(true)
 
 export default function EventLocation(props) {
   const [location, setLocation] = useState([]);

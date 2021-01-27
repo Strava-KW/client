@@ -27,6 +27,7 @@ import { fetchCommunity, setError } from "../store/actions";
 import EventMap from "../components/EventMap";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
+
 function Events({ navigation }) {
   const dispatch = useDispatch();
   const communities = useSelector((state) => state.communities);
