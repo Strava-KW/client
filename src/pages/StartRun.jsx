@@ -4,7 +4,7 @@ import RunTracker from "../components/RunTracker";
 import { Button } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { setProfile, setError } from "../store/actions";
+import { setProfile, setError, fetchCommunity } from "../store/actions";
 import axios from "../../config/axios";
 
 function StartRun({ route, Navigation }) {
@@ -63,6 +63,7 @@ function StartRun({ route, Navigation }) {
       })
       .then((res) => {
         dispatch(setProfile(res.data));
+        dispatch(fetchCommunity(access_token))
         setShowMap(false);
       })
       .catch((err) => {
