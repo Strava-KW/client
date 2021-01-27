@@ -34,20 +34,22 @@ export default function Chat() {
   let chatsRef;
 
   if (communities) {
-    console.log(communities)
-    chatsRef = db.collection(communities._id.toString())
+    if (communities._id) {
+        chatsRef = db.collection(communities._id.toString())
+    }
   }
+  
   useEffect(() => {
     if (access_token) {
       dispatch(fetchCommunity(access_token))
     }
     if (profile) {
-      setUser({id: profile._id.toString(), name: profile.fullname})
+      setUser({_id: profile._id.toString(), name: profile.fullname})
     }
-  }, [access_token, profile])
+  }, [])
 
   useEffect(() => {
-    if(chatsRef) {
+    if (chatsRef) {
       const unsubscribe = chatsRef.onSnapshot((querySnapshot) => {
         const messagesFirestore = querySnapshot
         .docChanges()
@@ -59,7 +61,7 @@ export default function Chat() {
         .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
         appendMessages(messagesFirestore)
       })
-      return () => unsubscribe()
+    return () => unsubscribe()
     }
   }, [])
 
