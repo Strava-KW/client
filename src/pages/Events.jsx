@@ -25,6 +25,7 @@ import axios from "../../config/axios";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCommunity, setError } from "../store/actions";
 import EventMap from "../components/EventMap";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 function Events({ navigation }) {
   const dispatch = useDispatch();
@@ -35,6 +36,8 @@ function Events({ navigation }) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [visible, setVisible] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false)
+  const [showTime, setShowTime] = useState(false)
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const API_KEY = "AIzaSyC_bUeG0cXpov1tAARI3M8T1r9-uTD0h4g";
@@ -227,6 +230,21 @@ function Events({ navigation }) {
               },
             }}
           />
+          <Button onPress={() => setShowCalendar(true)}>Select Date</Button>
+          {
+            showCalendar &&
+            <DateTimePicker
+            testID="dateTimePicker"
+            value= {new Date()}
+            is24Hour={true}
+            display="calendar"
+            onChange={(event, date) => {
+              setDate(date.toISOString().slice(0,10))
+              setShowCalendar(false)
+              }
+            }
+            />
+          }
 
           <TextInput
             label="Time"
@@ -300,8 +318,6 @@ function Events({ navigation }) {
             dark={true}
             mode="contained"
             onPress={() => {
-              console.log("DATA >>", eventName, date, time, searchKeyword);
-
               hideModal();
               axios({
                 url: "/community/events/",
