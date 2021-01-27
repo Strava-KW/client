@@ -44,13 +44,24 @@ function Leaderboard() {
                     {index + 1}.
                   </Text>
                 </View>
-                <Avatar.Text
-                  style={styles.avatarContainer}
-                  size={54}
-                  // color="#242424"
-                  color="white"
-                  label={member.fullname[0]}
-                ></Avatar.Text>
+                {
+                  member.picture ? 
+                  <Avatar.Image
+                    style={styles.avatarContainer}
+                    size={54}
+                    // color="#242424"
+                    color="white"
+                    source={{uri: member.picture}}
+                  /> : 
+                  <Avatar.Text
+                    style={styles.avatarContainer}
+                    size={54}
+                    // color="#242424"
+                    color="white"
+                    label={member.fullname[0]}
+                  >
+                  </Avatar.Text>
+                }
                 <View style={styles.detailContainer}>
                   <Text
                     style={{
@@ -88,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "#323232",
+    backgroundColor: "#242424",
   },
   title: {
     padding: 25,
@@ -98,8 +109,9 @@ const styles = StyleSheet.create({
     fontFamily: "Jost",
   },
   leaderboard: {
+    height: "70%",
     width: Dimensions.get("window").width - 24,
-    backgroundColor: "#242424",
+    backgroundColor: "#161616",
     // alignItems: 'center',
     // justifyContent: 'center',
     borderTopLeftRadius: 25,
@@ -110,7 +122,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginHorizontal: 10,
     borderRadius: 25,
-    backgroundColor: "#323232",
+    backgroundColor: "#242424",
   },
   rank: {
     display: "flex",

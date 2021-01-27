@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
+import Loader from './Loader'
 import * as Location from "expo-location";
 import mapStyle from "../constant/mapStyle.json";
 import axios from "axios";
@@ -36,7 +37,7 @@ export default function EventMap(props) {
     })();
   }, []);
 
-  if (loading) return <View><Text>Loading ...</Text></View>
+  if (loading) return <Loader />
   return (
     <MapView
       style={styles.map}

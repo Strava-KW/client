@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
+import Loader from './Loader';
 import * as Location from "expo-location";
 // import * as TaskManager from 'expo-task-manager'
 import mapStyle from "../constant/mapStyle.json";
@@ -76,7 +77,7 @@ export default function EventLocation(props) {
     console.log(eventLocation)
   }
 
-  if (loading) return <View><Text>Loading ...</Text></View> // styling
+  if (loading) return <Loader /> // styling
 
   return (
     <MapView

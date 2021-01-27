@@ -22,18 +22,36 @@ function Members() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> Community Members </Text>
+      <Text style={styles.title}> {communities.name} </Text>
       <ScrollView style={styles.waitingList}>
-        {communities?.members?.map((member) => (
+        {communities?.members?.sort(function(memberA, memberB) {
+          if (memberA.role > memberB.role) {
+            return 1
+          } else if (memberB.role > memberA.role) {
+            return -1
+          }
+          return 0
+        }).map((member) => (
           <Card style={styles.personCard} key={member._id}>
             <Card.Content style={styles.person}>
-              <Avatar.Text
-                style={styles.avatarContainer}
-                size={48}
-                // color="#242424"
-                color="white"
-                label={member.fullname[0]}
-              ></Avatar.Text>
+                {
+                  member.picture ? 
+                  <Avatar.Image
+                    style={styles.avatarContainer}
+                    size={54}
+                    // color="#242424"
+                    color="white"
+                    source={{uri: member.picture}}
+                  /> : 
+                  <Avatar.Text
+                    style={styles.avatarContainer}
+                    size={54}
+                    // color="#242424"
+                    color="white"
+                    label={member.fullname[0]}
+                  >
+                  </Avatar.Text>
+                }
               <View style={styles.nameContainer}>
                 <Text
                   style={{
@@ -70,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "#323232",
+    backgroundColor: "#242424",
   },
   title: {
     padding: 25,
@@ -81,7 +99,7 @@ const styles = StyleSheet.create({
   waitingList: {
     height: "70%",
     width: Dimensions.get("window").width - 36,
-    backgroundColor: "#242424",
+    backgroundColor: "#161616",
     // alignItems: 'center',
     // justifyContent: 'center',
     borderTopLeftRadius: 25,
@@ -92,7 +110,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginHorizontal: 10,
     borderRadius: 20,
-    backgroundColor: "#242424",
+    backgroundColor: "#191919",
     shadowColor: "#000",
     shadowOffset: {
       width: 1,

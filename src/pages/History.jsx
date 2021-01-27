@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, Image } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 import { StyleSheet, Dimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,6 +18,17 @@ function History() {
     console.log(profile)
   }
 
+  if (profile.history.length === 0) {
+    return (
+      <View style={styles.placeholder}>
+        <Image
+          style={styles.placeholderImage}
+          source={require('../../assets/history-placeholder.png')}
+        ></Image>
+        <Text style={styles.placeholderTitle}>No running history yet!</Text>
+      </View>
+    )
+  }
   return (
     <ScrollView style={styles.container}>
       {/* <Card style={styles.eventCard}>
@@ -60,6 +71,22 @@ function History() {
 }
 
 const styles = StyleSheet.create({
+  placeholder:{
+    flex: 1,
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: "#242424",
+  },
+  placeholderImage:{
+    width: 200,
+    height: 200
+  },
+  placeholderTitle:{
+    fontSize: 30,
+    color: "#FA8135",
+    fontFamily: "Jost",
+  }, 
   container: {
     flex: 1,
     backgroundColor: "#242424",
