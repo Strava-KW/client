@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
-import { RunTracker } from "../components";
+import RunTracker from "../components/RunTracker";
 import { Button } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useSelector, useDispatch } from 'react-redux';
-import { setProfile, setError } from '../store/actions'
-import axios from '../../config/axios'
+import { useSelector, useDispatch } from "react-redux";
+import { setProfile, setError } from "../store/actions";
+import axios from "../../config/axios";
 
 function StartRun({ route, Navigation }) {
   const [ showMap, setShowMap ] = useState(false)
@@ -18,23 +18,23 @@ function StartRun({ route, Navigation }) {
   useEffect(() => {
     if (access_token) {
       axios({
-        url: '/profile',
-        method: 'GET',
+        url: "/profile",
+        method: "GET",
         headers: {
-          access_token: access_token
-        }
+          access_token: access_token,
+        },
       })
-        .then(res => {
-          dispatch(setProfile(res.data))
+        .then((res) => {
+          dispatch(setProfile(res.data));
         })
-        .catch(err => {
-          dispatch(setError(err.response.data))
-        })
+        .catch((err) => {
+          dispatch(setError(err.response.data));
+        });
     }
-  }, [access_token])
+  }, [access_token]);
 
-  function setLocation (location) {
-    setLocationRun(location)
+  function setLocation(location) {
+    setLocationRun(location);
   }
 
   if (profile) {
@@ -43,40 +43,38 @@ function StartRun({ route, Navigation }) {
 
   function trackRun () {
     axios({
-      url: '/history',
-      method: 'POST',
+      url: "/history",
+      method: "POST",
       headers: {
-        access_token
+        access_token,
       },
       data: {
-        distance: ((locationRun.length/100)-0.01).toFixed(2),
-        date: new Date()
-      }
+        distance: (locationRun.length / 100 - 0.01).toFixed(2),
+        date: new Date(),
+      },
     })
-      .then(res => {
+      .then((res) => {
         return axios({
-          url: '/profile',
-          method: 'GET',
+          url: "/profile",
+          method: "GET",
           headers: {
-            access_token
-          }
-        })
+            access_token,
+          },
+        });
       })
-      .then(res => {
-        dispatch(setProfile(res.data))
-        setShowMap(false)
+      .then((res) => {
+        dispatch(setProfile(res.data));
+        setShowMap(false);
       })
-      .catch(err => {
-        setShowMap(false)
-      })
+      .catch((err) => {
+        setShowMap(false);
+      });
   }
 
   if (showMap) {
     return (
       <View>
-        <RunTracker 
-          setLocation={setLocation}
-        />
+        <RunTracker setLocation={setLocation} />
         <View
           style={{
             position: "absolute",
@@ -103,7 +101,7 @@ function StartRun({ route, Navigation }) {
           </Button>
         </View>
       </View>
-    )
+    );
   }
   return (
     <View style={styles.container}>
@@ -140,8 +138,8 @@ function StartRun({ route, Navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#242424',
+    alignItems: "center",
+    backgroundColor: "#242424",
   },
   playButton: {
     borderRadius: 100,

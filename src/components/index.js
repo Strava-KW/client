@@ -1,4 +1,4 @@
-import BottomNav from "./BottomNav";
+import BottomNav from "./BottomNav"; //
 import CommunityDrawer from "./CommunityDrawer";
 import CommunityStack from "./CommunityStack";
 import EventLocation from "./EventLocation";

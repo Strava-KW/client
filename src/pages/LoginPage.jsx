@@ -11,8 +11,12 @@ import {
 } from "react-native-paper";
 import * as Google from "expo-google-app-auth";
 import { useDispatch, useSelector } from "react-redux";
-import { setAccessToken, setError, setGoogleAccessToken } from "../store/actions";
-import Toast from 'react-native-toast-message';
+import {
+  setAccessToken,
+  setError,
+  setGoogleAccessToken,
+} from "../store/actions";
+import Toast from "react-native-toast-message";
 import axios from "../../config/axios";
 
 export default function LoginPage({ navigation }) {
@@ -26,29 +30,31 @@ export default function LoginPage({ navigation }) {
 
   const googleLogin = async () => {
     try {
-      const { type, accessToken, user, idToken } = await Google.logInAsync(config);
+      const { type, accessToken, user, idToken } = await Google.logInAsync(
+        config
+      );
       if (type === "success") {
         // navigation.replace("Runator", { user, accessToken });
         axios({
-          url: '/users/googleLogin',
-          method: 'POST',
+          url: "/users/googleLogin",
+          method: "POST",
           data: {
-            google_token: idToken
-          }
+            google_token: idToken,
+          },
         })
-          .then(res => {
-            dispatch(setAccessToken(res.data.access_token))
-            dispatch(setGoogleAccessToken(accessToken))
-            navigation.replace("Runator")
+          .then((res) => {
+            dispatch(setAccessToken(res.data.access_token));
+            dispatch(setGoogleAccessToken(accessToken));
+            navigation.replace("Runator");
           })
-          .catch(err => {
+          .catch((err) => {
             throw {
-              message: err.response.data.message
-            }
-          })
+              message: err.response.data.message,
+            };
+          });
       }
     } catch ({ message }) {
-      dispatch(setError(message))
+      dispatch(setError(message));
       alert(`login: ${message}`);
     }
   };
@@ -70,17 +76,17 @@ export default function LoginPage({ navigation }) {
   }, [error]);
 
   if (error) {
-    console.log(error)
+    console.log(error);
     Toast.show({
-      type: 'error',
-      position: 'top',
+      type: "error",
+      position: "top",
       text1: error,
       visibilityTime: 3000,
       autoHide: true,
       topOffset: 30,
       bottomOffset: 40,
-    }); 
-    dispatch(setError(null))
+    });
+    dispatch(setError(null));
   }
 
   const hasErrors = () => {
@@ -131,7 +137,8 @@ export default function LoginPage({ navigation }) {
                 paddingBottom: 10,
                 paddingTop: 15,
                 fontFamily: "Jost",
-                color: "#242424",
+                // color: "#242424",
+                color: "white",
                 fontSize: 16,
               }}
             >
@@ -210,23 +217,25 @@ export default function LoginPage({ navigation }) {
               onPress={() => {
                 hideModal();
                 axios({
-                  url: '/users/login',
-                  method: 'POST',
+                  url: "/users/login",
+                  method: "POST",
                   data: {
                     email,
-                    password
-                  }
+                    password,
+                  },
                 })
                   .then((res) => {
-                    console.log(res.data, 'login')
-                    dispatch(setAccessToken(res.data.access_token))
+                    console.log(res.data, "login");
+                    dispatch(setAccessToken(res.data.access_token));
                     Toast.show({
-                      type: 'success',
-                      position: 'top',
-                      text1: 'Logged In!',
+                      type: "success",
+                      position: "top",
+                      text1: "Logged In!",
                       visibilityTime: 3000,
                       autoHide: true,
-                      onHide: () => {navigation.replace("Runator");},
+                      onHide: () => {
+                        navigation.replace("Runator");
+                      },
                       topOffset: 30,
                       bottomOffset: 40,
                     });
@@ -234,11 +243,11 @@ export default function LoginPage({ navigation }) {
                     setPassword("");
                   })
                   .catch((err) => {
-                    console.log(err.response.data.message, 'login')
-                    dispatch(setError(err.response.data.message))
+                    console.log(err.response.data.message, "login");
+                    dispatch(setError(err.response.data.message));
                     setEmail("");
                     setPassword("");
-                  })
+                  });
               }}
               labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
             >
@@ -269,10 +278,12 @@ const styles = StyleSheet.create({
     fontFamily: "Jost",
     marginBottom: 15,
     padding: 10,
-    color: "#2F3238",
+    // color: "#2F3238",
+    color: "white",
   },
   loginContainer: {
-    backgroundColor: "#FA8135",
+    // backgroundColor: "#FA8135",
+    backgroundColor: "#AC3E05",
     width: Dimensions.get("window").width,
     height: "70%",
   },
@@ -296,6 +307,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 40,
     alignSelf: "center",
-    backgroundColor: "#FA8135",
+    // backgroundColor: "#FA8135",
+    backgroundColor: "#AC3E05",
   },
 });
