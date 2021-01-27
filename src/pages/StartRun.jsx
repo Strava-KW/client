@@ -8,12 +8,11 @@ import { setProfile, setError } from "../store/actions";
 import axios from "../../config/axios";
 
 function StartRun({ route, Navigation }) {
-  const [ showMap, setShowMap ] = useState(false)
-  const [ locationRun, setLocationRun ] = useState([])
-  const dispatch = useDispatch()
-  const access_token = useSelector(state => state.access_token)
-  const profile = useSelector(state => state.profile)
-
+  const [showMap, setShowMap] = useState(false);
+  const [locationRun, setLocationRun] = useState([]);
+  const dispatch = useDispatch();
+  const access_token = useSelector((state) => state.access_token);
+  const profile = useSelector((state) => state.profile);
 
   useEffect(() => {
     if (access_token) {
@@ -38,10 +37,10 @@ function StartRun({ route, Navigation }) {
   }
 
   if (profile) {
-    console.log(profile)
+    console.log(profile);
   }
 
-  function trackRun () {
+  function trackRun() {
     axios({
       url: "/history",
       method: "POST",
@@ -84,7 +83,7 @@ function StartRun({ route, Navigation }) {
         >
           <Button
             mode="contained"
-            color="#FA8135"
+            color="#AC3E05"
             compact={true}
             style={styles.playButton}
             contentStyle={{
@@ -93,7 +92,9 @@ function StartRun({ route, Navigation }) {
             }}
             labelStyle={{
               fontFamily: "Jost",
-              fontSize: 16,
+              fontSize: 18,
+              fontWeight: "bold",
+              color: "#d8d8d8",
             }}
             onPress={() => trackRun()}
           >
@@ -106,6 +107,19 @@ function StartRun({ route, Navigation }) {
   return (
     <View style={styles.container}>
       <Image source={require("../../assets/icon.png")} style={styles.icon} />
+      <Text
+        style={{
+          fontFamily: "Jost",
+          fontSize: 18,
+          fontWeight: "bold",
+          color: "#d8d8d8",
+          position: "absolute",
+          top: "70%",
+          alignSelf: "center",
+        }}
+      >
+        Press START to begin{" "}
+      </Text>
       <View
         style={{
           position: "absolute", //use absolute position to show button on top of the map
@@ -115,7 +129,7 @@ function StartRun({ route, Navigation }) {
       >
         <Button
           mode="contained"
-          color="#FA8135"
+          color="#AC3E05"
           compact={true}
           style={styles.playButton}
           contentStyle={{
@@ -124,7 +138,9 @@ function StartRun({ route, Navigation }) {
           }}
           labelStyle={{
             fontFamily: "Jost",
-            fontSize: 16,
+            fontSize: 18,
+            fontWeight: "bold",
+            color: "#d8d8d8",
           }}
           onPress={() => setShowMap(true)}
         >
