@@ -107,9 +107,10 @@ export default function LoginPage({ navigation }) {
             onPress={() => googleLogin()}
             style={{
               marginBottom: 10,
-              width: 300,
+              width: 250,
               alignSelf: "center",
               backgroundColor: "#242424",
+              fontColor: " #A9A9A9", //Color Option: #A9A9A9,#2F3238,#d8d8d8
             }}
             labelStyle={{ fontFamily: "Jost", fontSize: 18 }}
           >
@@ -122,7 +123,7 @@ export default function LoginPage({ navigation }) {
             onPress={() => navigation.navigate("Register")}
             style={{
               marginBottom: 10,
-              width: 300,
+              width: 250,
               alignSelf: "center",
               backgroundColor: "#242424",
             }}
@@ -151,7 +152,7 @@ export default function LoginPage({ navigation }) {
               uppercase={false}
               style={{
                 marginBottom: 10,
-                width: 300,
+                width: 250,
                 alignSelf: "center",
                 backgroundColor: "#242424",
               }}
@@ -170,6 +171,22 @@ export default function LoginPage({ navigation }) {
             transparent={true}
           >
             <Headline style={styles.headline}>Sign In</Headline>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 20,
+              }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  height: 0.5,
+                  width: Dimensions.get("window").height - 75,
+                  backgroundColor: "white",
+                }}
+              />
+            </View>
             <TextInput
               label="Email"
               value={email}
@@ -180,21 +197,25 @@ export default function LoginPage({ navigation }) {
               style={styles.formField}
               theme={{
                 colors: {
-                  placeholder: "white",
-                  text: "white",
+                  placeholder: "orange",
+                  text: "#d8d8d8",
                   primary: "orange",
                   background: "#242424",
                 },
               }}
             />
-            <HelperText type="error" visible={hasErrors()}>
+            <HelperText
+              type="error"
+              visible={hasErrors()}
+              style={{ color: "#e76f51" }}
+            >
               Email address is invalid!
             </HelperText>
             <TextInput
               label="Password"
               value={password}
               onChangeText={(password) => setPassword(password)}
-              mode="outlined"
+              mode="flat"
               selectionColor="#FA8135"
               underlineColor="#FA8135"
               style={styles.formField}
@@ -202,7 +223,7 @@ export default function LoginPage({ navigation }) {
               theme={{
                 colors: {
                   placeholder: "orange",
-                  text: "white",
+                  text: "#d8d8d8",
                   primary: "orange",
                   background: "#242424",
                 },
@@ -210,7 +231,7 @@ export default function LoginPage({ navigation }) {
             />
             <Button
               style={styles.signInButton}
-              color="#FA8135"
+              color="#d8d8d8" // #d8d8d8,#FA8135
               uppercase={false}
               dark={true}
               mode="contained"
@@ -277,13 +298,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: "Jost",
     marginBottom: 15,
+    marginTop: 15,
     padding: 10,
-    // color: "#2F3238",
-    color: "white",
+    color: "white", //Color Option: #A9A9A9,#2F3238,#d8d8d8
   },
   loginContainer: {
-    // backgroundColor: "#FA8135",
-    backgroundColor: "#AC3E05",
+    backgroundColor: "#e36414", // Color Option: #e36414",#FA8135, #AC3E05
     width: Dimensions.get("window").width,
     height: "70%",
   },
@@ -294,7 +314,7 @@ const styles = StyleSheet.create({
   headline: {
     marginBottom: 30,
     fontFamily: "Jost",
-    color: "white",
+    color: "#d8d8d8", //Color Option: #A9A9A9
     textAlign: "center",
   },
   formField: {
@@ -303,8 +323,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   signInButton: {
-    marginTop: 50,
-    width: 300,
+    marginVertical: 50,
+    width: 250,
     height: 40,
     alignSelf: "center",
     // backgroundColor: "#FA8135",

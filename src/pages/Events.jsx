@@ -133,28 +133,31 @@ function Events({ navigation }) {
               </Card.Actions>
             </Card>
           </TouchableOpacity>
-        ))}
-        {!communities.events.length && (
-          <Card style={styles.eventPlaceHolder}>
-            <Card.Cover
-              source={require("../../assets/event-placeholder.png")}
-              style={{
-                height: 100,
-                width: 100,
-                alignSelf: "center",
-                marginVertical: 5,
-              }}
-            />
-            <Card.Content>
-              <Title style={styles.namePlaceHolder}>e.g. Happy Run</Title>
-              <View style={{ display: "flex", flexDirection: "row" }}>
-                <Paragraph style={styles.locationPlaceHolder}>
-                  Taman Menteng
-                </Paragraph>
-                <Paragraph style={styles.datePlaceHolder}>Date:</Paragraph>
-              </View>
-            </Card.Content>
-          </Card>
+        )) ? (
+          !communities.events.length && (
+            <Card style={styles.eventPlaceHolder}>
+              <Card.Cover
+                source={require("../../assets/event-placeholder.png")}
+                style={{
+                  height: 100,
+                  width: 100,
+                  alignSelf: "center",
+                  marginVertical: 5,
+                }}
+              />
+              <Card.Content>
+                <Title style={styles.namePlaceHolder}>e.g. Happy Run</Title>
+                <View style={{ display: "flex", flexDirection: "row" }}>
+                  <Paragraph style={styles.locationPlaceHolder}>
+                    Taman Menteng
+                  </Paragraph>
+                  <Paragraph style={styles.datePlaceHolder}>Date:</Paragraph>
+                </View>
+              </Card.Content>
+            </Card>
+          )
+        ) : (
+          <Text />
         )}
       </ScrollView>
       <Portal>
@@ -172,7 +175,23 @@ function Events({ navigation }) {
           animationType={"fade"}
           transparent={true}
         >
-          <Headline style={styles.headline}>Event Name</Headline>
+          <Headline style={styles.headline}>Create Event</Headline>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 20,
+            }}
+          >
+            <View
+              style={{
+                flex: 1,
+                height: 0.5,
+                width: Dimensions.get("window").height - 75,
+                backgroundColor: "white",
+              }}
+            />
+          </View>
           <TextInput
             label="Event Name"
             placeholder="e.g. Happy Run at Monas"
@@ -185,7 +204,7 @@ function Events({ navigation }) {
             theme={{
               colors: {
                 placeholder: "orange",
-                text: "white",
+                text: "#d8d8d8",
                 primary: "orange",
                 background: "#242424",
               },
@@ -203,7 +222,7 @@ function Events({ navigation }) {
             theme={{
               colors: {
                 placeholder: "orange",
-                text: "white",
+                text: "#d8d8d8",
                 primary: "orange",
                 background: "#242424",
               },
@@ -222,7 +241,7 @@ function Events({ navigation }) {
             theme={{
               colors: {
                 placeholder: "orange",
-                text: "white",
+                text: "#d8d8d8",
                 primary: "orange",
                 background: "#242424",
               },
@@ -233,7 +252,9 @@ function Events({ navigation }) {
             <TextInput
               placeholder="Search for an address"
               style={styles.formField}
-              mode="outlined"
+              mode="flat"
+              selectionColor="#FA8135"
+              underlineColor="#FA8135"
               onChangeText={(text) => {
                 searchLocation(text);
               }}
@@ -242,7 +263,7 @@ function Events({ navigation }) {
               theme={{
                 colors: {
                   placeholder: "orange",
-                  text: "white",
+                  text: "#d8d8d8",
                   primary: "orange",
                   background: "#242424",
                 },
@@ -254,14 +275,16 @@ function Events({ navigation }) {
                 renderItem={({ item, index }) => {
                   return (
                     <TouchableOpacity
-                      key={item.id}
+                      key={index}
                       style={styles.resultItem}
                       onPress={() => {
                         setSearchKeyword(item.structured_formatting.main_text);
                         setIsShowingResults(false);
                       }}
                     >
-                      <Text>{item.structured_formatting.main_text}</Text>
+                      <Text style={{ color: "white" }}>
+                        {item.structured_formatting.main_text}
+                      </Text>
                     </TouchableOpacity>
                   );
                 }}
@@ -344,7 +367,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   eventContainer: {
-    width: Dimensions.get("window").width - 24,
+    width: Dimensions.get("window").width - 36,
     // height: '70%',
     backgroundColor: "#242424",
     // alignItems: "center",
@@ -450,7 +473,7 @@ const styles = StyleSheet.create({
   headline: {
     marginBottom: 30,
     fontFamily: "Jost",
-    color: "white",
+    color: "#d8d8d8",
     textAlign: "center",
   },
   formField: {
@@ -459,18 +482,19 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   createEventButton: {
-    marginTop: 50,
-    width: 300,
+    marginVertical: 50,
+    width: 250,
     height: 40,
     alignSelf: "center",
     // backgroundColor: "#FA8135",
     backgroundColor: "#AC3E05",
+
     zIndex: 0,
   },
   searchResultsContainer: {
-    width: 320,
+    width: 340,
     height: 200,
-    backgroundColor: "#fff",
+    backgroundColor: "#323232",
     zIndex: 1,
     alignSelf: "center",
   },
@@ -480,8 +504,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 40,
     borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.3,
     paddingLeft: 15,
+    backgroundColor: "#323232",
+    marginHorizontal: 5,
+    padding: 5,
     zIndex: 2,
   },
   searchBox: {
