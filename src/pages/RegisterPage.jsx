@@ -1,26 +1,18 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import {
-  Button,
-  HelperText,
-  TextInput,
-  Headline,
-  Dialog,
-  Portal,
-} from "react-native-paper";
+import { Button, HelperText, TextInput, Headline } from "react-native-paper";
 import axios from "../../config/axios";
-import { useSelector, useDispatch } from 'react-redux'
-import { setError } from '../store/actions'
-// import axios from "axios";
-import Toast from 'react-native-toast-message'
+import { useSelector, useDispatch } from "react-redux";
+import { setError } from "../store/actions";
+import Toast from "react-native-toast-message";
 
 function Register({ navigation }) {
   const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
-  const error = useSelector(state => state.error)
-  const dispatch = useDispatch()
+  const error = useSelector((state) => state.error);
+  const dispatch = useDispatch();
 
   const hasErrors = () => {
     return email.length > 2 && !email.includes("@");
@@ -28,15 +20,17 @@ function Register({ navigation }) {
 
   if (error) {
     Toast.show({
-      type: 'error',
-      position: 'top',
+      type: "error",
+      position: "top",
       text1: error,
       visibilityTime: 3000,
       autoHide: true,
-      onHide: () => {dispatch(setError(null))},
+      onHide: () => {
+        dispatch(setError(null));
+      },
       topOffset: 30,
       bottomOffset: 40,
-    }); 
+    });
   }
 
   return (
@@ -60,14 +54,14 @@ function Register({ navigation }) {
         label="Full Name"
         value={fullname}
         onChangeText={(fullname) => setFullName(fullname)}
-        mode="flat"
+        mode="outlined"
         selectionColor="#FA8135"
         underlineColor="#FA8135"
         style={styles.formField}
         theme={{
           colors: {
-            placeholder: "white",
-            text: "white",
+            placeholder: "orange",
+            text: "d8d8d8",
             primary: "orange",
             background: "#242424",
           },
@@ -77,20 +71,28 @@ function Register({ navigation }) {
         label="Email"
         value={email}
         onChangeText={(email) => setEmail(email)}
-        mode="flat"
+        mode="outlined"
         selectionColor="#FA8135"
         underlineColor="#FA8135"
         style={styles.formField}
         theme={{
           colors: {
-            placeholder: "white",
-            text: "white",
+            placeholder: "orange",
+            text: "d8d8d8",
             primary: "orange",
             background: "#242424",
           },
         }}
       />
-      <HelperText type="error" visible={hasErrors()}>
+      <HelperText
+        type="error"
+        visible={hasErrors()}
+        style={{
+          color: "#e76f51",
+          alignSelf: "flex-start",
+          marginLeft: 25,
+        }}
+      >
         Email address is invalid!
       </HelperText>
       <TextInput
@@ -105,7 +107,7 @@ function Register({ navigation }) {
         theme={{
           colors: {
             placeholder: "orange",
-            text: "white",
+            text: "#d8d8d8",
             primary: "orange",
             background: "#242424",
           },
@@ -114,7 +116,7 @@ function Register({ navigation }) {
 
       <Button
         style={styles.signUpButton}
-        color="#FA8135"
+        color="#d8d8d8"
         dark={true}
         mode="contained"
         onPress={(e) => {
@@ -148,10 +150,11 @@ const styles = StyleSheet.create({
   },
   signUpButton: {
     marginTop: 50,
-    width: 300,
+    width: 250,
     height: 40,
     alignSelf: "center",
-    backgroundColor: "#FA8135",
+    // backgroundColor: "#FA8135",
+    backgroundColor: "#AC3E05",
   },
   formField: {
     width: Dimensions.get("window").width - 75,
@@ -160,7 +163,7 @@ const styles = StyleSheet.create({
   headline: {
     marginBottom: 30,
     fontFamily: "Jost",
-    color: "white",
+    color: "#d8d8d8", //Color Option: #A9A9A9,#d8d8d8
   },
 });
 
