@@ -13,7 +13,7 @@ function BottomNav() {
       activeColor="#FA8135"
       labelStyle={{ fontSize: 10, fontFamily: "Jost" }}
       barStyle={{
-        backgroundColor: "#323232",
+        backgroundColor: "#161616",
         paddingBottom: 5,
         shadowColor: "#000",
         shadowOffset: {

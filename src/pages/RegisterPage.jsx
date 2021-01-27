@@ -61,7 +61,7 @@ function Register({ navigation }) {
         theme={{
           colors: {
             placeholder: "orange",
-            text: "d8d8d8",
+            text: "#d8d8d8",
             primary: "orange",
             background: "#242424",
           },
@@ -78,7 +78,7 @@ function Register({ navigation }) {
         theme={{
           colors: {
             placeholder: "orange",
-            text: "d8d8d8",
+            text: "#d8d8d8",
             primary: "orange",
             background: "#242424",
           },

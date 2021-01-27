@@ -12,17 +12,19 @@ function CommunityDrawer () {
 
   return (
     <Drawer.Navigator
-      overlayColor="transparent"
+      overlayColor="rgba(0, 0, 0, 0.6)"
       drawerStyle={{
-        backgroundColor: '#323232',
+        backgroundColor: '#E66E2F',
+        borderColor: '#666666'
       }}
       drawerContentOptions={{
-        activeTintColor: "#DA6115",
+        activeTintColor: "black",
+        inactiveTintColor: "black",
         labelStyle: {
-          color: "#FA8135",
+          color: "#161616",
           fontSize: 20,
           alignSelf: 'center',
-          fontFamily: 'Jost'
+          fontFamily: 'Jost',
         }
       }}
     >

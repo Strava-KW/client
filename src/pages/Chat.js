@@ -1,11 +1,12 @@
 // @refresh reset
 import React, {useEffect, useState, useCallback} from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { LogBox, View } from 'react-native'
+import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import * as firebase from 'firebase'
 import 'firebase/firestore'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchCommunity } from '../store/actions'
+
 
 var firebaseConfig = {
   apiKey: "AIzaSyBQkRqgO6jXK6aEGk0KWFJm5nb0fffv9Xc",
@@ -22,8 +23,9 @@ if (firebase.apps.length === 0 ){
   firebase.initializeApp(firebaseConfig);
 } 
 
+LogBox.ignoreLogs(['Setting a timer for a long period of time'])
+
 export default function Chat() {
-  
   const db = firebase.firestore()
   const dispatch = useDispatch()
   const communities = useSelector(state => state.communities)
@@ -44,7 +46,11 @@ export default function Chat() {
       dispatch(fetchCommunity(access_token))
     }
     if (profile) {
-      setUser({_id: profile._id.toString(), name: profile.fullname})
+      if (profile.picture) {
+        setUser({_id: profile._id.toString(), name: profile.fullname, avatar: profile.picture})
+      } else {
+        setUser({_id: profile._id.toString(), name: profile.fullname})
+      }
     }
   }, [])
 
@@ -76,7 +82,40 @@ export default function Chat() {
   }
 
   return(
-    <GiftedChat messages={messages} user={user} onSend={handleSend} />
+      <GiftedChat 
+        messagesContainerStyle={{backgroundColor:'#242424'}}
+        messages={messages} 
+        user={user} 
+        onSend={handleSend} 
+        renderBubble={
+          props => customBubble(props)
+        }
+      />
   )
+}
 
+const customBubble = props => {
+  return (
+    <Bubble
+      {...props}
+      wrapperStyle={{
+        right: {
+          backgroundColor:'#fa8135'
+        },
+        left: {
+          backgroundColor:'#323232',
+          color: '#fa8135'
+        }
+      }}
+      textStyle={{
+        right: {
+          color:'#161616'
+        },
+        left: {
+          color:'#fa8135'
+        }
+      }}
+      
+    />
+  )
 }

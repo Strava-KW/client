@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions} from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Image } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { IconButton, Card, Title, Paragraph, Avatar } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
@@ -43,6 +43,18 @@ function WaitingList () {
     });
   }
 
+  if (communities.waitingList.length === 0) {
+    return (
+      <View style={styles.placeholder}>
+        <Toast ref={(ref) => Toast.setRef(ref)} />
+        <Image
+          style={styles.placeholderImage}
+          source={require('../../assets/waiting-list.png')}
+        ></Image>
+        <Text style={styles.placeholderTitle}>No user on the waiting list!</Text>
+      </View>
+    )
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Waiting List </Text>
@@ -52,7 +64,24 @@ function WaitingList () {
             <Card style={styles.personCard} key={person._id}>
               <Card.Content style={styles.person}>
                 <View style={styles.avatarContainer}>
-                  <Avatar.Text style={styles.avatar} size={48} color="#242424" label={person.fullname[0]}></Avatar.Text>
+                {
+                  person.picture ? 
+                  <Avatar.Image
+                    style={styles.avatarContainer}
+                    size={54}
+                    // color="#242424"
+                    color="white"
+                    source={{uri: person.picture}}
+                  /> : 
+                  <Avatar.Text
+                    style={styles.avatarContainer}
+                    size={54}
+                    // color="#242424"
+                    color="white"
+                    label={person.fullname[0]}
+                  >
+                  </Avatar.Text>
+                }
                 </View>
                 <View style={styles.nameContainer}>
                   <Text style={{ fontSize: 21, fontWeight: '600', color: '#FA8135', fontFamily: 'Jost' }}>{person.fullname}</Text>
@@ -72,6 +101,22 @@ function WaitingList () {
 }
 
 const styles = StyleSheet.create({
+  placeholder:{
+    flex: 1,
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: "#242424",
+  },
+  placeholderImage:{
+    width: 200,
+    height: 200
+  },
+  placeholderTitle:{
+    fontSize: 25,
+    color: "#FA8135",
+    fontFamily: "Jost",
+  }, 
   container: {
     flex: 1,
     justifyContent: 'flex-start',

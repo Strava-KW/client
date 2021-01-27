@@ -21,13 +21,9 @@ function Settings ({ navigation }) {
         await Google.logOutAsync({ accessToken: google_access_token, androidClientId })
         dispatch(setGoogleAccessToken(null))
         dispatch(setAccessToken(null))
-        dispatch(setProfile({}))
-        dispatch(setCommunities([]))
       }
       else {
         dispatch(setAccessToken(null))
-        dispatch(setProfile({}))
-        dispatch(setCommunities([]))
       }
       dispatch(setError(null))
       // Toast.show({

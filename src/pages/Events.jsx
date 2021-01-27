@@ -84,57 +84,58 @@ function Events({ navigation }) {
         Create Event
       </Button>
       <ScrollView style={styles.eventContainer}>
-        {communities?.events?.map((eventElement) => (
-          <TouchableOpacity
-            key={eventElement._id}
-            onPress={() => {
-              navigation.navigate("Event Location", {
-                location: eventElement.hashed,
-              });
-            }}
-          >
-            <Card style={styles.eventCard}>
-              <Card.Content style={styles.mapContainer}>
-                <EventMap location={eventElement.hashed} />
-              </Card.Content>
-              <Card.Content style={styles.cardContent}>
-                <Title style={styles.cardName}>{eventElement.name}</Title>
-                <View style={{ display: "flex", flexDirection: "row" }}>
-                  <Paragraph style={styles.cardLocation}>
-                    {eventElement.location}
-                  </Paragraph>
-                  <Paragraph style={styles.cardDate}>
-                    {eventElement.date.slice(0, 10)}
-                  </Paragraph>
-                </View>
-              </Card.Content>
-              <Card.Actions style={styles.cardActions}>
-                <IconButton
-                  icon="delete"
-                  color="#242424"
-                  onPress={() => {
-                    axios({
-                      url: `/community/events/${eventElement._id}`,
-                      method: "DELETE",
-                      headers: {
-                        access_token,
-                      },
-                    })
-                      .then((res) => {
-                        dispatch(fetchCommunity(access_token));
+        { 
+          communities.events.length > 0 ? 
+          communities?.events?.map((eventElement) => (
+            <TouchableOpacity
+              key={eventElement._id}
+              onPress={() => {
+                navigation.navigate("Event Location", {
+                  location: eventElement.hashed,
+                });
+              }}
+            >
+              <Card style={styles.eventCard}>
+                <Card.Content style={styles.mapContainer}>
+                  <EventMap location={eventElement.hashed} />
+                </Card.Content>
+                <Card.Content style={styles.cardContent}>
+                  <Title style={styles.cardName}>{eventElement.name}</Title>
+                  <View style={{ display: "flex", flexDirection: "row" }}>
+                    <Paragraph style={styles.cardLocation}>
+                      {eventElement.location}
+                    </Paragraph>
+                    <Paragraph style={styles.cardDate}>
+                      {eventElement.date.slice(0, 10)}
+                    </Paragraph>
+                  </View>
+                </Card.Content>
+                <Card.Actions style={styles.cardActions}>
+                  <IconButton
+                    icon="delete"
+                    color="#242424"
+                    onPress={() => {
+                      axios({
+                        url: `/community/events/${eventElement._id}`,
+                        method: "DELETE",
+                        headers: {
+                          access_token,
+                        },
                       })
-                      .catch((err) => {
-                        dispatch(setError(err.response.data.message));
-                      });
-                  }}
-                >
-                  Delete
-                </IconButton>
-              </Card.Actions>
-            </Card>
-          </TouchableOpacity>
-        )) ? (
-          !communities.events.length && (
+                        .then((res) => {
+                          dispatch(fetchCommunity(access_token));
+                        })
+                        .catch((err) => {
+                          dispatch(setError(err.response.data.message));
+                        });
+                    }}
+                  >
+                    Delete
+                  </IconButton>
+                </Card.Actions>
+              </Card>
+            </TouchableOpacity>
+        )) : (
             <Card style={styles.eventPlaceHolder}>
               <Card.Cover
                 source={require("../../assets/event-placeholder.png")}
@@ -145,7 +146,7 @@ function Events({ navigation }) {
                   marginVertical: 5,
                 }}
               />
-              <Card.Content>
+              <Card.Content style={styles.cardContent}>
                 <Title style={styles.namePlaceHolder}>e.g. Happy Run</Title>
                 <View style={{ display: "flex", flexDirection: "row" }}>
                   <Paragraph style={styles.locationPlaceHolder}>
@@ -156,9 +157,7 @@ function Events({ navigation }) {
               </Card.Content>
             </Card>
           )
-        ) : (
-          <Text />
-        )}
+        }
       </ScrollView>
       <Portal>
         <Modal
@@ -350,7 +349,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#323232",
+    backgroundColor: "#242424",
   },
   mapContainer: {
     width: "100%",
@@ -415,6 +414,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#242424",
   },
   cardContent: {
+    paddingLeft: 20,
+    paddingRight: 20,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },
@@ -487,7 +488,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignSelf: "center",
     // backgroundColor: "#FA8135",
-    backgroundColor: "#AC3E05",
+    backgroundColor: "#E66E2F",
 
     zIndex: 0,
   },
