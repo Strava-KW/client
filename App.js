@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Provider } from 'react-redux';
-import store from './src/store/index'
+import { Provider } from "react-redux";
+import store from "./src/store/index";
 
 import { Provider as PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,8 +9,7 @@ import theme from "./config/theme";
 import { useFonts } from "expo-font";
 import { BottomNav } from "./src/components";
 import { LoginPage, RegisterPage, Settings } from "./src/pages/index";
-import { IconButton } from 'react-native-paper'
-
+import { IconButton } from "react-native-paper";
 
 const Stack = createStackNavigator();
 
@@ -45,7 +44,7 @@ export default function App() {
             <Stack.Screen
               name="Runator"
               component={BottomNav}
-              options={({navigation}) => ({
+              options={({ navigation }) => ({
                 headerStyle: {
                   backgroundColor: "#323232",
                 },
@@ -61,15 +60,17 @@ export default function App() {
                     icon="cog"
                     color="grey"
                     size={28}
-                    onPress={() => { navigation.navigate('Settings') }}
+                    onPress={() => {
+                      navigation.navigate("Settings");
+                    }}
                   />
-                )
+                ),
               })}
             ></Stack.Screen>
             <Stack.Screen
               name="Settings"
               component={Settings}
-              options={({navigation}) => ({
+              options={({ navigation }) => ({
                 headerStyle: {
                   backgroundColor: "#323232",
                 },
@@ -80,13 +81,10 @@ export default function App() {
                   fontSize: 24,
                 },
               })}
-            >
-            </Stack.Screen>
+            ></Stack.Screen>
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
     </Provider>
   );
 }
-
-

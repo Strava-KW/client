@@ -18,17 +18,19 @@ import {
   TextInput,
   Modal,
   Portal,
+  IconButton,
 } from "react-native-paper";
 import axios from "../../config/axios";
-import { EventLocation } from "../components";
+// import { EventLocation } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCommunity, setError } from "../store/actions";
+import EventMap from "../components/EventMap";
 
 function Events({ navigation }) {
   const dispatch = useDispatch();
   const communities = useSelector((state) => state.communities);
   const access_token = useSelector((state) => state.access_token);
-  const error = useSelector((state) => state.error)
+  const error = useSelector((state) => state.error);
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -46,7 +48,7 @@ function Events({ navigation }) {
     }
   }, [access_token]);
 
-  searchLocation = async (text) => {
+  const searchLocation = async (text) => {
     try {
       setSearchKeyword(text);
       axios
@@ -65,7 +67,7 @@ function Events({ navigation }) {
   };
 
   if (error) {
-    console.log(error)
+    console.log(error);
   }
   return (
     <View style={styles.container}>
@@ -74,29 +76,86 @@ function Events({ navigation }) {
         icon="plus"
         uppercase={false}
         mode="contained"
-        color="#FA8135"
+        // color="#FA8135"
+        color="#AC3E05"
         style={styles.createButton}
         onPress={showModal}
       >
         Create Event
       </Button>
       <ScrollView style={styles.eventContainer}>
-        {
-          communities?.events?.map(eventElement => (
-            <Card key={communities.events._id} style={styles.eventCard}>
+        {communities?.events?.map((eventElement) => (
+          <TouchableOpacity
+            key={eventElement._id}
+            onPress={() => {
+              navigation.navigate("Event Location", {
+                location: eventElement.hashed,
+              });
+            }}
+          >
+            <Card style={styles.eventCard}>
               <Card.Content style={styles.mapContainer}>
-                <EventLocation location={eventElement.hashed}/>
+                <EventMap location={eventElement.hashed} />
               </Card.Content>
               <Card.Content style={styles.cardContent}>
                 <Title style={styles.cardName}>{eventElement.name}</Title>
-                <View style={{display: "flex", flexDirection: "row"}}>
-                  <Paragraph style={styles.cardLocation}>{eventElement.location}</Paragraph>
-                  <Paragraph style={styles.cardDate}>{eventElement.date.slice(0, 10)}</Paragraph>
+                <View style={{ display: "flex", flexDirection: "row" }}>
+                  <Paragraph style={styles.cardLocation}>
+                    {eventElement.location}
+                  </Paragraph>
+                  <Paragraph style={styles.cardDate}>
+                    {eventElement.date.slice(0, 10)}
+                  </Paragraph>
                 </View>
               </Card.Content>
+              <Card.Actions style={styles.cardActions}>
+                <IconButton
+                  icon="delete"
+                  color="#242424"
+                  onPress={() => {
+                    axios({
+                      url: `/community/events/${eventElement._id}`,
+                      method: "DELETE",
+                      headers: {
+                        access_token,
+                      },
+                    })
+                      .then((res) => {
+                        dispatch(fetchCommunity(access_token));
+                      })
+                      .catch((err) => {
+                        dispatch(setError(err.response.data.message));
+                      });
+                  }}
+                >
+                  Delete
+                </IconButton>
+              </Card.Actions>
             </Card>
-          ))
-        }
+          </TouchableOpacity>
+        ))}
+        {!communities.events.length && (
+          <Card style={styles.eventPlaceHolder}>
+            <Card.Cover
+              source={require("../../assets/event-placeholder.png")}
+              style={{
+                height: 100,
+                width: 100,
+                alignSelf: "center",
+                marginVertical: 5,
+              }}
+            />
+            <Card.Content>
+              <Title style={styles.namePlaceHolder}>e.g. Happy Run</Title>
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <Paragraph style={styles.locationPlaceHolder}>
+                  Taman Menteng
+                </Paragraph>
+                <Paragraph style={styles.datePlaceHolder}>Date:</Paragraph>
+              </View>
+            </Card.Content>
+          </Card>
+        )}
       </ScrollView>
       <Portal>
         <Modal
@@ -195,6 +254,7 @@ function Events({ navigation }) {
                 renderItem={({ item, index }) => {
                   return (
                     <TouchableOpacity
+                      key={item.id}
                       style={styles.resultItem}
                       onPress={() => {
                         setSearchKeyword(item.structured_formatting.main_text);
@@ -231,7 +291,7 @@ function Events({ navigation }) {
                   location: searchKeyword,
                 },
                 headers: {
-                  access_token
+                  access_token,
                 },
               })
                 .then((res) => {
@@ -271,12 +331,13 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     width: "100%",
-    height: "60%",
+    height: "65%",
     paddingTop: 0,
     paddingRight: 0,
     paddingLeft: 0,
     borderRadius: 30,
   },
+
   createButton: {
     width: 150,
     alignSelf: "center",
@@ -303,7 +364,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   eventCard: {
-    height: 240,
+    height: 250,
     width: 340,
     borderRadius: 20,
     marginHorizontal: 15,
@@ -320,15 +381,48 @@ const styles = StyleSheet.create({
     shadowRadius: 2.5,
     elevation: 2,
   },
+  eventPlaceHolder: {
+    height: 180,
+    width: 340,
+    borderRadius: 20,
+    marginHorizontal: 15,
+    marginTop: 20,
+    marginBottom: 5,
+    alignSelf: "center",
+    backgroundColor: "#242424",
+  },
   cardContent: {
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },
+
   cardName: {
-    fontSize: 18,
+    fontSize: 20,
     alignContent: "center",
+    fontWeight: "bold",
     // paddingTop: 10,
     color: "#242424",
+    fontFamily: "Jost",
+    marginTop: 10,
+  },
+  namePlaceHolder: {
+    fontSize: 20,
+    alignContent: "center",
+    fontWeight: "bold",
+    // paddingTop: 10,
+    color: "#A9A9A9",
+    fontFamily: "Jost",
+  },
+  locationPlaceHolder: {
+    fontSize: 16,
+    flex: 3,
+    color: "#A9A9A9",
+    fontFamily: "Jost",
+  },
+  datePlaceHolder: {
+    fontSize: 14,
+    flex: 1,
+    color: "#A9A9A9",
     fontFamily: "Jost",
   },
   cardLocation: {
@@ -342,6 +436,12 @@ const styles = StyleSheet.create({
     flex: 1,
     color: "#242424",
     fontFamily: "Jost",
+  },
+  cardActions: {
+    flex: 1,
+    position: "absolute",
+    bottom: "10%",
+    alignSelf: "flex-end",
   },
   modal: {
     backgroundColor: "#242424",
@@ -363,7 +463,8 @@ const styles = StyleSheet.create({
     width: 300,
     height: 40,
     alignSelf: "center",
-    backgroundColor: "#FA8135",
+    // backgroundColor: "#FA8135",
+    backgroundColor: "#AC3E05",
     zIndex: 0,
   },
   searchResultsContainer: {

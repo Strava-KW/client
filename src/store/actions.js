@@ -35,7 +35,7 @@ export const fetchCommunity = (access_token) => (dispatch, getState) => {
       dispatch(setCommunities(res.data))
     })
     .catch(err => {
-      dispatch(setError(err.response.data.message))
+      dispatch(setError(err))
     })
 }
 
@@ -58,7 +58,7 @@ export const acceptMember = (id, access_token) => (dispatch, getState) => {
 export const rejectMember = (id, access_token) => (dispatch, getState) => {
   axios({
     url: `/community/approval/${id}`,
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       access_token
     }

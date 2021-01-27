@@ -52,7 +52,7 @@ function WaitingList () {
             <Card style={styles.personCard} key={person._id}>
               <Card.Content style={styles.person}>
                 <View style={styles.avatarContainer}>
-                  <Avatar.Text size={48} color="orange" label={person.fullname[0]}></Avatar.Text>
+                  <Avatar.Text style={styles.avatar} size={48} color="#242424" label={person.fullname[0]}></Avatar.Text>
                 </View>
                 <View style={styles.nameContainer}>
                   <Text style={{ fontSize: 21, fontWeight: '600', color: '#FA8135', fontFamily: 'Jost' }}>{person.fullname}</Text>
@@ -114,9 +114,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   avatarContainer: {
+    alignItems: 'center',
     justifyContent: 'center',
     marginRight: 15,
   },
+  avatar: {
+    backgroundColor: '#FA8135'
+  },  
   nameContainer: {
     flex: 2,
     justifyContent: 'center'
